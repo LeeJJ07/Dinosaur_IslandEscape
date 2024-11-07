@@ -21,6 +21,7 @@ namespace HakSeung
                 return s_Instance;
             }
         }
+
         private void Awake()
         {
             if (s_Instance != null && s_Instance != this)
