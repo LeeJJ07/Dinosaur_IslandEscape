@@ -291,11 +291,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37fa72df7d70d934790a99974b1cdf28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1578827220}
+  target: {fileID: 769880172}
   offsetX: 0.05
   offsetY: 2.75
   offsetZ: 4.6
-  cameraSpeed: 10
+  cameraSpeed: 20
 --- !u!1 &769880172
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,7 +334,7 @@ Transform:
   m_GameObject: {fileID: 769880172}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.16336685, y: 2.3564978, z: 6.576274}
+  m_LocalPosition: {x: 0, y: 0.946, z: 3.001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -561,6 +561,18 @@ PrefabInstance:
       value: T-Rex_Highpoly
       objectReference: {fileID: 0}
     - target: {fileID: 420554, guid: caeffe6dee1013c4fa90d49ba86e861d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 420554, guid: caeffe6dee1013c4fa90d49ba86e861d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 420554, guid: caeffe6dee1013c4fa90d49ba86e861d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 420554, guid: caeffe6dee1013c4fa90d49ba86e861d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -600,10 +612,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 420554, guid: caeffe6dee1013c4fa90d49ba86e861d, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 11193250, guid: caeffe6dee1013c4fa90d49ba86e861d, type: 3}
       propertyPath: m_Animation
       value: 
-      objectReference: {fileID: 7400040, guid: 1268bcc8bd9797a418e12c6a88283254, type: 3}
+      objectReference: {fileID: 7400050, guid: 1268bcc8bd9797a418e12c6a88283254, type: 3}
     - target: {fileID: 11193250, guid: caeffe6dee1013c4fa90d49ba86e861d, type: 3}
       propertyPath: m_CullingType
       value: 1
