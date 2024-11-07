@@ -39,6 +39,9 @@ namespace JongJin
         private void Update()
         {
             Move();
+
+            if (transform.CompareTag(playerTag[(int)EPlayer.PLAYER1])) BandController.SetX((int)EPlayer.PLAYER1, transform.position.z);
+            else BandController.SetX((int)EPlayer.PLAYER2, transform.position.z);
         }
 
         private void OnKeyBoard()
@@ -55,7 +58,9 @@ namespace JongJin
             if ((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.S))
                 || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.DownArrow)))
             {
-
+                //ToDo_이종진 : 임시 테스트용 코드 작성 
+                speed -= 1f;
+                animator.SetFloat(paramSpeed, speed);
             }
             if ((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.R))
                 || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.Keypad4)))
