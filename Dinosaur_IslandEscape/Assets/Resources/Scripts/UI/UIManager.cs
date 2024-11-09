@@ -8,7 +8,8 @@ namespace HakSeung
     {
         private const string uiManagerObjectName = "_UIManager";
         private static UIManager s_Instance;
-
+        //ÇöÀç ¾À¿¡ ¸Â´Â ÆË¾÷µéÀ» ¹Þ¾Æ¿Í¾ßµÊ
+        Stack<CUIPopup> popupStack = new Stack<CUIPopup>();
         public static UIManager Instance
         {
             get
@@ -19,11 +20,13 @@ namespace HakSeung
                     s_Instance = newUIManagerObject.AddComponent<UIManager>();
                 }
                 return s_Instance;
+
             }
         }
 
         private void Awake()
         {
+
             if (s_Instance != null && s_Instance != this)
             {
                 Destroy(this.gameObject);
@@ -32,6 +35,13 @@ namespace HakSeung
             s_Instance = this;
 
             DontDestroyOnLoad(this.gameObject);
+        }
+
+
+
+        public void ClosePopupUI()
+        {
+
         }
 
     }
