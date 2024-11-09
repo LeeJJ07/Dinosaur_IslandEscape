@@ -7,7 +7,7 @@ namespace JongJin
     public class DinosaurController : MonoBehaviour
     {
 
-        [SerializeField] private float speed = 1.0f;
+        [SerializeField] private float speed = 2.0f;
         private void Start()
         {
 
@@ -16,6 +16,7 @@ namespace JongJin
         private void Update()
         {
             Move();
+            Managers.Game.DinosaurMoveDistance = transform.position.z;
         }
 
         private void Move()

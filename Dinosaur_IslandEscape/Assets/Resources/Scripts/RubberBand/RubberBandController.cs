@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BandController : MonoBehaviour
+public class RubberBandController : MonoBehaviour
 {
     private static float[] playerSpeeds = { 0, 0 };
     public static float bandZ = 0.0f;

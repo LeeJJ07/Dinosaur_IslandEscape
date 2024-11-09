@@ -7,12 +7,14 @@ namespace JongJin
 {
     public class PlayerController : MonoBehaviour
     {
-        enum EPlayer { PLAYER1, PLAYER2, PLAYER3, PLAYER4 }
         private readonly string[] playerTag = { "Player1", "Player2", "Player3", "Player4" };
         private readonly string groundTag = "Ground";
         private readonly string paramSpeed = "speed";
         private readonly string paramJump = "isJump";
         private readonly string jumpAniName = "Jump";
+
+        enum EPlayer { PLAYER1, PLAYER2, PLAYER3, PLAYER4 }
+
 
         [SerializeField] private float speed = 10.0f;
         [SerializeField] private float jumpForce = 5.0f;
@@ -40,8 +42,8 @@ namespace JongJin
         {
             Move();
 
-            if (transform.CompareTag(playerTag[(int)EPlayer.PLAYER1])) BandController.SetX((int)EPlayer.PLAYER1, transform.position.z);
-            else BandController.SetX((int)EPlayer.PLAYER2, transform.position.z);
+            if (transform.CompareTag(playerTag[(int)EPlayer.PLAYER1])) RubberBandController.SetX((int)EPlayer.PLAYER1, transform.position.z);
+            else RubberBandController.SetX((int)EPlayer.PLAYER2, transform.position.z);
         }
 
         private void OnKeyBoard()
@@ -58,7 +60,7 @@ namespace JongJin
             if ((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.S))
                 || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.DownArrow)))
             {
-                //ToDo_ÀÌÁ¾Áø : ÀÓ½Ã Å×½ºÆ®¿ë ÄÚµå ÀÛ¼º 
+                // TODO < ì´ì¢…ì§„ > -ìž„ì‹œí…ŒìŠ¤íŠ¸ ì½”ë“œ ìž‘ì„± -20241108
                 speed -= 1f;
                 animator.SetFloat(paramSpeed, speed);
             }
