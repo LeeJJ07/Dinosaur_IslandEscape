@@ -5,12 +5,16 @@ using UnityEngine;
 namespace JongJin 
 {
     public class RubberBandController : MonoBehaviour {
+
+        // TODO<이종진> - 돌발 미션 이름 및 통일성 수정 필요 - 20241110
+        enum EInGameState { RUNNING, TAILMISSION, FMISSION, SMISSION, TMISSION }
+
         [Header("Object")]
         [SerializeField] private GameObject[] players;
         [SerializeField] private GameObject dinosaur;
 
         [Header("Distance")]
-        [SerializeField] private float totalRunningDistance = 1000f;
+        [SerializeField] private float totalRunningDistance = 100.0f;
         [SerializeField] private float minDistance = 5.0f;
         [SerializeField] private float maxDistance = 15.0f;
 
@@ -21,23 +25,37 @@ namespace JongJin
         [SerializeField] private float secondMissionRate = 55.0f;
         [SerializeField] private float thirdMissionRate = 80.0f;
 
+        private EInGameState curState = EInGameState.RUNNING;
+
         private bool isPossibleTailMission = false;
 
         private float[] playerDistance = { 0.0f, 0.0f, 0.0f, 0.0f };
         private float firstRankerDistance = 0.0f;
         private float lastRankerDistance = 0.0f;
 
-        private float dinosaurSpeed = 2.0f;
+        public float ProgressRate { get { return lastRankerDistance / totalRunningDistance * 100.0f; } }
+
         public float DinosaurSpeed { get { return dinosaurSpeed; } }
+        private float dinosaurSpeed = 2.0f;
 
         private void Start() {
             dinosaurSpeed = dinosaur.GetComponent<DinosaurController>().Speed;
         }
 
         private void Update() {
-            Move();
-            CalculatePlayerDistance();
-            CalculateRank();
+            switch (curState) {
+                case EInGameState.RUNNING:
+                    if (!isPossibleTailMission && ProgressRate > tailMissionStartRate)
+                        isPossibleTailMission = true;
+                    Move();
+                    CalculatePlayerDistance();
+                    CalculateRank();
+                    break;
+                case EInGameState.TAILMISSION:
+                    break;
+                case EInGameState.FMISSION:
+                    break;
+            }
         }
 
         private void Move() {

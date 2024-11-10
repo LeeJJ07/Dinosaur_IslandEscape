@@ -329,7 +329,7 @@ MonoBehaviour:
   - {fileID: 1578827220}
   - {fileID: 1761438626}
   dinosaur: {fileID: 106847611}
-  totalRunningDistance: 1000
+  totalRunningDistance: 500
   minDistance: 12
   maxDistance: 20
   tailMissionStartRate: 15
