@@ -92,8 +92,6 @@ namespace MyeongJin
 
             for (int i = 0; i < playerCount; ++i)
             {
-                if (Convert.ToBoolean(UnityEngine.Random.Range(0, 2)))
-                    continue;
                 var obstacle = Pool.Get();
 
                 obstacle.transform.position = new Vector3(i * space, 0, distance);
