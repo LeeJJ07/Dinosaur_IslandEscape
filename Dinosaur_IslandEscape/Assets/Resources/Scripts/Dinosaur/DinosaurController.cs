@@ -8,6 +8,7 @@ namespace JongJin
     {
 
         [SerializeField] private float speed = 2.0f;
+        public float Speed { get { return speed; } }
         private void Start()
         {
 
@@ -16,7 +17,6 @@ namespace JongJin
         private void Update()
         {
             Move();
-            Managers.Game.DinosaurMoveDistance = transform.position.z;
         }
 
         private void Move()

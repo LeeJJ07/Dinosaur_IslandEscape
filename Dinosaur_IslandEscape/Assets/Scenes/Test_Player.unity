@@ -294,7 +294,7 @@ MonoBehaviour:
   target: {fileID: 769880172}
   offsetX: 0.05
   offsetY: 2.75
-  offsetZ: 4.6
+  offsetZ: 4
   cameraSpeed: 20
 --- !u!1 &769880172
 GameObject:
@@ -325,6 +325,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d6230b6c4c8884385c3d6cce5d6315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  players:
+  - {fileID: 1578827220}
+  - {fileID: 1761438626}
+  dinosaur: {fileID: 106847611}
+  totalRunningDistance: 1000
+  minDistance: 12
+  maxDistance: 20
+  tailMissionStartRate: 15
+  firstMissionRate: 35
+  secondMissionRate: 55
+  thirdMissionRate: 80
 --- !u!4 &769880174
 Transform:
   m_ObjectHideFlags: 0
@@ -558,7 +569,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 121864, guid: caeffe6dee1013c4fa90d49ba86e861d, type: 3}
       propertyPath: m_Name
-      value: T-Rex_Highpoly
+      value: Dinosaur
       objectReference: {fileID: 0}
     - target: {fileID: 420554, guid: caeffe6dee1013c4fa90d49ba86e861d, type: 3}
       propertyPath: m_LocalScale.x
@@ -651,8 +662,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7d9d530a6fe76647906e6f405d17f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  rubberBandController: {fileID: 769880173}
+  speed: 1
   jumpForce: 5
+  increaseSpeed: 0.1
+  decreaseSpeed: 0.2
+  minSpeed: 0.5
+  maxSpeed: 5
 --- !u!136 &1578827224
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -849,8 +865,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7d9d530a6fe76647906e6f405d17f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  rubberBandController: {fileID: 769880173}
+  speed: 1
   jumpForce: 5
+  increaseSpeed: 0.1
+  decreaseSpeed: 0.2
+  minSpeed: 0.5
+  maxSpeed: 5
 --- !u!136 &1761438630
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -952,7 +973,7 @@ PrefabInstance:
     - target: {fileID: 9030717234314516334, guid: 98e3d543e4c80954fba8bf460668c87f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.03
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9030717234314516334, guid: 98e3d543e4c80954fba8bf460668c87f,
         type: 3}

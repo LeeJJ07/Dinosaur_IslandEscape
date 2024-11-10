@@ -5,8 +5,32 @@ using UnityEngine;
 
 namespace JongJin
 {
-    public class InputManager
+    public class InputManager : MonoBehaviour
     {
+        private static InputManager sInstance;
+        public static InputManager Instance {
+            get {
+                if (sInstance == null) {
+                    GameObject newManagersObject = new GameObject("@InputManager");
+                    sInstance = newManagersObject.AddComponent<InputManager>();
+                }
+                return sInstance;
+            }
+        }
+        private void Awake() {
+            if (sInstance != null && sInstance != this) {
+                Destroy(this.gameObject);
+                return;
+            }
+            sInstance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+
+        private void Update() 
+        {
+            OnUpdate();
+        }
+
         public Action KeyAction = null;
         public void OnUpdate()
         {

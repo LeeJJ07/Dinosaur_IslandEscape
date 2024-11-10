@@ -4,11 +4,35 @@ using UnityEngine;
 
 namespace JongJin
 {
-    public class GameManager
+    public class GameManager : MonoBehaviour
     {
-        private float[] playersMoveDistance = { 0, 0, 0, 0 };
-        public float dinosaurMoveDistance = -3;
-        
-        public float DinosaurMoveDistance { get { return dinosaurMoveDistance; } set { dinosaurMoveDistance = value; } }
+        private static GameManager sInstance;
+        public static GameManager Instance 
+        {
+            get 
+            {
+                if (sInstance == null) 
+                {
+                    GameObject newManagersObject = new GameObject("@GameManager");
+                    sInstance = newManagersObject.AddComponent<GameManager>();
+                }
+                return sInstance;
+            }
+        }
+        private void Awake() 
+        {
+            if (sInstance != null && sInstance != this) 
+            {
+                Destroy(this.gameObject);
+                return;
+            }
+            sInstance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+
+        private void Update() 
+        {
+
+        }
     }
 }
