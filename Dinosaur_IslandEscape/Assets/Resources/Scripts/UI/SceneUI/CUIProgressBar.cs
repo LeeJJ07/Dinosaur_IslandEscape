@@ -4,22 +4,40 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class CUIProgressBar : CUIScene
+namespace HakSeung
 {
-    [Header("Porgress Bar")]
-    [SerializeField] private float curProgress;
-    [SerializeField] private float maxProgress = 100;
-    [SerializeField] private float minProgress = 0;
-
-    public Sprite mask;
-
-    private void Update()
+    public class CUIProgressBar : CUIScene
     {
-            
-    }
+        [Header("Porgress Bar")]
+        //[SerializeField] private float curProgress;
+        [SerializeField]private float maxProgress;
 
-    private void FillProgressBar()
-    {
+        private const float maxFillAmount = 1f;
+        private const float defaultMaxProgress = 0;
 
+        public Image PrograssBarFill;
+        
+        public float MaxProgress { 
+            set 
+            {
+                if(value > defaultMaxProgress)
+                    maxProgress = value;
+            } 
+        }
+
+        private void Awake()
+        {
+            maxProgress = defaultMaxProgress;
+        }
+
+        private void FillProgressBar(float curProgress)
+        {
+            if (maxProgress <= defaultMaxProgress) return;
+
+            if(curProgress <= maxProgress)
+                PrograssBarFill.fillAmount = curProgress / maxProgress;
+            else
+                PrograssBarFill.fillAmount = maxFillAmount;
+        }
     }
 }
