@@ -9,27 +9,22 @@ namespace MyeongJin
 	{
 		public IObjectPool<CObstacle> Pool { get; set; }
 
-		private float timeToCheckPosition = 1f;
+		private float timeToCheckPosition = 0.1f;
 		private int maxRotateValue = 1;
 		private int minRotateSpeed = 4;
 		private int curRotateSpeed;
 
-        //TODO < 문명진 > - startPosition Value를 현재 자기의 위치로 변경해야함. - 2024.11.07 4:10
-        [SerializeField]
-        private Vector3 startPosition = new Vector3(0, 0, 10);
-        // <<
-
         //TODO < 문명진 > - destructPosition Value를 Dinosaur의 끝 부분으로 변경해야함. - 2024.11.07 4:10
-        [SerializeField]
-		private Vector3 destructPosition = new Vector3(0, 0, -3);
+        private GameObject rubberBand;
+        private int destructPosition;
         // <<
-
-        private Vector3 curPosition;
 
         private void Start()
 		{
-			curPosition = startPosition;
-			curRotateSpeed = Random.Range(minRotateSpeed, minRotateSpeed + maxRotateValue);
+            rubberBand = GameObject.Find("SpawnStones");
+            //TODO < 문명진 > - CGenerator 클래스가 아닌 공룡의 위치를 가지고 있는 녀석의 클래스에서 가져와야함. - 2024.11.07 4:10
+            destructPosition = rubberBand.GetComponent<CGenerator>().FirstPlayerPosition;
+            curRotateSpeed = Random.Range(minRotateSpeed, minRotateSpeed + maxRotateValue);
         }
 
         private void Update()
@@ -44,14 +39,11 @@ namespace MyeongJin
 		{
 			yield return new WaitForSeconds(timeToCheckPosition);
 
-			// >> : Test Code
-			destructPosition.z += 1;
-			Debug.Log(destructPosition.z);
-            // <<
+			destructPosition = rubberBand.GetComponent<CGenerator>().FirstPlayerPosition - 100;
 
             StartCoroutine(CheckPosition());
 
-            if (curPosition.z < destructPosition.z)
+            if (this.transform.position.z < destructPosition)
 				ReturnToPool();
 		}
 
@@ -67,7 +59,7 @@ namespace MyeongJin
 		private void ResetObstacle()
 		{
             //TODO < 문명진 > - 돌의 삭제 위치를 공룡 위치로 초기화 해줘야함. - 2024.11.07 4:20
-            destructPosition.z = -3;
+			destructPosition = rubberBand.GetComponent<CGenerator>().FirstPlayerPosition - 100;
         }
 		private void RotateObstacle()
 		{
