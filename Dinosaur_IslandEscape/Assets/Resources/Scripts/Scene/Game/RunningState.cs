@@ -46,6 +46,10 @@ namespace JongJin
 		{
 			return playerDistance[playerNumber];
 		}
+		public Vector3 GetPlayerPrevPosition(int playerNumber)
+		{
+			return prevPlayerPosition[playerNumber];
+		}
 		public void EnterState()
 		{
 			dinosaurSpeed = dinosaur.GetComponent<DinosaurController>().Speed;
@@ -54,6 +58,8 @@ namespace JongJin
 				return;
 
 			SetInfo();
+
+			Camera.main.GetComponent<CameraController>().enabled = true;
 		}
 		public void UpdateState()
 		{
@@ -67,7 +73,8 @@ namespace JongJin
 		public void ExitState()
 		{
 			SaveInfo();
-		}
+			Camera.main.GetComponent<CameraController>().enabled = false;
+        }
 		private void Move()
 		{
 			transform.position = dinosaur.transform.forward * firstRankerDistance;

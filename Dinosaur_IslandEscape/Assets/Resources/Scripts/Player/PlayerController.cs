@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
-namespace JongJin 
+namespace JongJin
 {
-    public class PlayerController : MonoBehaviour 
+    public class PlayerController : MonoBehaviour
     {
         private readonly string[] playerTag = { "Player1", "Player2", "Player3", "Player4" };
         private readonly string groundTag = "Ground";
+        private readonly string paramMission = "isMission";
         private readonly string paramSpeed = "speed";
         private readonly string paramJump = "isJump";
         private readonly string jumpAniName = "Jump";
@@ -28,10 +29,11 @@ namespace JongJin
         [SerializeField] private float minSpeed = 0.5f;
         [SerializeField] private float maxSpeed = 10.0f;
 
+        private EPlayer playerId;
         private RunningState runningController;
         private EPlayerState curState;
 
-        private bool isGrounded = true;
+        private int isGrounded = 0;
 
         private Rigidbody rigid;
         private Animator animator;
@@ -42,10 +44,17 @@ namespace JongJin
             animator = GetComponent<Animator>();
         }
 
-        private void Start() 
+        private void Start()
         {
             InputManager.Instance.KeyAction -= OnKeyBoard;
             InputManager.Instance.KeyAction += OnKeyBoard;
+
+            for(int playerNum = 0; playerNum < playerTag.Length; playerNum++)
+            {
+                if (this.tag != playerTag[playerNum]) continue;
+                playerId = (EPlayer)playerNum;
+                break;
+            }
 
             runningController = gameSceneController.GetComponent<RunningState>();
             curState = EPlayerState.RUNNING;
@@ -53,26 +62,26 @@ namespace JongJin
             animator.SetFloat(paramSpeed, speed);
         }
 
-        private void Update() 
+        private void Update()
         {
             UpdateState();
             if (curState == EPlayerState.RUNNING)
                 Move();
         }
 
-        private void OnKeyBoard() 
+        private void OnKeyBoard()
         {
-            if (!isGrounded)
+            if (isGrounded <= 0)
                 return;
 
-            if ( curState == EPlayerState.RUNNING 
-                &&((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.S))
-                || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.DownArrow))))
+            if (curState == EPlayerState.RUNNING
+                && (playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.S))
+                || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.DownArrow)))
             {
                 IncreaseSpeed();
             }
-            if ((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.W))
-                || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.UpArrow))) 
+            if ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.W))
+                || (playerId == EPlayer.PLAYER2 &&  Input.GetKeyDown(KeyCode.UpArrow)))
             {
                 Jump();
             }
@@ -80,58 +89,71 @@ namespace JongJin
             if (curState == EPlayerState.RUNNING)
                 return;
 
-            if ((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.A))
-                || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.LeftArrow))) 
+            if ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.A))
+                || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.LeftArrow)))
             {
 
             }
-            if ((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.D))
-                || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.RightArrow))) 
+            if ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.D))
+                || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.RightArrow)))
             {
 
             }
-            if ((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.LeftControl))
-                || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.RightControl))) 
+            if ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.LeftControl))
+                || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.RightControl)))
             {
 
             }
-            if ((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.LeftShift))
-                || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.RightShift))) 
+            if ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.LeftShift))
+                || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.RightShift)))
             {
 
             }
         }
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision == null)
-                return;
             if (!collision.gameObject.CompareTag(groundTag))
                 return;
             animator.SetBool(paramJump, false);
-            isGrounded = true;
+            isGrounded++;
         }
-        private void OnCollisionExit(Collision collision) 
+        private void OnCollisionExit(Collision collision)
         {
-            if (collision == null)
+            if (!collision.gameObject.CompareTag(groundTag))
                 return;
-            if (collision.gameObject.CompareTag(groundTag))
-                isGrounded = false;
+            isGrounded--;
         }
         private void UpdateState()
         {
-            if (gameSceneController.CurState == EGameState.RUNNING)
-                curState = EPlayerState.RUNNING;
-            else
-                curState = EPlayerState.MISSION;
+            if (curState != EPlayerState.RUNNING
+                && gameSceneController.CurState == EGameState.RUNNING)
+                SetRunningState();
+            else if (curState != EPlayerState.MISSION
+                  && gameSceneController.CurState != EGameState.RUNNING)
+                SetMissionState();
         }
-        private void Move() 
+        private void SetRunningState()
+        {
+            curState = EPlayerState.RUNNING;
+            animator.SetBool(paramMission, false);
+            transform.position = runningController.GetPlayerPrevPosition((int)playerId);
+        }
+        private void SetMissionState()
+        {
+            curState = EPlayerState.MISSION;
+            animator.SetBool(paramMission, true);
+            // TODO<이종진> - 상태 전환시 임시 플레이어 위치 수정 필요 - 20241112
+            transform.position = new Vector3(27.5f + (int)playerId * 5f, 2.0f, 0.0f);
+        }
+        
+        private void Move()
         {
             DecreaseSpeed();
 
             if (!runningController.IsBeyondMaxDistance(this.transform.position))
                 return;
-            if (runningController.IsUnderMinDistance(this.transform.position, out Vector3 curPos) 
-                && speed < runningController.DinosaurSpeed) 
+            if (runningController.IsUnderMinDistance(this.transform.position, out Vector3 curPos)
+                && speed < runningController.DinosaurSpeed)
             {
                 this.transform.position = curPos;
                 return;
@@ -139,21 +161,22 @@ namespace JongJin
 
             transform.Translate(transform.forward * Time.deltaTime * speed);
         }
-        private void Jump() 
+        private void Jump()
         {
-            animator.Play(jumpAniName, -1, 0f);
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName(jumpAniName))
+                animator.Play(jumpAniName, -1, 0f);
             animator.SetBool(paramJump, true);
             rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
 
-        private void DecreaseSpeed() 
+        private void DecreaseSpeed()
         {
             if (speed < minSpeed)
                 return;
             speed -= Time.deltaTime * decreaseSpeed;
             animator.SetFloat(paramSpeed, speed);
         }
-        private void IncreaseSpeed() 
+        private void IncreaseSpeed()
         {
             if (speed > maxSpeed)
                 return;
