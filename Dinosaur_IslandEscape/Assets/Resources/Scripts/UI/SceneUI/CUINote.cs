@@ -23,13 +23,13 @@ namespace HakSeung
         [SerializeField] private float curTime;
         [SerializeField] private float noteSuccessTime = 3f;
         [SerializeField] private bool isHit;
-        
+
         private const float noteFailTime = 0f;
-        private const float hitCheckRingScale = 2f;
+        [SerializeField]private const float hitCheckRingScale = 5f;
+        private const float distanceToPlayerPostion = 1f;
 
         public GameObject[] noteObjects = new GameObject[(int)NoteImageObject.END];
-        public Vector3 PlayerPos{ get; set; } = Vector3.zero;
-
+        public GameObject TestPlayer;
 
         protected override void InitUI()
         {
@@ -70,13 +70,19 @@ namespace HakSeung
         /// <returns></returns>
         private IEnumerator IECheckNoteHitInSuccessTime()
         {
-            float hitNoteScale = transform.localScale.x; 
+            float hitNoteScale = transform.localScale.x;
 
-            while(curTime > noteFailTime && !isHit)
+            while (curTime > noteFailTime && !isHit)
             {
                 curTime -= Time.deltaTime;
                 noteObjects[(int)NoteImageObject.HITCHECKRING].transform.localScale =
                     Vector3.Lerp(noteObjects[(int)NoteImageObject.HITCHECKRING].transform.localScale, Vector3.one, Time.deltaTime);
+
+                //플레이어 위치 추적하는 코드 필요 
+                if (TestPlayer != null) 
+                    SyncUIWithPlayerPosition(TestPlayer.transform.position);
+
+
                 yield return null;
             }
 
@@ -92,7 +98,13 @@ namespace HakSeung
             Hide();
         }
 
+        private void SyncUIWithPlayerPosition(Vector3 playerPosition)
+        {
+            this.transform.position = Camera.main.WorldToScreenPoint(playerPosition + Vector3.up * distanceToPlayerPostion);
+        }
+        
 
+            
     }
 
 }
