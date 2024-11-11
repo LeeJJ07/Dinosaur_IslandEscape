@@ -4,12 +4,23 @@ using UnityEngine;
 
 namespace HakSeung
 {
+  /*  enum SceneType
+    {
+        START,
+        RUNNING,
+        ENDING,
+        
+        END
+    }*/
     public class UIManager : MonoBehaviour
     {
+        //TODO<학승> SceneType에 따라서 캔버스 변경시키는 코드가 필요함 24/11/11
         private const string uiManagerObjectName = "_UIManager";
         private static UIManager s_Instance;
         //현재 씬에 맞는 팝업들을 받아와야됨
         Stack<CUIPopup> popupStack = new Stack<CUIPopup>();
+
+        //Canvas[] canvas = new Canvas[];
         public static UIManager Instance
         {
             get
@@ -26,7 +37,6 @@ namespace HakSeung
 
         private void Awake()
         {
-
             if (s_Instance != null && s_Instance != this)
             {
                 Destroy(this.gameObject);
