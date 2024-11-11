@@ -63,6 +63,7 @@ namespace MyeongJin
         }
 		private void Update()
 		{
+			UpdateCurState();
 			switch(curState)
 			{
 				case EGameState.RUNNING:
@@ -87,14 +88,17 @@ namespace MyeongJin
                     break;
             }
 		}
-		// TODO < 문명진 > - OnGUI 메소드 내용을 다른 호출 메소드(Update or Observer)로 변경해야함. - 2024.11.09 17:05
-		private void OnGUI()
+		private void UpdateCurState()
+		{
+            curState = gameSceneController.GetComponent<GameSceneController>().CurState;
+        }
+        // TODO < 문명진 > - OnGUI 메소드 내용을 다른 호출 메소드(Update or Observer)로 변경해야함. - 2024.11.09 17:05
+        private void OnGUI()
 		{
 			if (GUILayout.Button("Generate"))
 			{
 				isPlayerRunning = !isPlayerRunning;
 				Timer = 0;
-
 			}
 		}
 		private void CheckCanSpawnObstacle()
@@ -103,7 +107,7 @@ namespace MyeongJin
 			{
 				if (CanSpawnObstacle(obstacleGenerateChance[i]))
 				{
-					// TODO < 문명진 > - "16"을 RubberBand Size로 바꿔줘야 함. - 2024.11.11 18:55
+					// TODO < 문명진 > - "10"을 RubberBand Size로 바꿔줘야 함. - 2024.11.11 18:55
 
 					obstaclePool.SpawnObstacle(i, runningState.GetPlayerDistance(i) + 10);
 					playerNode[i].GetComponent<CUINote>().Show();
@@ -142,7 +146,7 @@ namespace MyeongJin
 		}
 		private bool IsSpawnTime()
 		{
-			return !Convert.ToBoolean((Timer % 50));
+			return !Convert.ToBoolean((Timer % 250));
 		}
 		private void TimerRunning()
 		{

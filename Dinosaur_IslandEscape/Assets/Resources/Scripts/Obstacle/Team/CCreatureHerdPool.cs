@@ -92,7 +92,6 @@ namespace MyeongJin
         {
             obstacle.gameObject.SetActive(false);
         }
-
         private void OnTakeFromPool(CCreatureHerd obstacle)
         {
             obstacle.gameObject.SetActive(true);
@@ -104,19 +103,19 @@ namespace MyeongJin
         public bool SpawnPteranodon(int lineNum)
         {
             // TODO < 문명진 > - space를 Line의 x값을 받아서 사용해야 함. - 2024.11.11 17:30
-            int space = 10;
+            float space = -1.745f;
 
             var obstacle = Pool.Get();
 
             // TODO < 문명진 > - 생성 위치를 미션 지점으로 지정해줘야 함. - 2024.11.11 14:20
             if (obstacle.name == "SmallPteranodon")
             {
-                obstacle.transform.position = new Vector3(lineNum * space, 0, 20);
+                obstacle.transform.position = new Vector3(lineNum * space + 30, 0, 20);
                 return true;
             }
             else if (obstacle.name == "BigPteranodon")
             {
-                obstacle.transform.position = new Vector3(space / 2, 0, 20);
+                obstacle.transform.position = new Vector3(space / 2 + 30, 0, 20);
             }
             return false;
         }
