@@ -14,6 +14,7 @@ namespace JongJin
         private readonly string jumpAniName = "Jump";
 
         enum EPlayer { PLAYER1, PLAYER2, PLAYER3, PLAYER4 }
+        enum EPlayerState { RUNNING, MISSION }
 
         // TODO<이종진> - 테스트용 작성 수정필요 - 20241110
         [SerializeField] private GameSceneController gameSceneController;
@@ -28,6 +29,7 @@ namespace JongJin
         [SerializeField] private float maxSpeed = 10.0f;
 
         private RunningState runningController;
+        private EPlayerState curState;
 
         private bool isGrounded = true;
 
@@ -46,13 +48,15 @@ namespace JongJin
             InputManager.Instance.KeyAction += OnKeyBoard;
 
             runningController = gameSceneController.GetComponent<RunningState>();
+            curState = EPlayerState.RUNNING;
 
             animator.SetFloat(paramSpeed, speed);
         }
 
         private void Update() 
         {
-            if(gameSceneController.CurState == EGameState.RUNNING)
+            UpdateState();
+            if (curState == EPlayerState.RUNNING)
                 Move();
         }
 
@@ -61,38 +65,43 @@ namespace JongJin
             if (!isGrounded)
                 return;
 
-            if ((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.W))
-                || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.UpArrow))) 
+            if ( curState == EPlayerState.RUNNING 
+                &&((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.S))
+                || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.DownArrow))))
             {
                 IncreaseSpeed();
             }
-            if ((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.S))
-                || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.DownArrow))) 
-            {
-
-            }
-            if ((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.R))
-                || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.Keypad4))) 
+            if ((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.W))
+                || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.UpArrow))) 
             {
                 Jump();
             }
-            if ((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.T))
-                || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.Keypad5))) 
+
+            if (curState == EPlayerState.RUNNING)
+                return;
+
+            if ((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.A))
+                || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.LeftArrow))) 
             {
 
             }
-            if ((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.F))
-                || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.Keypad1))) 
+            if ((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.D))
+                || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.RightArrow))) 
             {
 
             }
-            if ((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.G))
-                || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.Keypad2))) 
+            if ((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.LeftControl))
+                || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.RightControl))) 
+            {
+
+            }
+            if ((transform.CompareTag(playerTag[(int)EPlayer.PLAYER1]) && Input.GetKeyDown(KeyCode.LeftShift))
+                || (transform.CompareTag(playerTag[(int)EPlayer.PLAYER2]) && Input.GetKeyDown(KeyCode.RightShift))) 
             {
 
             }
         }
-        private void OnCollisionEnter(Collision collision) 
+        private void OnCollisionEnter(Collision collision)
         {
             if (collision == null)
                 return;
@@ -107,6 +116,13 @@ namespace JongJin
                 return;
             if (collision.gameObject.CompareTag(groundTag))
                 isGrounded = false;
+        }
+        private void UpdateState()
+        {
+            if (gameSceneController.CurState == EGameState.RUNNING)
+                curState = EPlayerState.RUNNING;
+            else
+                curState = EPlayerState.MISSION;
         }
         private void Move() 
         {
