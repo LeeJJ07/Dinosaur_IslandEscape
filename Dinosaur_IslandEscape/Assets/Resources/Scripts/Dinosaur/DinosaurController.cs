@@ -6,6 +6,7 @@ namespace JongJin
 {
     public class DinosaurController : MonoBehaviour
     {
+        [SerializeField] private GameSceneController gameSceneController;
 
         [SerializeField] private float speed = 2.0f;
         public float Speed { get { return speed; } }
@@ -16,7 +17,8 @@ namespace JongJin
 
         private void Update()
         {
-            Move();
+            if(gameSceneController.CurState == EGameState.RUNNING)
+                Move();
         }
 
         private void Move()
