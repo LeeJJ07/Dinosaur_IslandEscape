@@ -289,9 +289,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilePrefabs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
   tileRespawnPoint: 0
   tileLength: 16
   numberOfTiles: 3
@@ -495,15 +495,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400112, guid: 1268bcc8bd9797a418e12c6a88283254, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400112, guid: 1268bcc8bd9797a418e12c6a88283254, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400112, guid: 1268bcc8bd9797a418e12c6a88283254, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400112, guid: 1268bcc8bd9797a418e12c6a88283254, type: 3}
       propertyPath: m_LocalPosition.x
@@ -545,6 +545,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 400112, guid: 1268bcc8bd9797a418e12c6a88283254, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 11100000, guid: 1268bcc8bd9797a418e12c6a88283254, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -579,7 +583,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1596142116}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e94bf77413583a7449bab2f281b650a5, type: 3}
   m_Name: 
@@ -599,6 +603,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0b0b509cec889404db5ea04509510d09, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0b0b509cec889404db5ea04509510d09, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0b0b509cec889404db5ea04509510d09, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0b0b509cec889404db5ea04509510d09, type: 3}
+      propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0b0b509cec889404db5ea04509510d09, type: 3}
@@ -640,6 +656,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 0b0b509cec889404db5ea04509510d09, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0b0b509cec889404db5ea04509510d09, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

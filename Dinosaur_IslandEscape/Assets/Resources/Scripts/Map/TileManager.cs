@@ -42,7 +42,7 @@ namespace JaeHoon
         }
         private void DeleteTile()
         {
-            Destroy(activeTiles[0]);
+            Destroy(activeTiles[0],20f);
             activeTiles.RemoveAt(0);
         }
     }
