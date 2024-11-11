@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CUIScene : CUIBase
+namespace HakSeung
 {
-    // Start is called before the first frame update
-    void Start()
+    public abstract class CUIScene : CUIBase
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
