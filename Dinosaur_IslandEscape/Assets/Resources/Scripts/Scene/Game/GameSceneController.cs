@@ -36,18 +36,18 @@ namespace JongJin
             switch (curState)
             {
                 case EGameState.RUNNING:
-                    Debug.Log("왜 여기에?");
-                    if (runningState.IsFirstMissionTriggered())
-                    {
-                        UpdateState(EGameState.FIRSTMISSION);
-                        Debug.Log("씬전환");
-                    }
-                    else if (runningState.IsSecondMissionTriggered())
-                        UpdateState(EGameState.SECONDMISSION);
-                    else if (runningState.IsThirdMissionTriggered())
-                        UpdateState(EGameState.THIRDMISSION);
-                    else if (runningState.IsTailMissionTriggered())
-                        UpdateState(EGameState.TAILMISSION);
+                    //Debug.Log("왜 여기에?");
+                    //if (runningState.IsFirstMissionTriggered())
+                    //{
+                    //    UpdateState(EGameState.FIRSTMISSION);
+                    //    Debug.Log("씬전환");
+                    //}
+                    //else if (runningState.IsSecondMissionTriggered())
+                    //    UpdateState(EGameState.SECONDMISSION);
+                    //else if (runningState.IsThirdMissionTriggered())
+                    //    UpdateState(EGameState.THIRDMISSION);
+                    //else if (runningState.IsTailMissionTriggered())
+                    //    UpdateState(EGameState.TAILMISSION);
                     break;
                 case EGameState.TAILMISSION:
                     break;

@@ -317,9 +317,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curTime: 0
-  noteSuccessTime: 3
+  noteSuccessTime: 5
   isHit: 0
   noteObjects:
   - {fileID: 605455409392059851}
   - {fileID: 1075351476674365515}
   - {fileID: 3516224734157121008}
+  TestPlayer: {fileID: 0}
