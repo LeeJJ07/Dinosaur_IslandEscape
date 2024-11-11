@@ -36,14 +36,14 @@ namespace JongJin
             switch (curState)
             {
                 case EGameState.RUNNING:
-                    if (runningState.IsFirstMissionTriggered())
-                        UpdateState(EGameState.FIRSTMISSION);
-                    else if (runningState.IsSecondMissionTriggered())
-                        UpdateState(EGameState.SECONDMISSION);
-                    else if (runningState.IsThirdMissionTriggered())
-                        UpdateState(EGameState.THIRDMISSION);
-                    else if (runningState.IsTailMissionTriggered())
-                        UpdateState(EGameState.TAILMISSION);
+                    //if (runningState.IsFirstMissionTriggered())
+                    //    UpdateState(EGameState.FIRSTMISSION);
+                    //else if (runningState.IsSecondMissionTriggered())
+                    //    UpdateState(EGameState.SECONDMISSION);
+                    //else if (runningState.IsThirdMissionTriggered())
+                    //    UpdateState(EGameState.THIRDMISSION);
+                    //else if (runningState.IsTailMissionTriggered())
+                    //    UpdateState(EGameState.TAILMISSION);
                     break;
                 case EGameState.TAILMISSION:
                     break;
