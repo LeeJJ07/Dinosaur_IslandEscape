@@ -1,3 +1,4 @@
+using JongJin;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,8 +10,9 @@ namespace MyeongJin
 	{
 		private CObstacleObjectPool obstaclePool;
 		private CCreatureHerdPool creatureHerdPool;
+		private GameObject gameSceneController;
 
-		private int playerCount = 2;
+        private int playerCount = 2;
 		private float[] obstacleGenerateChance;
 		private float[] creatureHerdGenerateChance;
 		private System.Random random = new System.Random();
@@ -18,8 +20,13 @@ namespace MyeongJin
 		private bool isPlayerRunning = false;
 		private bool isSpawnSection = false;
 
-		// TODO < 문명진 > - 실제 플레이어의 위치를 받아야 함. - 2024.11.07 16:10
-		public int FirstPlayerPosition { get; private set; }
+		private int curGeneratePosition;
+		private int oldGeneratePosition;
+
+		RunningState runningState;
+
+        // TODO < 문명진 > - 실제 플레이어의 위치를 받아야 함. - 2024.11.07 16:10
+        public int FirstPlayerPosition { get; private set; }
 		/// <summary>
 		/// 현재 익룡 생성 주기는 Timer가 일정 시간이 될 때마다 확률적으로 생성하고 있음.
 		/// </summary>
@@ -37,16 +44,19 @@ namespace MyeongJin
 
 			obstaclePool = gameObject.AddComponent<CObstacleObjectPool>();
 			creatureHerdPool = gameObject.AddComponent<CCreatureHerdPool>();
-		}
-		private void FixedUpdate()
+
+			gameSceneController = GameObject.Find("GameSceneController");
+            runningState = gameSceneController.GetComponent<RunningState>();
+        }
+		private void Update()
 		{
 			if (isPlayerRunning)
-			{
-				Running();
-
-				if (IsSpawnSection())
+			{ 
+				if (IsSpawnSection(out curGeneratePosition))
 					CheckCanSpawnObstacle();
-			}
+				oldGeneratePosition = curGeneratePosition;
+
+            }
 			else
 			{
 				TimerRunning();
@@ -71,9 +81,9 @@ namespace MyeongJin
 			{
 				if (CanSpawnObstacle(obstacleGenerateChance[i]))
 				{
-                    // TODO < 문명진 > - SpawnObstacle(트랙 번호, 트랙의 플레이어 위치)로 변경해줘야함. - 2024.11.11 14:40
-					// 현재는 1등 위치로만 기준 되어 있음.
-                    obstaclePool.SpawnObstacle(i, FirstPlayerPosition);
+					// TODO < 문명진 > - "16"을 RubberBand Size로 바꿔줘야 함. - 2024.11.11 18:55
+
+					obstaclePool.SpawnObstacle(i, runningState.GetPlayerDistance(i) + 10);
 					ResetChance(obstacleGenerateChance, i);
 				}
 				else
@@ -100,17 +110,15 @@ namespace MyeongJin
 			return creatureHerdPool.SpawnPteranodon(i);
 
         }
-		private bool IsSpawnSection()
+		private bool IsSpawnSection(out int curGeneratePosition)
 		{
-			return !Convert.ToBoolean((FirstPlayerPosition % 10));
+			curGeneratePosition = (int)runningState.FirstRankerDistance;
+
+			return curGeneratePosition != oldGeneratePosition && !Convert.ToBoolean((curGeneratePosition % 8));
 		}
 		private bool IsSpawnTime()
 		{
 			return !Convert.ToBoolean((Timer % 50));
-		}
-		private void Running()
-		{
-			FirstPlayerPosition++;
 		}
 		private void TimerRunning()
 		{

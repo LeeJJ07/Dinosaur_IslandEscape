@@ -100,9 +100,10 @@ namespace MyeongJin
 		{
 			Destroy(obstacle.gameObject);
 		}
-		public void SpawnObstacle(int lineNum, int zPosition)
+		public void SpawnObstacle(int lineNum, float zPosition)
 		{
-			int space = 10;
+            //TODO < 문명진 > - -1.745f를 플레이어 간 간격으로 조정. - 2024.11.11 19:45
+            float space = -1.745f;
 
 			var obstacle = Pool.Get();
 
