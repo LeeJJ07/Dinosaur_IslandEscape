@@ -140,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af3e3e04211a9b64fa8e2b86494b9b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameSceneController: {fileID: 769880180}
   speed: 2
 --- !u!1 &228673312
 GameObject:
@@ -369,6 +370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c76e490371ccabe488e1dbee6a965096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  test: 0
 --- !u!114 &769880178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -732,7 +734,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7d9d530a6fe76647906e6f405d17f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningController: {fileID: 769880179}
+  gameSceneController: {fileID: 769880180}
   speed: 1
   jumpForce: 5
   increaseSpeed: 0.1
@@ -935,7 +937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7d9d530a6fe76647906e6f405d17f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningController: {fileID: 769880179}
+  gameSceneController: {fileID: 769880180}
   speed: 1
   jumpForce: 5
   increaseSpeed: 0.1

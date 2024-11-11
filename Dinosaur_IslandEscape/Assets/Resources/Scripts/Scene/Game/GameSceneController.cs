@@ -16,6 +16,7 @@ namespace JongJin
 
         private GameStateContext gameStateContext;
         private EGameState curState;
+        public EGameState CurState { get { return curState; } }
 
         private void Start()
         {
@@ -35,8 +36,12 @@ namespace JongJin
             switch (curState)
             {
                 case EGameState.RUNNING:
+                    Debug.Log("ø÷ ø©±‚ø°?");
                     if (runningState.IsFirstMissionTriggered())
-                        { UpdateState(EGameState.FIRSTMISSION); Debug.Log("æ¿¿¸»Ø"); }
+                    {
+                        UpdateState(EGameState.FIRSTMISSION);
+                        Debug.Log("æ¿¿¸»Ø");
+                    }
                     else if (runningState.IsSecondMissionTriggered())
                         UpdateState(EGameState.SECONDMISSION);
                     else if (runningState.IsThirdMissionTriggered())
@@ -47,6 +52,8 @@ namespace JongJin
                 case EGameState.TAILMISSION:
                     break;
                 case EGameState.FIRSTMISSION:
+                    if(firstMissionState.test)
+                        UpdateState(EGameState.RUNNING);
                     break;
                 case EGameState.SECONDMISSION:
                     break;
@@ -58,7 +65,7 @@ namespace JongJin
 
         private void UpdateState(EGameState nextState)
         {
-            if (curState != nextState)
+            if (curState == nextState)
                 return;
             curState = nextState;
 

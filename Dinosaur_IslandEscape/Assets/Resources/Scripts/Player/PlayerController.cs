@@ -16,7 +16,7 @@ namespace JongJin
         enum EPlayer { PLAYER1, PLAYER2, PLAYER3, PLAYER4 }
 
         // TODO<이종진> - 테스트용 작성 수정필요 - 20241110
-        [SerializeField] private RunningState runningController;
+        [SerializeField] private GameSceneController gameSceneController;
 
         [SerializeField] private float speed = 1.0f;
         [SerializeField] private float jumpForce = 5.0f;
@@ -26,6 +26,8 @@ namespace JongJin
 
         [SerializeField] private float minSpeed = 0.5f;
         [SerializeField] private float maxSpeed = 10.0f;
+
+        private RunningState runningController;
 
         private bool isGrounded = true;
 
@@ -43,12 +45,15 @@ namespace JongJin
             InputManager.Instance.KeyAction -= OnKeyBoard;
             InputManager.Instance.KeyAction += OnKeyBoard;
 
+            runningController = gameSceneController.GetComponent<RunningState>();
+
             animator.SetFloat(paramSpeed, speed);
         }
 
         private void Update() 
         {
-            Move();
+            if(gameSceneController.CurState == EGameState.RUNNING)
+                Move();
         }
 
         private void OnKeyBoard() 
@@ -106,6 +111,7 @@ namespace JongJin
         private void Move() 
         {
             DecreaseSpeed();
+
             if (!runningController.IsBeyondMaxDistance(this.transform.position))
                 return;
             if (runningController.IsUnderMinDistance(this.transform.position, out Vector3 curPos) 
@@ -114,6 +120,7 @@ namespace JongJin
                 this.transform.position = curPos;
                 return;
             }
+
             transform.Translate(transform.forward * Time.deltaTime * speed);
         }
         private void Jump() 
