@@ -12,14 +12,9 @@ namespace MyeongJin
         private float timeToCheckPosition = 1f;
         private float moveSpeed = 10f;
 
-        //TODO < 문명진 > - startPosition Value를 현재 자기의 위치로 변경해야함. - 2024.11.07 4:10
-        [SerializeField]
-        private Vector3 startPosition = new Vector3(0, 10, 20);
-        // <<
-
         //TODO < 문명진 > - destructPosition Value를 Dinosaur의 끝 부분으로 변경해야함. - 2024.11.07 4:10
         [SerializeField]
-        private int destructPosition = -5;
+        private int destructPosition = -10;
         // <<
 
         private void Update()

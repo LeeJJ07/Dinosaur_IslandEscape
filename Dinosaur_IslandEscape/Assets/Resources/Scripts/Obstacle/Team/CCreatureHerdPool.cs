@@ -10,7 +10,6 @@ namespace MyeongJin
     {
         public int maxPoolSize = 10;
         public int stackDefaultCapacity = 10;
-        static int distance = 0;
 
         private string smallPteranodonName = "Prefabs/Obstacle/Team/Pteranodon";      // 프리팹이 존재하는 폴더 위치
         private GameObject smallPteranodon;
@@ -83,21 +82,15 @@ namespace MyeongJin
         {
             Destroy(obstacle.gameObject);
         }
-        public void SpawnPteranodon()
+        public void SpawnPteranodon(int lineNum)
         {
-            // TODO < 문명진 > - 프테라노돈 생성. - 2024.11.09 17:10
-
-            int playerCount = 2;
             int space = 10;
 
-            for (int i = 0; i < playerCount; ++i)
-            {
-                var obstacle = Pool.Get();
+            var obstacle = Pool.Get();
 
-                obstacle.transform.position = new Vector3(i * space, 0, distance);
-            }
+            // TODO < 문명진 > - 생성 위치를 미션 지점으로 지정해줘야 함.. - 2024.11.11 14:20
 
-            distance += 10;
+            obstacle.transform.position = new Vector3(lineNum * space, 0, 20);
         }
     }
 }

@@ -10,7 +10,6 @@ namespace MyeongJin
 	{
 		public int maxPoolSize = 10;
 		public int stackDefaultCapacity = 10;
-        static int distance = 0;
 
         private string logName = "Prefabs/Obstacle/Personal/Log";		// 프리팹이 존재하는 폴더 위치
 		private string rockName = "Prefabs/Obstacle/Personal/Rock";
@@ -101,21 +100,13 @@ namespace MyeongJin
 		{
 			Destroy(obstacle.gameObject);
 		}
-		public void SpawnObstacle()
+		public void SpawnObstacle(int lineNum, int zPosition)
 		{
-			// TODO < 문명진 > - 1등 플레이어의 일정거리 앞에 생성하도록 position 변경해야함. - 2024.11.07 16:10
-			
-			int playerCount = 2;
 			int space = 10;
 
-			for (int i = 0; i < playerCount; ++i)
-			{
-				var obstacle = Pool.Get();
+			var obstacle = Pool.Get();
 
-				obstacle.transform.position = new Vector3(i * space, 0, distance);
-			}
-
-			distance += 10;
+			obstacle.transform.position = new Vector3(lineNum * space, 0, zPosition);
         }
     }
 }
