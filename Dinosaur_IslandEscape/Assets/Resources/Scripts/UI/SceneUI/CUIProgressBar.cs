@@ -16,7 +16,8 @@ namespace HakSeung
         private const float defaultMaxProgress = 0;
 
         public Image PrograssBarFill;
-        
+
+
         public float MaxProgress { 
             set 
             {
@@ -24,11 +25,11 @@ namespace HakSeung
                     maxProgress = value;
             } 
         }
-
-        private void Awake()
+        protected override void InitUI()
         {
             maxProgress = defaultMaxProgress;
         }
+
 
         private void FillProgressBar(float curProgress)
         {
@@ -39,5 +40,6 @@ namespace HakSeung
             else
                 PrograssBarFill.fillAmount = maxFillAmount;
         }
+
     }
 }

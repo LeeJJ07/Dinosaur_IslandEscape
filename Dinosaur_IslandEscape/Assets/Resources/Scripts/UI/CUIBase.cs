@@ -4,17 +4,36 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class CUIBase : MonoBehaviour
+namespace HakSeung
 {
-    // Start is called before the first frame update
-    void Start()
+    public abstract class CUIBase : MonoBehaviour
     {
-        
-    }
+        private void Awake()
+        {
+            InitUI();
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
+        /// <summary>
+        /// UI를 보이기 위한 활성화 메서드
+        /// </summary>
+        public virtual void Show()
+        {
+            gameObject.SetActive(true);
+        }
+
+        /// <summary>
+        /// UI를 숨기기 위한 비활성화 메서드
+        /// </summary>
+        public virtual void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+
+        /// <summary>
+        /// UI초기값 설정을 위한 메서드
+        /// </summary>
+        protected abstract void InitUI();
+
         
     }
 }

@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CUIPopup : CUIBase
+namespace HakSeung
 {
-    // Start is called before the first frame update
-    void Start()
+    public abstract class CUIPopup : CUIBase
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+      
     }
 }
