@@ -16,7 +16,7 @@ namespace JongJin
         enum EPlayer { PLAYER1, PLAYER2, PLAYER3, PLAYER4 }
 
         // TODO<이종진> - 테스트용 작성 수정필요 - 20241110
-        [SerializeField] private RubberBandController rubberBandController;
+        [SerializeField] private RunningState runningController;
 
         [SerializeField] private float speed = 1.0f;
         [SerializeField] private float jumpForce = 5.0f;
@@ -32,7 +32,7 @@ namespace JongJin
         private Rigidbody rigid;
         private Animator animator;
 
-        private void Awake() 
+        private void Awake()
         {
             rigid = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
@@ -106,10 +106,10 @@ namespace JongJin
         private void Move() 
         {
             DecreaseSpeed();
-            if (!rubberBandController.IsBeyondMaxDistance(this.transform.position))
+            if (!runningController.IsBeyondMaxDistance(this.transform.position))
                 return;
-            if (rubberBandController.IsUnderMinDistance(this.transform.position, out Vector3 curPos) 
-                && speed < rubberBandController.DinosaurSpeed) 
+            if (runningController.IsUnderMinDistance(this.transform.position, out Vector3 curPos) 
+                && speed < runningController.DinosaurSpeed) 
             {
                 this.transform.position = curPos;
                 return;

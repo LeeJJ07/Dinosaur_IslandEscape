@@ -305,37 +305,19 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 769880174}
-  - component: {fileID: 769880173}
+  - component: {fileID: 769880180}
+  - component: {fileID: 769880179}
+  - component: {fileID: 769880178}
+  - component: {fileID: 769880177}
+  - component: {fileID: 769880176}
+  - component: {fileID: 769880175}
   m_Layer: 0
-  m_Name: Band
+  m_Name: GameSceneController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &769880173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 769880172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48d6230b6c4c8884385c3d6cce5d6315, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  players:
-  - {fileID: 1578827220}
-  - {fileID: 1761438626}
-  dinosaur: {fileID: 106847611}
-  totalRunningDistance: 500
-  minDistance: 12
-  maxDistance: 20
-  tailMissionStartRate: 15
-  firstMissionRate: 35
-  secondMissionRate: 55
-  thirdMissionRate: 80
 --- !u!4 &769880174
 Transform:
   m_ObjectHideFlags: 0
@@ -351,6 +333,94 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &769880175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769880172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a3599db015287947be88ec47e852a83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &769880176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769880172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98f6a00b7d5d66346984587541aa7e8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &769880177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769880172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c76e490371ccabe488e1dbee6a965096, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &769880178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769880172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a0aa5ff5685d344bd5e0624c0e989f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &769880179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769880172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89d6fd534bbabed45972a1920c1bd889, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  players:
+  - {fileID: 1578827220}
+  - {fileID: 1761438626}
+  dinosaur: {fileID: 106847611}
+  totalRunningDistance: 100
+  minDistance: 12
+  maxDistance: 20
+  tailMissionStartRate: 15
+  firstMissionRate: 35
+  secondMissionRate: 55
+  thirdMissionRate: 80
+--- !u!114 &769880180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769880172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ae90731b52e84f42a9f13f727d3dcb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runningState: {fileID: 0}
+  tailMissionState: {fileID: 0}
+  firstMissionState: {fileID: 0}
+  secondMissionState: {fileID: 0}
+  thirdMissionState: {fileID: 0}
 --- !u!1 &1064507912
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,7 +732,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7d9d530a6fe76647906e6f405d17f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rubberBandController: {fileID: 769880173}
+  runningController: {fileID: 769880179}
   speed: 1
   jumpForce: 5
   increaseSpeed: 0.1
@@ -865,7 +935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7d9d530a6fe76647906e6f405d17f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rubberBandController: {fileID: 769880173}
+  runningController: {fileID: 769880179}
   speed: 1
   jumpForce: 5
   increaseSpeed: 0.1
