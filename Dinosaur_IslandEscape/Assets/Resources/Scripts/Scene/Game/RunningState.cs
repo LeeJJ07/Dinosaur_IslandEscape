@@ -35,7 +35,9 @@ namespace JongJin
 		private float firstRankerDistance = 0.0f;
 		private float lastRankerDistance = 0.0f;
 
-		public float ProgressRate { get { return firstRankerDistance / totalRunningDistance * 100.0f; } }
+        public float FirstRankerDistance { get { return firstRankerDistance; } }
+
+        public float ProgressRate { get { return firstRankerDistance / totalRunningDistance * 100.0f; } }
 
 		public float DinosaurSpeed { get { return dinosaurSpeed; } }
 		private float dinosaurSpeed = 2.0f;
