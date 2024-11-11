@@ -86,13 +86,20 @@ namespace MyeongJin
 			{
 				if (CanSpawnObstacle(creatureHerdGenerateChance[i]))
 				{
-					creatureHerdPool.SpawnPteranodon(i);
+					if (!IsSpawnHerd(i))
+						break;
+
 					ResetChance(creatureHerdGenerateChance, i);
 				}
 				else
 					ChanceUp(creatureHerdGenerateChance, i);
 			}
 		}
+		private bool IsSpawnHerd(int i)
+		{
+			return creatureHerdPool.SpawnPteranodon(i);
+
+        }
 		private bool IsSpawnSection()
 		{
 			return !Convert.ToBoolean((FirstPlayerPosition % 10));
