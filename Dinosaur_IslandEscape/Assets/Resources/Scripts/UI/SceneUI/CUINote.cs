@@ -28,6 +28,8 @@ namespace HakSeung
         private const float hitCheckRingScale = 2f;
 
         public GameObject[] noteObjects = new GameObject[(int)NoteImageObject.END];
+        public Vector3 PlayerPos{ get; set; } = Vector3.zero;
+
 
         protected override void InitUI()
         {
