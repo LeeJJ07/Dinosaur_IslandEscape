@@ -1394,7 +1394,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.946, z: 3.001}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1572,15 +1572,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 420554, guid: caeffe6dee1013c4fa90d49ba86e861d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 420554, guid: caeffe6dee1013c4fa90d49ba86e861d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 420554, guid: caeffe6dee1013c4fa90d49ba86e861d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 420554, guid: caeffe6dee1013c4fa90d49ba86e861d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1629,7 +1629,7 @@ PrefabInstance:
     - target: {fileID: 11193250, guid: caeffe6dee1013c4fa90d49ba86e861d, type: 3}
       propertyPath: m_Animation
       value: 
-      objectReference: {fileID: 7400050, guid: 1268bcc8bd9797a418e12c6a88283254, type: 3}
+      objectReference: {fileID: 7400040, guid: 1268bcc8bd9797a418e12c6a88283254, type: 3}
     - target: {fileID: 11193250, guid: caeffe6dee1013c4fa90d49ba86e861d, type: 3}
       propertyPath: m_CullingType
       value: 1
