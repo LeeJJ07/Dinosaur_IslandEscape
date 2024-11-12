@@ -49,13 +49,13 @@ namespace MyeongJin
 		{
 			yield return new WaitForSeconds(timeToCheckPosition);
 
-			StateCheck();
+			//StateCheck();
 
-			if (IsStateChanged())
-			{
-				ReturnToPool();
-                yield return null;
-            }
+			//if (IsStateChanged())
+			//{
+			//	ReturnToPool();
+   //             yield return null;
+   //         }
 
 			destructPosition = dinasaur.GetComponent<Transform>().position.z;
 
