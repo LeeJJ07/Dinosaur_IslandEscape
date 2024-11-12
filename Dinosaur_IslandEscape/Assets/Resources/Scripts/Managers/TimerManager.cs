@@ -11,7 +11,8 @@ namespace MyeongJin
         public TextMeshProUGUI text;
 
         private static TimerManager sInstance;
-        private GameObject gameSceneController;
+        private GameObject gameSceneControllerObject;
+        private GameSceneController gameSceneController;
         EGameState curState;
         private float[] Timer;
 
@@ -39,7 +40,8 @@ namespace MyeongJin
         }
         private void Start()
         {
-            gameSceneController = GameObject.Find("GameSceneController");
+            gameSceneControllerObject = GameObject.Find("GameSceneController");
+            gameSceneController = gameSceneControllerObject.GetComponent<GameSceneController>();
 
             Timer = new float[5];
             for (int i = 0; i < 5; i++)
@@ -60,7 +62,7 @@ namespace MyeongJin
                 case EGameState.FIRSTMISSION:
                     DecreaseTime(EGameState.FIRSTMISSION);
                     break;
-                case EGameState.SECONDMISSION:
+               case EGameState.SECONDMISSION:
                     DecreaseTime(EGameState.SECONDMISSION);
                     break;
                 case EGameState.THIRDMISSION:
@@ -71,7 +73,8 @@ namespace MyeongJin
         }
         private void UpdateCurState()
         {
-            EGameState gameState = gameSceneController.GetComponent<GameSceneController>().CurState;
+            EGameState gameState = gameSceneController.CurState;
+
             if(gameState != curState && gameState != EGameState.RUNNING)
             {
                 InitTimer(gameState);
@@ -85,14 +88,15 @@ namespace MyeongJin
                 case EGameState.TAILMISSION:
                     Timer[(int)gameState] = 10.0f;
                     break;
+                    // TODO <문명진> - 나중에 미션에 해당 시간을 넘겨서 종료조건 만들어야 함.
                 case EGameState.FIRSTMISSION:
-                    Timer[(int)gameState] = 20.0f;
+                    Timer[(int)gameState] = 30.0f;
                     break;
                 case EGameState.SECONDMISSION:
-                    Timer[(int)gameState] = 20.0f;
+                    Timer[(int)gameState] = 30.0f;
                     break;
                 case EGameState.THIRDMISSION:
-                    Timer[(int)gameState] = 20.0f;
+                    Timer[(int)gameState] = 30.0f;
                     break;
             }
         }
