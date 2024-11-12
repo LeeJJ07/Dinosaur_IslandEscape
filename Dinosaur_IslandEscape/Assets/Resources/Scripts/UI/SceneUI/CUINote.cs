@@ -11,7 +11,7 @@ namespace HakSeung
 {
     public class CUINote : CUIScene
     {
-        private enum NoteImageObject
+        private enum ENoteImageObject
         {
             HITCHECKRING,
             SUCCESS,
@@ -22,13 +22,14 @@ namespace HakSeung
 
         [SerializeField] private bool isHit;
         [SerializeField] private float curTime;
-        [SerializeField] private float noteSuccessTime = 3f;
-        [SerializeField]private const float hitCheckRingScale = 5f;
-        [SerializeField]private const float distanceToPlayerPostion = 1f;
+        [SerializeField] private const float noteHitCheckTime = 3f;
+        [SerializeField] private const float noteHitResultTime = 2f;
+        [SerializeField] private const float hitCheckRingScale = 5f;
+        [SerializeField] private const float distanceToPlayerPostion = 1f;
 
         private const float noteFailTime = 0f;
 
-        public GameObject[] noteObjects = new GameObject[(int)NoteImageObject.END];
+        public GameObject[] noteObjects = new GameObject[(int)ENoteImageObject.END];
         
         //테스트 용이니까 플레이어 넣어야됨
         public GameObject TestPlayer;
@@ -47,13 +48,13 @@ namespace HakSeung
         private void OnEnable()
         {
             isHit = false;
-            curTime = noteSuccessTime;
+            curTime = noteHitCheckTime;
 
-            noteObjects[(int)NoteImageObject.HITCHECKRING].SetActive(true);
-            noteObjects[(int)NoteImageObject.SUCCESS].SetActive(false);
-            noteObjects[(int)NoteImageObject.FAIL].SetActive(false);
+            noteObjects[(int)ENoteImageObject.HITCHECKRING].SetActive(true);
+            noteObjects[(int)ENoteImageObject.SUCCESS].SetActive(false);
+            noteObjects[(int)ENoteImageObject.FAIL].SetActive(false);
 
-            noteObjects[(int)NoteImageObject.HITCHECKRING].transform.localScale *= hitCheckRingScale;
+            noteObjects[(int)ENoteImageObject.HITCHECKRING].transform.localScale *= hitCheckRingScale;
 
             StartCoroutine(IECheckNoteHitInSuccessTime());
         }
@@ -61,7 +62,7 @@ namespace HakSeung
         private void OnDisable()
         {
             curTime = noteFailTime;
-            noteObjects[(int)NoteImageObject.HITCHECKRING].transform.localScale = Vector3.one;
+            noteObjects[(int)ENoteImageObject.HITCHECKRING].transform.localScale = Vector3.one;
         }
 
         /// <summary>
@@ -77,25 +78,32 @@ namespace HakSeung
             while (curTime > noteFailTime && !isHit)
             {
                 curTime -= Time.deltaTime;
-                noteObjects[(int)NoteImageObject.HITCHECKRING].transform.localScale =
-                    Vector3.Lerp(noteObjects[(int)NoteImageObject.HITCHECKRING].transform.localScale, Vector3.one, Time.deltaTime);
+                noteObjects[(int)ENoteImageObject.HITCHECKRING].transform.localScale =
+                    Vector3.Lerp(noteObjects[(int)ENoteImageObject.HITCHECKRING].transform.localScale, Vector3.one, Time.deltaTime);
 
-                //플레이어 위치 추적하는 코드 필요 
                 if (TestPlayer != null) 
                     SyncUIWithPlayerPosition(TestPlayer.transform.position);
-
 
                 yield return null;
             }
 
             if (isHit)
-                noteObjects[(int)NoteImageObject.SUCCESS].SetActive(true);
+                noteObjects[(int)ENoteImageObject.SUCCESS].SetActive(true);
             else
-                noteObjects[(int)NoteImageObject.FAIL].SetActive(true);
+                noteObjects[(int)ENoteImageObject.FAIL].SetActive(true);
 
-            noteObjects[(int)NoteImageObject.HITCHECKRING].SetActive(false);
+            noteObjects[(int)ENoteImageObject.HITCHECKRING].SetActive(false);
 
-            yield return new WaitForSeconds(2f);
+            while (curTime <= noteHitResultTime)
+            {
+                curTime += Time.deltaTime;
+
+                if (TestPlayer != null)
+                    SyncUIWithPlayerPosition(TestPlayer.transform.position);
+
+                yield return null;
+            }
+
 
             Hide();
         }

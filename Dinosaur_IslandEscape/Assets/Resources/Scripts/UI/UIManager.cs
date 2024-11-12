@@ -6,30 +6,33 @@ using static UnityEditor.Rendering.InspectorCurveEditor;
 
 namespace HakSeung
 {
-  /*  enum SceneType
-    {
-        START,
-        RUNNING,
-        ENDING,
-        
-        END
-    }*/
+    
+
+
     public class UIManager : MonoBehaviour
     {
-        //TODO<학승> SceneType에 따라서 캔버스 변경시키는 코드가 필요함 24/11/11
-        //TODO<학승> EGameState에 End 추가 요청 해야됨 24/11/12
-        [SerializeField] private Canvas[] sceneCanvas = new Canvas[(int)JongJin.EGameState.THIRDMISSION + 1]; 
+        enum ECanvasType
+        {
+            START,
+            RUNNING,
+            EVENT,
+            ENDING,
+
+            END
+        }
+
+        //TODO<학승> sceneCanvas에 할당될 캔버스들의 값을 start game event end 총 네개로 구성해서 그 state를 받아와야됨
+        [SerializeField] private GameObject[] sceneCanvas = new GameObject[(int)ECanvasType.END]; 
+        [SerializeField] private int curCanvasTypeIndex = (int)ECanvasType.END;
+        
         private const string uiManagerObjectName = "_UIManager";
         private static UIManager s_Instance;
 
         private GameSceneController gameSceneController;
-        private Canvas curCanvas;
 
         //현재 씬에 맞는 팝업들을 받아와야됨
         private Stack<CUIPopup> popupStack = new Stack<CUIPopup>();
 
-
-        //Canvas[] canvas = new Canvas[];
         public static UIManager Instance
         {
             get
@@ -46,8 +49,6 @@ namespace HakSeung
 
         private void Awake()
         {
-            gameSceneController = GetComponent<GameSceneController>();
-
             if (s_Instance != null && s_Instance != this)
             {
                 Destroy(this.gameObject);
@@ -57,27 +58,62 @@ namespace HakSeung
             s_Instance = this;
 
             DontDestroyOnLoad(this.gameObject);
+
+            Initialize();
         }
 
         private void Update()
         {
+            //TODO<학승> 
+            //1. 씬에대한 정보확인
+            //2. 현재 씬이 게임씬이면 러닝인지 이벤트 state인지 확인
+            // 24/11/12
+            int nextCanvasIndex = (int)ECanvasType.END;
+
+            //현재 씬이 게임 씬이면 작동될 코드
             switch (gameSceneController.CurState)
             {
                 case JongJin.EGameState.RUNNING:
-                    //TODO<학승> State변화 시 다른 Canvas 비활성화 하고 현재 캔버스만 작동시켜야됨 24/11/12
-                    //sceneCanvas[(int)EGameState.RUNNING];
+                    nextCanvasIndex = (int)ECanvasType.RUNNING;
                     break;
                 case JongJin.EGameState.FIRSTMISSION:
-                    break;
                 case JongJin.EGameState.SECONDMISSION:
-                    break;
                 case JongJin.EGameState.THIRDMISSION:
-                    break;
                 case JongJin.EGameState.TAILMISSION:
+                    nextCanvasIndex = (int)ECanvasType.EVENT;
                     break;
             }
 
+            if(curCanvasTypeIndex != nextCanvasIndex)
+                CanvasChange(nextCanvasIndex);
+
         }
+
+        private void Initialize()
+        {
+            if (curCanvasTypeIndex != (int)ECanvasType.END)
+            {
+                gameSceneController = GetComponent<GameSceneController>();
+
+                for (int i = (int)ECanvasType.START; i < sceneCanvas.Length; i++)
+                {
+
+                }
+
+                sceneCanvas[(int)ECanvasType.START].SetActive(true);
+
+                for (int i = (int)ECanvasType.START + 1; i < sceneCanvas.Length; i++)
+                    sceneCanvas[i].SetActive(false);
+            }
+        }
+
+        private void CanvasChange(int nextCanvasIndex)
+        {
+            sceneCanvas[curCanvasTypeIndex].SetActive(false);
+            curCanvasTypeIndex = nextCanvasIndex;
+            sceneCanvas[curCanvasTypeIndex].SetActive(true);
+        }
+
 
         public void ClosePopupUI()
         {
