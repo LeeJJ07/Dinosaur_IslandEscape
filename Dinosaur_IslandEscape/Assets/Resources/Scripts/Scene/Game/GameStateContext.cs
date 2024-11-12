@@ -8,7 +8,9 @@ namespace JongJin
         TAILMISSION,
         FIRSTMISSION,
         SECONDMISSION,
-        THIRDMISSION
+        THIRDMISSION,
+
+        END
     }
 
     public class GameStateContext

@@ -251,12 +251,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameSceneController: {fileID: 2047471993}
-  speed: 1
+  speed: 3
   jumpForce: 5
-  increaseSpeed: 0.1
-  decreaseSpeed: 0.2
-  minSpeed: 0.5
-  maxSpeed: 5
+  increaseSpeed: 0.3
+  decreaseSpeed: 0.3
+  minSpeed: 2
+  maxSpeed: 10
 --- !u!54 &232763362
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -540,12 +540,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameSceneController: {fileID: 2047471993}
-  speed: 1
+  speed: 3
   jumpForce: 5
-  increaseSpeed: 0.1
-  decreaseSpeed: 0.2
-  minSpeed: 0.5
-  maxSpeed: 5
+  increaseSpeed: 0.3
+  decreaseSpeed: 0.3
+  minSpeed: 2
+  maxSpeed: 8
 --- !u!54 &309800276
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1037,7 +1037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e94bf77413583a7449bab2f281b650a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 6
 --- !u!1 &2047471992
 GameObject:
   m_ObjectHideFlags: 0
@@ -1142,9 +1142,9 @@ MonoBehaviour:
   - {fileID: 309800274}
   - {fileID: 232763360}
   dinosaur: {fileID: 2127258040}
-  totalRunningDistance: 100
-  minDistance: 12
-  maxDistance: 20
+  totalRunningDistance: 500
+  minDistance: 13
+  maxDistance: 25
   tailMissionStartRate: 15
   firstMissionRate: 35
   secondMissionRate: 55
@@ -1268,7 +1268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameSceneController: {fileID: 2047471993}
-  speed: 2
+  speed: 4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

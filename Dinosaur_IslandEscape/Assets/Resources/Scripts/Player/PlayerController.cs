@@ -13,6 +13,7 @@ namespace JongJin
         private readonly string paramSpeed = "speed";
         private readonly string paramJump = "isJump";
         private readonly string jumpAniName = "Jump";
+        private readonly string paramCrouch = "isCrouch";
 
         enum EPlayer { PLAYER1, PLAYER2, PLAYER3, PLAYER4 }
         enum EPlayerState { RUNNING, MISSION }
@@ -102,7 +103,7 @@ namespace JongJin
             if ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.LeftControl))
                 || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.RightControl)))
             {
-
+                Crouch();
             }
             if ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.LeftShift))
                 || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.RightShift)))
@@ -168,19 +169,22 @@ namespace JongJin
             animator.SetBool(paramJump, true);
             rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
-
-        private void DecreaseSpeed()
+        private void Crouch()
         {
-            if (speed < minSpeed)
-                return;
-            speed -= Time.deltaTime * decreaseSpeed;
-            animator.SetFloat(paramSpeed, speed);
+            animator.SetTrigger(paramCrouch);
         }
         private void IncreaseSpeed()
         {
             if (speed > maxSpeed)
                 return;
             speed += increaseSpeed;
+            animator.SetFloat(paramSpeed, speed);
+        }
+        private void DecreaseSpeed()
+        {
+            if (speed < minSpeed)
+                return;
+            speed -= Time.deltaTime * decreaseSpeed;
             animator.SetFloat(paramSpeed, speed);
         }
     }
