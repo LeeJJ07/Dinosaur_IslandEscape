@@ -45,7 +45,8 @@ namespace MyeongJin
 
             Timer = new float[5];
             for (int i = 0; i < 5; i++)
-                Timer[i] = 0.0f;
+                Timer[i] = 20.0f;
+                Timer[0] = 300.0f;
         }
         private void Update()
         {
@@ -54,7 +55,7 @@ namespace MyeongJin
             switch (curState)
             {
                 case EGameState.RUNNING:
-                    IncreaseTime(EGameState.RUNNING);
+                    DecreaseTime(EGameState.RUNNING);
                     break;
                 case EGameState.TAILMISSION:
                     DecreaseTime(EGameState.TAILMISSION);
@@ -69,7 +70,7 @@ namespace MyeongJin
                     DecreaseTime(EGameState.THIRDMISSION);
                     break;
             }
-            text.text = Timer[(int)curState].ToString();
+            text.text = Timer[(int)curState].ToString("0.00");
         }
         private void UpdateCurState()
         {

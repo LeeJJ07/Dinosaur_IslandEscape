@@ -12,11 +12,14 @@ namespace MyeongJin
 	{
 		[SerializeField] GameObject player1Node;
 		[SerializeField] GameObject player2Node;
+		[SerializeField] GameObject missionGround;
 
 		private CObstacleObjectPool obstaclePool;
 		private CCreatureHerdPool creatureHerdPool;
 		private GameObject gameSceneController;
 		private GameObject[] playerNode;
+
+		private Vector3 missionGroundPos;
 
         private int playerCount = 2;
 		private float[] obstacleGenerateChance;
@@ -53,6 +56,7 @@ namespace MyeongJin
 			playerNode[0] = player1Node;
 			playerNode[1] = player2Node;
 
+            missionGroundPos = missionGround.GetComponent<Transform>().position;
 
             obstaclePool = gameObject.AddComponent<CObstacleObjectPool>();
 			creatureHerdPool = gameObject.AddComponent<CCreatureHerdPool>();
@@ -138,7 +142,7 @@ namespace MyeongJin
 		/// </summary>
 		private bool IsSpawnHerd(int i)
 		{
-			return creatureHerdPool.SpawnPteranodon(i);
+			return creatureHerdPool.SpawnPteranodon(i, missionGroundPos);
 
         }
 		private bool IsSpawnSection(out int curGeneratePosition)
@@ -149,7 +153,7 @@ namespace MyeongJin
 		}
 		private bool IsSpawnTime()
 		{
-			return !Convert.ToBoolean((Timer % 250));
+			return !Convert.ToBoolean((Timer % 300));
 		}
 		private void TimerRunning()
 		{

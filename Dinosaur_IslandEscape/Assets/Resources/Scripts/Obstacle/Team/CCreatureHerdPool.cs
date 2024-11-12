@@ -100,10 +100,11 @@ namespace MyeongJin
         {
             Destroy(obstacle.gameObject);
         }
-        public bool SpawnPteranodon(int lineNum)
+        public bool SpawnPteranodon(int lineNum, Vector3 position)
         {
             // TODO < 문명진 > - space를 Line의 x값을 받아서 사용해야 함. - 2024.11.11 17:30
-            float space = -1.745f;
+            float space = 4f;
+            float yPosition = 2f;
 
             var obstacle = Pool.Get();
 
@@ -111,12 +112,12 @@ namespace MyeongJin
             // "30"과 "20"을 Line에 맞춰서 생성해야 함.
             if (obstacle.name == "SmallPteranodon")
             {
-                obstacle.transform.position = new Vector3(lineNum * space + 30, 0, 20);
+                obstacle.transform.position = new Vector3(lineNum * space + position.x - 2, yPosition, 20);
                 return true;
             }
             else if (obstacle.name == "BigPteranodon")
             {
-                obstacle.transform.position = new Vector3(space / 2 + 30, 0, 20);
+                obstacle.transform.position = new Vector3(space / 2 + position.x - 2, yPosition, 20);
             }
             return false;
         }

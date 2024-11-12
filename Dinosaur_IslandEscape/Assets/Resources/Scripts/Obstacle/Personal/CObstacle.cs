@@ -13,7 +13,7 @@ namespace MyeongJin
 
         private float timeToCheckPosition = 0.1f;
 		private int maxRotateValue = 1;
-		private int minRotateSpeed = 2;
+		private int minRotateSpeed = 1;
 		private int curRotateSpeed;
 
         //TODO < 문명진 > - destructPosition Value를 Dinosaur의 끝 부분으로 변경해야함. - 2024.11.07 4:10
