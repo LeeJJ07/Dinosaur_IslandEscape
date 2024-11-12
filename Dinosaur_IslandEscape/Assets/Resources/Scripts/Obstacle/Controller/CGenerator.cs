@@ -27,13 +27,14 @@ namespace MyeongJin
 		private System.Random random = new System.Random();
 
 		private bool isPlayerRunning = false;
-		private bool isSpawnSection = false;
+		private bool isChangedState = false;
 
 		private int curGeneratePosition;
 		private int oldGeneratePosition;
 
-		RunningState runningState;
-		EGameState curState;
+        private RunningState runningState;
+        private EGameState curState;
+		private GameSceneController gamecSceneController;
 
         // TODO < 문명진 > - 실제 플레이어의 위치를 받아야 함. - 2024.11.07 16:10
         public int FirstPlayerPosition { get; private set; }
@@ -62,12 +63,14 @@ namespace MyeongJin
 			creatureHerdPool = gameObject.AddComponent<CCreatureHerdPool>();
 
 			gameSceneController = GameObject.Find("GameSceneController");
+			gamecSceneController = gameSceneController.GetComponent<GameSceneController>();
             runningState = gameSceneController.GetComponent<RunningState>();
-            curState = gameSceneController.GetComponent<GameSceneController>().CurState;
+            curState = gamecSceneController.CurState;
         }
 		private void Update()
 		{
 			UpdateCurState();
+
 			switch(curState)
 			{
 				case EGameState.RUNNING:
@@ -94,7 +97,7 @@ namespace MyeongJin
 		}
 		private void UpdateCurState()
 		{
-            curState = gameSceneController.GetComponent<GameSceneController>().CurState;
+            curState = gamecSceneController.CurState;
         }
         // TODO < 문명진 > - OnGUI 메소드 내용을 다른 호출 메소드(Update or Observer)로 변경해야함. - 2024.11.09 17:05
         private void OnGUI()

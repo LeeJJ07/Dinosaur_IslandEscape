@@ -24,7 +24,7 @@ namespace HakSeung
         [SerializeField] private float curTime;
         [SerializeField] private const float noteHitCheckTime = 3f;
         [SerializeField] private const float noteHitResultTime = 2f;
-        [SerializeField] private const float hitCheckRingScale = 5f;
+        [SerializeField] private const float hitCheckRingScale = 3f;
         [SerializeField] private const float distanceToPlayerPostion = 1f;
 
         private const float noteFailTime = 0f;
