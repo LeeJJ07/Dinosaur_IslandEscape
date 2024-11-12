@@ -133,6 +133,9 @@ namespace MyeongJin
 					ChanceUp(creatureHerdGenerateChance, i);
 			}
 		}
+		/// <summary>
+		/// 큰 익룡/악어를 생성 시 true를 반환하여 해당 Line에는 더 이상 소환되지 않음. 즉, 라인 수 상관없이 한마리만 생성
+		/// </summary>
 		private bool IsSpawnHerd(int i)
 		{
 			return creatureHerdPool.SpawnPteranodon(i);

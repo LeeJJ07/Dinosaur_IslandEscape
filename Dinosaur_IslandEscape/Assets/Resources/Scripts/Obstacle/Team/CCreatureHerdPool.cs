@@ -108,6 +108,7 @@ namespace MyeongJin
             var obstacle = Pool.Get();
 
             // TODO < 문명진 > - 생성 위치를 미션 지점으로 지정해줘야 함. - 2024.11.11 14:20
+            // "30"과 "20"을 Line에 맞춰서 생성해야 함.
             if (obstacle.name == "SmallPteranodon")
             {
                 obstacle.transform.position = new Vector3(lineNum * space + 30, 0, 20);
