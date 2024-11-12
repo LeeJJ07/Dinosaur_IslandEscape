@@ -20,15 +20,17 @@ namespace HakSeung
             END
         }
 
+        [SerializeField] private bool isHit;
         [SerializeField] private float curTime;
         [SerializeField] private float noteSuccessTime = 3f;
-        [SerializeField] private bool isHit;
+        [SerializeField]private const float hitCheckRingScale = 5f;
+        [SerializeField]private const float distanceToPlayerPostion = 1f;
 
         private const float noteFailTime = 0f;
-        [SerializeField]private const float hitCheckRingScale = 5f;
-        private const float distanceToPlayerPostion = 1f;
 
         public GameObject[] noteObjects = new GameObject[(int)NoteImageObject.END];
+        
+        //테스트 용이니까 플레이어 넣어야됨
         public GameObject TestPlayer;
 
         protected override void InitUI()
