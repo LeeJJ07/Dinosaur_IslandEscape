@@ -20,6 +20,7 @@ namespace HakSeung
             END
         }
 
+        //TODO<학승> const 대문자 변환해야됨 11/13
         [SerializeField] private bool isHit;
         [SerializeField] private float curTime;
         [SerializeField] private const float noteHitCheckTime = 3f;
@@ -30,7 +31,9 @@ namespace HakSeung
         private const float noteFailTime = 0f;
 
         public GameObject[] noteObjects = new GameObject[(int)ENoteImageObject.END];
-        
+
+        Coroutine coCheckNoteHit; // 코루틴 명명법 모르겠어서 임시
+
         //테스트 용이니까 플레이어 넣어야됨
         public GameObject TestPlayer;
 
@@ -56,11 +59,14 @@ namespace HakSeung
 
             noteObjects[(int)ENoteImageObject.HITCHECKRING].transform.localScale *= hitCheckRingScale;
 
-            StartCoroutine(IECheckNoteHitInSuccessTime());
+            coCheckNoteHit = StartCoroutine(IECheckNoteHitInSuccessTime());
         }
 
         private void OnDisable()
         {
+            if (coCheckNoteHit != null)
+                StopCoroutine(coCheckNoteHit);
+
             curTime = noteFailTime;
             noteObjects[(int)ENoteImageObject.HITCHECKRING].transform.localScale = Vector3.one;
         }
@@ -106,6 +112,7 @@ namespace HakSeung
 
 
             Hide();
+            
         }
 
         private void SyncUIWithPlayerPosition(Vector3 playerPosition)
