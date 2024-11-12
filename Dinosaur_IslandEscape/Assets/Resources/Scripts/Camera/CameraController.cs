@@ -32,7 +32,7 @@ namespace JongJin
         private void OnDisable()
         {
             // TODO<이종진> - 카메라 위치와 회전값 수정 필요 - 20241112
-            transform.position = new Vector3(30.0f, 3.0f, -10.0f);
+            transform.position = new Vector3(150.0f, 3.0f, -10.0f);
             transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
         }
     }

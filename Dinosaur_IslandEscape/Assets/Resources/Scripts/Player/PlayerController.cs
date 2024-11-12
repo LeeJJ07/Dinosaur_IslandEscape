@@ -144,7 +144,7 @@ namespace JongJin
             curState = EPlayerState.MISSION;
             animator.SetBool(paramMission, true);
             // TODO<이종진> - 상태 전환시 임시 플레이어 위치 수정 필요 - 20241112
-            transform.position = new Vector3(27.5f + (int)playerId * 5f, 2.0f, 0.0f);
+            transform.position = new Vector3(148f + (int)playerId * 4f, 2.0f, 0.0f);
         }
         
         private void Move()
