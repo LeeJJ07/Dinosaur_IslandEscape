@@ -76,7 +76,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Woman Player Animator Controller
+  m_Name: Running Player Animator Controller
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: speed
@@ -241,10 +241,10 @@ AnimatorStateMachine:
     m_Position: {x: 240, y: 280, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1930927526140729694}
-    m_Position: {x: 380, y: 170, z: 0}
+    m_Position: {x: 480, y: 170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2914739423853509882}
-    m_Position: {x: 520, y: 260, z: 0}
+    m_Position: {x: 520, y: 280, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

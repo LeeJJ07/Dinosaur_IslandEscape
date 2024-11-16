@@ -61,7 +61,8 @@ namespace JongJin
                 break;
             }
 
-            runningController = gameSceneController.GetComponent<RunningState>();
+            if (gameSceneController != null)
+                runningController = gameSceneController.GetComponent<RunningState>();
             curState = EPlayerState.RUNNING;
 
             animator.SetFloat(paramSpeed, speed);
@@ -91,7 +92,7 @@ namespace JongJin
                 Jump();
             }
 
-            if (curState == EPlayerState.RUNNING)
+            if (curState == EPlayerState.RUNNING && gameSceneController != null)
                 return;
 
             if ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.A))
@@ -130,6 +131,9 @@ namespace JongJin
         }
         private void UpdateState()
         {
+            if (gameSceneController == null)
+                return;
+
             if (curState != EPlayerState.RUNNING
                 && gameSceneController.CurState == EGameState.RUNNING)
                 SetRunningState();
@@ -153,6 +157,9 @@ namespace JongJin
         
         private void Move()
         {
+            if (gameSceneController == null)
+                return;
+
             DecreaseSpeed();
 
             if (!runningController.IsBeyondMaxDistance(this.transform.position))
@@ -181,8 +188,12 @@ namespace JongJin
         }
         private void IncreaseSpeed()
         {
+            if(gameSceneController == null) 
+                return; 
+
             if (speed > maxSpeed)
                 return;
+
             speed += increaseSpeed;
             animator.SetFloat(paramSpeed, speed);
         }
