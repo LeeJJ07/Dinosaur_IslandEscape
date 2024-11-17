@@ -73,8 +73,5 @@ namespace HakSeung
             CurrentScene.Clear();
             SceneManager.LoadScene(SceneTypeToString(type));
         }
-
-
     }
-
 }
