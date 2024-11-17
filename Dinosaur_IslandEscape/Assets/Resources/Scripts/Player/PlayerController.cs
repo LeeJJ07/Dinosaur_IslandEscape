@@ -15,6 +15,12 @@ namespace JongJin
         private readonly string jumpAniName = "Jump";
         private readonly string paramCrouch = "isCrouch";
         private readonly string crouchAniName = "Crouch";
+        private readonly string paramHeart = "isHeart";
+        private readonly string heartAniName = "Heart";
+        private readonly string paramLeftTouch = "isLeftTouch";
+        private readonly string leftTouchAniName = "Left Touch";
+        private readonly string paramRightTouch = "isRightTouch";
+        private readonly string rightTouchAniName = "Right Touch";
         private readonly string idleAniName = "Idle";
 
 
@@ -62,10 +68,11 @@ namespace JongJin
             }
 
             if (gameSceneController != null)
+            {
                 runningController = gameSceneController.GetComponent<RunningState>();
+                animator.SetFloat(paramSpeed, speed);
+            }
             curState = EPlayerState.RUNNING;
-
-            animator.SetFloat(paramSpeed, speed);
         }
 
         private void Update()
@@ -98,12 +105,12 @@ namespace JongJin
             if ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.A))
                 || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.LeftArrow)))
             {
-
+                LeftTouch();
             }
             if ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.D))
                 || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.RightArrow)))
             {
-
+                RightTouch();
             }
             if ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.LeftControl))
                 || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.RightControl)))
@@ -113,7 +120,7 @@ namespace JongJin
             if ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.LeftShift))
                 || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.RightShift)))
             {
-
+                Heart();
             }
         }
         private void OnCollisionEnter(Collision collision)
@@ -182,9 +189,19 @@ namespace JongJin
         }
         private void Crouch()
         {
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName(crouchAniName))
-                return;
             StartCoroutine(CrouchActive());
+        }
+        private void Heart()
+        {
+            StartCoroutine(HeartActive());
+        }
+        private void LeftTouch()
+        {
+            StartCoroutine(LeftTouchActive());
+        }
+        private void RightTouch()
+        {
+            StartCoroutine(RightTouchActive());
         }
         private void IncreaseSpeed()
         {
@@ -209,12 +226,54 @@ namespace JongJin
         {
             animator.SetBool(paramCrouch, true);
             isActivated = true;
-            yield return new WaitForSeconds(0.01f);
-            float curAnimationTime = animator.GetCurrentAnimatorStateInfo(0).length;
 
+            yield return new WaitForSeconds(0.3f);
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            float curAnimationTime = stateInfo.length;
             yield return new WaitForSeconds(curAnimationTime);
+
             isActivated = false;
             animator.SetBool(paramCrouch, false);
+        }
+
+        IEnumerator HeartActive()
+        {
+            animator.SetBool(paramHeart, true);
+            isActivated = true;
+
+            yield return new WaitForSeconds(0.3f);
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            float curAnimationTime = stateInfo.length;
+            yield return new WaitForSeconds(curAnimationTime);
+
+            isActivated = false;
+            animator.SetBool(paramHeart, false);
+        }
+        IEnumerator LeftTouchActive()
+        {
+            animator.SetBool(paramLeftTouch, true);
+            isActivated = true;
+
+            yield return new WaitForSeconds(0.3f);
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            float curAnimationTime = stateInfo.length;
+            yield return new WaitForSeconds(curAnimationTime);
+
+            isActivated = false;
+            animator.SetBool(paramLeftTouch, false);
+        }
+        IEnumerator RightTouchActive()
+        {
+            animator.SetBool(paramRightTouch, true);
+            isActivated = true;
+
+            yield return new WaitForSeconds(0.3f);
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            float curAnimationTime = stateInfo.length;
+            yield return new WaitForSeconds(curAnimationTime);
+
+            isActivated = false;
+            animator.SetBool(paramRightTouch, false);
         }
     }
 }
