@@ -5,62 +5,62 @@ using UnityEngine;
 
 namespace MyeongJin
 {
-	public class CSmallPteranodon : CCreatureHerd
+	public class CCrocodile : CCreatureHerd
 	{
 		private Vector3 startPosition;
-		// >>: Stoop
-		private Transform[] controlPoints;  // 제어점 (최소 4개 필요)
 
-		private float moveSpeed = 12f;       // 이동 속도
-		private float t = 0f;               // Catmull-Rom 곡선의 시간 변수
-		private int currentSegment = 0;     // 현재 이동 중인 곡선 구간
+		// >>: Stoop
+		private List<Transform[]> controlPoints = new List<Transform[]>();  // 제어점 (최소 4개 필요)
+
+		private float moveSpeed = 12f;		// 이동 속도
+		private float t = 0f;				// Catmull-Rom 곡선의 시간 변수
+		private int currentSegment = 0;		// 현재 이동 중인 곡선 구간
+		private int targetNum = 0;
 		// <<
 
 		private void Start()
 		{
-			controlPoints = GameObject.Find("SkyControlPoints").GetComponent< CSkyControlPoint>().controlPoints;
+			controlPoints.Add(GameObject.Find("GroundControlPoint1").GetComponent<CGroundControlPoint>().controlPoints);
+			controlPoints.Add(GameObject.Find("GroundControlPoint2").GetComponent<CGroundControlPoint>().controlPoints);
 		}
-        private void Update()
+		private void Update()
 		{
 			StoopAndClimb();
-        }
-        private void OnEnable()
-        {
-            this.transform.Rotate(45, 0, 0);
-        }
-        private void OnDisable()
+		}
+		private void OnEnable()
+		{
+			targetNum = UnityEngine.Random.Range(0, 2);
+			SetStartPosition();
+		}
+		private void OnDisable()
 		{
 			ResetObstacle();
 		}
 		public new void ResetObstacle()
 		{
 			SetStartPosition();
-			this.transform.rotation = Quaternion.Euler(0, 0, 0);
 		}
 		private void SetStartPosition()
 		{
-			if (controlPoints != null)
+			if (controlPoints.Count != 0)
 			{
 				startPosition = this.transform.position;
-				startPosition.y = controlPoints[0].position.y;
-				startPosition.z = controlPoints[0].position.z;
+				startPosition.y = controlPoints[targetNum][0].position.y;
+				startPosition.z = controlPoints[targetNum][0].position.z;
 				this.transform.position = startPosition;
 			}
 		}
 		private void StoopAndClimb()
 		{
-			Debug.Log("DownFall Pteranodon!");
+			if (controlPoints[targetNum].Length < 4) return;
 
-			if (controlPoints.Length < 4) return;
-
-			Transform p0 = controlPoints[currentSegment];
-			Transform p1 = controlPoints[currentSegment + 1];
-			Transform p2 = controlPoints[currentSegment + 2];
-			Transform p3 = controlPoints[currentSegment + 3];
+			Transform p0 = controlPoints[targetNum][currentSegment];
+			Transform p1 = controlPoints[targetNum][currentSegment + 1];
+			Transform p2 = controlPoints[targetNum][currentSegment + 2];
+			Transform p3 = controlPoints[targetNum][currentSegment + 3];
 
 			// Catmull-Rom 곡선 공식 사용
 			Vector3 newPosition = CatmullRom(p0.position, p1.position, p2.position, p3.position, t);
-			newPosition.x = transform.position.x;
 			transform.position = newPosition;
 
 			// 곡선의 t 값을 점진적으로 업데이트 (speed로 곡선 이동 속도 조정)
@@ -76,10 +76,9 @@ namespace MyeongJin
 				if (currentSegment == 1)
 				{
 					this.GetComponentInChildren<Animator>().SetBool("isTouch", true);
-					this.transform.Rotate(-45, 0, 0);
 				}
 
-				if (currentSegment >= controlPoints.Length - 3)
+				if (currentSegment >= controlPoints[targetNum].Length - 3)
 				{
 					currentSegment = 0;
 					Debug.Log("Catmull-Rom Spline 경로 끝까지 도착했습니다!");

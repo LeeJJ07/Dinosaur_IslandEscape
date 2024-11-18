@@ -72,10 +72,6 @@ namespace MyeongJin
 		{
 			UpdateCurState();
 
-            // >>: Test
-            curState = EGameState.FIRSTMISSION;
-            // <<
-
             switch (curState)
 			{
 				case EGameState.RUNNING:
@@ -142,7 +138,7 @@ namespace MyeongJin
 		/// </summary>
 		private bool IsSpawnHerd(int i)
 		{
-			return creatureHerdPool.SpawnPteranodon(i, missionGroundPos);
+			return creatureHerdPool.SpawnCreatureHerd(i, missionGroundPos);
         }
 		private bool IsSpawnSection(out int curGeneratePosition)
 		{

@@ -9,26 +9,31 @@ namespace MyeongJin
 {
 	public class CCreatureHerdPool : MonoBehaviour
 	{
-		public int maxPoolSize = 10;
-		public int stackDefaultCapacity = 10;
+		public int maxPoolSize = 15;
+		public int stackDefaultCapacity = 15;
 
 		private int creatureNum = 0;
 		private int bigCreatureStack = 0;
 
 		private string smallPteranodonName = "Prefabs/Obstacle/Team/SmallPteranodon";      // 프리팹이 존재하는 폴더 위치
 		private string bigPteranodonName = "Prefabs/Obstacle/Team/BigPteranodon";      // 프리팹이 존재하는 폴더 위치
+		private string crocodileName = "Prefabs/Obstacle/Team/Crocodile";      // 프리팹이 존재하는 폴더 위치
 		private GameObject smallPteranodon;
 		private GameObject bigPteranodon;
+		private GameObject crocodile;
 
 		// >>: 익룡 이동 점
-		private Transform[] controlPoints;
+		private Transform[] skycontrolPoints;
+		private Transform[] groundControlPoints;
 		// <<
 
 		private void Awake()
 		{
 			smallPteranodon = Resources.Load<GameObject>(smallPteranodonName);
 			bigPteranodon = Resources.Load<GameObject>(bigPteranodonName);
+			crocodile = Resources.Load<GameObject>(crocodileName);
 
+			#region 프리팹 예외처리
 			if (smallPteranodon != null)
 			{
 				Debug.Log($"프리팹 '{smallPteranodonName}'을(를) Load 하였습니다.");
@@ -48,37 +53,27 @@ namespace MyeongJin
 				Debug.LogError($"프리팹 '{bigPteranodonName}'을(를) 찾을 수 없습니다.");
 				// 예외처리 코드 추가
 			}
+			if (crocodile != null)
+			{
+				Debug.Log($"프리팹 '{crocodileName}'을(를) Load 하였습니다.");
+			}
+			else
+			{
+				Debug.LogError($"프리팹 '{crocodileName}'을(를) 찾을 수 없습니다.");
+				// 예외처리 코드 추가
+			}
+			#endregion
 		}
-        private void Start()
-        {
-            // TODO < 문명진 > - controlPoints를 관리해주는 클래스를 구현해서 동작할 수 있도록 수정해볼 것 - 2024.11.18 14:40
-            controlPoints = GameObject.FindGameObjectsWithTag("ControlPoint")
-                              .Select(obj => obj.transform)
-                              .ToArray();
+		private void Start()
+		{
+			skycontrolPoints = GameObject.Find("SkyControlPoints").GetComponent<CSkyControlPoint>().controlPoints;
 
-            SortWithName();
-
-			for (int i = 0; i < 10; i++)
+			for (int i = 0; i < maxPoolSize; i++)
 			{
 				CreatedPooledItem().ReturnToPool();
 			}
-        }
-        private void SortWithName()
-        {
-            for (int i = 0; i < controlPoints.Length; i++)
-            {
-                for (int j = i + 1; j < controlPoints.Length; j++)
-                {
-                    if (string.Compare(controlPoints[i].gameObject.name, controlPoints[j].gameObject.name) == 1)
-                    {
-                        Transform temp = controlPoints[i];
-                        controlPoints[i] = controlPoints[j];
-                        controlPoints[j] = temp;
-                    }
-                }
-            }
-        }
-        public IObjectPool<CCreatureHerd> Pool
+		}
+		public IObjectPool<CCreatureHerd> Pool
 		{
 			get
 			{
@@ -101,7 +96,6 @@ namespace MyeongJin
 		{
 			CCreatureHerd obstacle = null;
 
-
 			switch (creatureNum / 5)
 			{
 				case 0:
@@ -117,13 +111,15 @@ namespace MyeongJin
 					obstacle = go.AddComponent<CBigPteranodon>();
 					break;
 				case 2:
-					// TODO < 문명진 > - 악어 생성 추가. - 2024.11.11 17:15
-					obstacle = null;
+					go = Instantiate(crocodile);
+					go.name = "Crocodile";
+
+					obstacle = go.AddComponent<CCrocodile>();
 					break;
 			}
 			creatureNum++;
 
-            obstacle.Pool = Pool;
+			obstacle.Pool = Pool;
 
 			return obstacle;
 		}
@@ -139,63 +135,81 @@ namespace MyeongJin
 		{
 			Destroy(obstacle.gameObject);
 		}
-		public bool SpawnPteranodon(int lineNum, Vector3 position)
+		public bool SpawnCreatureHerd(int lineNum, Vector3 position)
 		{
 			// TODO < 문명진 > - space를 Line의 x값을 받아서 사용해야 함. - 2024.11.11 17:30
 			float space = 4f;
 
-            CCreatureHerd obstacle = null;
-            List<CCreatureHerd> temp = new List<CCreatureHerd>();
+			CCreatureHerd obstacle = null;
+			List<CCreatureHerd> temp = new List<CCreatureHerd>();
 
-            if (bigCreatureStack % 5 != 0)
+			if (bigCreatureStack % 5 != 0)
 			{
-				while(true)
-				{
-                    obstacle = Pool.Get();
-					if (obstacle is CSmallPteranodon)
+				if (UnityEngine.Random.Range(0, 2) == 0)
+					while (true)
 					{
-						foreach(CCreatureHerd i in temp)
+						obstacle = Pool.Get();
+						if (obstacle is CSmallPteranodon)
+						{
+							foreach (CCreatureHerd i in temp)
+							{
+								i.ReturnToPool();
+							}
+							break;
+						}
+						else
+						{
+							temp.Add(obstacle);
+						}
+					}
+				else
+					while (true)
+					{
+						obstacle = Pool.Get();
+						if (obstacle is CCrocodile)
+						{
+							foreach (CCreatureHerd i in temp)
+							{
+								i.ReturnToPool();
+							}
+							break;
+						}
+						else
+						{
+							temp.Add(obstacle);
+						}
+					}
+			}
+			else
+			{
+				while (true)
+				{
+					obstacle = Pool.Get();
+					if (obstacle is CBigPteranodon)
+					{
+						foreach (CCreatureHerd i in temp)
 						{
 							i.ReturnToPool();
-                        }
+						}
 						break;
 					}
 					else
 					{
-                        temp.Add(obstacle);
+						temp.Add(obstacle);
 					}
-                }
+				}
 			}
-			else
-			{
-                while (true)
-                {
-                    obstacle = Pool.Get();
-                    if (obstacle is CBigPteranodon)
-                    {
-                        foreach (CCreatureHerd i in temp)
-                        {
-                            i.ReturnToPool();
-                        }
-                        break;
-                    }
-                    else
-                    {
-                        temp.Add(obstacle);
-                    }
-                }
-            }
 			bigCreatureStack++;
 
-            // TODO < 문명진 > - 생성 위치를 미션 지점으로 지정해줘야 함. - 2024.11.11 14:20
-            // "30"과 "20"을 Line에 맞춰서 생성해야 함.
-            if (obstacle  is CSmallPteranodon)
+			// TODO < 문명진 > - 생성 위치를 미션 지점으로 지정해줘야 함. - 2024.11.11 14:20
+			// "30"과 "20"을 Line에 맞춰서 생성해야 함.
+			if (obstacle is CSmallPteranodon)
 			{
-				obstacle.transform.position = new Vector3(lineNum * space + position.x - 2, controlPoints[1].position.y, controlPoints[1].position.z);
+				obstacle.transform.position = new Vector3(lineNum * space + position.x - 2, skycontrolPoints[1].position.y, skycontrolPoints[1].position.z);
 			}
 			else if (obstacle is CBigPteranodon)
 			{
-				obstacle.transform.position = new Vector3(space / 2 + position.x - 2, controlPoints[1].position.y, controlPoints[1].position.z);
+				obstacle.transform.position = new Vector3(space / 2 + position.x - 2, skycontrolPoints[1].position.y, skycontrolPoints[1].position.z);
 			}
 			return true;
 		}
