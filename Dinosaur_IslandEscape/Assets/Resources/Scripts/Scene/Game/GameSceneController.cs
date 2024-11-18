@@ -13,10 +13,8 @@ namespace JongJin
         [SerializeField] private FirstMissionState firstMissionState;
         [SerializeField] private SecondMissionState secondMissionState;
         [SerializeField] private ThirdMissionState thirdMissionState;
- 
-        [SerializeField] private GameObject missionGround_1;
-        [SerializeField] private GameObject missionGround_2;
-        [SerializeField] private GameObject missionGround_3;
+
+        [SerializeField] private GameObject missionGround;
 
 
         private GameStateContext gameStateContext;
@@ -35,9 +33,7 @@ namespace JongJin
             gameStateContext.Transition(runningState);
             curState = EGameState.RUNNING;
 
-            missionGround_1.SetActive(false);           // missionGround_1은 초기에는 꺼둔 상태
-            missionGround_2.SetActive(false);           // missionGround_2은 초기에는 꺼둔 상태
-            missionGround_3.SetActive(false);           // missionGround_3은 초기에는 꺼둔 상태
+            missionGround.SetActive(false);           // missionGround는 초기에는 꺼둔 상태
         }
 
         private void Update()
@@ -48,17 +44,17 @@ namespace JongJin
                     if (runningState.IsFirstMissionTriggered())
                     {
                         UpdateState(EGameState.FIRSTMISSION);
-                        missionGround_1.SetActive(true);                // FirstMission에 돌입하면 missionGroun_1이 켜짐
+                        missionGround.SetActive(true);                // FirstMission에 돌입하면 missionGroun_1이 켜짐
                     }
                     else if (runningState.IsSecondMissionTriggered())
                     {
                         UpdateState(EGameState.SECONDMISSION);
-                        missionGround_1.SetActive(true);
+                        missionGround.SetActive(true);
                     }
                     else if (runningState.IsThirdMissionTriggered())
                     {
                         UpdateState(EGameState.THIRDMISSION);
-                        missionGround_1.SetActive(true);
+                        missionGround.SetActive(true);
                     }
                     //else if (runningState.IsTailMissionTriggered())
                     //{
@@ -72,12 +68,12 @@ namespace JongJin
                     if (firstMissionState.test)         // 
                     { 
                         UpdateState(EGameState.RUNNING);            // 계속 달림
-                        missionGround_1.SetActive(false);               
+                        missionGround.SetActive(false);               
                     }
                     break;
-                case EGameState.SECONDMISSION:
+                case EGameState.SECONDMISSION:          // missionGround.SetActive(false) 넣어야함
                     break;
-                case EGameState.THIRDMISSION:
+                case EGameState.THIRDMISSION:           // missionGround.SetActive(false) 넣어야함
                     break;
             }
             gameStateContext.CurrentState.UpdateState();
