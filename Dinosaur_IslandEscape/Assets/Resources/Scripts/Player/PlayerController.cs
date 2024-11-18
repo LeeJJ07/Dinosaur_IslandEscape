@@ -1,3 +1,4 @@
+using HakSeung;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -84,6 +85,13 @@ namespace JongJin
 
         private void OnKeyBoard()
         {
+            if (gameSceneController == null &&
+                ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.LeftShift))
+                || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.RightShift))))
+            {
+                Heart();
+            }
+
             if (isGrounded <= 0 || isActivated)
                 return;
 
@@ -116,11 +124,6 @@ namespace JongJin
                 || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.RightControl)))
             {
                 Crouch();
-            }
-            if ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.LeftShift))
-                || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.RightShift)))
-            {
-                Heart();
             }
         }
         private void OnCollisionEnter(Collision collision)
@@ -193,7 +196,10 @@ namespace JongJin
         }
         private void Heart()
         {
-            StartCoroutine(HeartActive());
+            if (SceneManagerExtended.Instance.GetReady((int)playerId))
+                HeartDeActive();
+            else
+                HeartActive();
         }
         private void LeftTouch()
         {
@@ -221,6 +227,21 @@ namespace JongJin
             speed -= Time.deltaTime * decreaseSpeed;
             animator.SetFloat(paramSpeed, speed);
         }
+        private void HeartActive()
+        {
+            animator.SetBool(paramHeart, true);
+            isActivated = true;
+
+            SceneManagerExtended.Instance.SetReady((int)playerId, true);
+            if (SceneManagerExtended.Instance.CheckReady())
+                StartCoroutine(SceneManagerExtended.Instance.GoToGameScene());
+        }
+        private void HeartDeActive()
+        {
+            SceneManagerExtended.Instance.SetReady((int)playerId, false);
+            isActivated = false;
+            animator.SetBool(paramHeart, false);
+        }
 
         IEnumerator CrouchActive()
         {
@@ -236,19 +257,6 @@ namespace JongJin
             animator.SetBool(paramCrouch, false);
         }
 
-        IEnumerator HeartActive()
-        {
-            animator.SetBool(paramHeart, true);
-            isActivated = true;
-
-            yield return new WaitForSeconds(0.3f);
-            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            float curAnimationTime = stateInfo.length;
-            yield return new WaitForSeconds(curAnimationTime);
-
-            isActivated = false;
-            animator.SetBool(paramHeart, false);
-        }
         IEnumerator LeftTouchActive()
         {
             animator.SetBool(paramLeftTouch, true);
