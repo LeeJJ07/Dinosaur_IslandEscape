@@ -14,6 +14,9 @@ namespace JongJin
         private readonly string paramJump = "isJump";
         private readonly string jumpAniName = "Jump";
         private readonly string paramCrouch = "isCrouch";
+        private readonly string crouchAniName = "Crouch";
+        private readonly string idleAniName = "Idle";
+
 
         enum EPlayer { PLAYER1, PLAYER2, PLAYER3, PLAYER4 }
         enum EPlayerState { RUNNING, MISSION }
@@ -35,6 +38,7 @@ namespace JongJin
         private EPlayerState curState;
 
         private int isGrounded = 0;
+        private bool isActivated = false;
 
         private Rigidbody rigid;
         private Animator animator;
@@ -72,7 +76,7 @@ namespace JongJin
 
         private void OnKeyBoard()
         {
-            if (isGrounded <= 0)
+            if (isGrounded <= 0 || isActivated)
                 return;
 
             if (curState == EPlayerState.RUNNING
@@ -171,7 +175,9 @@ namespace JongJin
         }
         private void Crouch()
         {
-            animator.SetTrigger(paramCrouch);
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName(crouchAniName))
+                return;
+            StartCoroutine(CrouchActive());
         }
         private void IncreaseSpeed()
         {
@@ -186,6 +192,18 @@ namespace JongJin
                 return;
             speed -= Time.deltaTime * decreaseSpeed;
             animator.SetFloat(paramSpeed, speed);
+        }
+
+        IEnumerator CrouchActive()
+        {
+            animator.SetBool(paramCrouch, true);
+            isActivated = true;
+            yield return new WaitForSeconds(0.01f);
+            float curAnimationTime = animator.GetCurrentAnimatorStateInfo(0).length;
+
+            yield return new WaitForSeconds(curAnimationTime);
+            isActivated = false;
+            animator.SetBool(paramCrouch, false);
         }
     }
 }
