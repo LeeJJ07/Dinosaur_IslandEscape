@@ -54,8 +54,8 @@ namespace MyeongJin
 			//if (IsStateChanged())
 			//{
 			//	ReturnToPool();
-   //             yield return null;
-   //         }
+			//	yield return null;
+			//}
 
 			destructPosition = dinasaur.GetComponent<Transform>().position.z;
 

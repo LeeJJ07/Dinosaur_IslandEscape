@@ -1516,7 +1516,7 @@ MonoBehaviour:
   minDistance: 13
   maxDistance: 25
   tailMissionStartRate: 15
-  firstMissionRate: 5
+  firstMissionRate: 35
   secondMissionRate: 55
   thirdMissionRate: 80
 --- !u!4 &2047471999

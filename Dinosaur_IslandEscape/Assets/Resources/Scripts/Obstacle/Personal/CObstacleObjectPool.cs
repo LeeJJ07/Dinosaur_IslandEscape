@@ -13,15 +13,19 @@ namespace MyeongJin
 
         private string logName = "Prefabs/Obstacle/Personal/Log";		// 프리팹이 존재하는 폴더 위치
 		private string rockName = "Prefabs/Obstacle/Personal/Rock";
+		private string rock1Name = "Prefabs/Obstacle/Personal/Rock1";
 		private GameObject log;
 		private GameObject rock;
+		private GameObject rock1;
 
 		private void Awake()
 		{
 			log = Resources.Load<GameObject>(logName);
 			rock = Resources.Load<GameObject>(rockName);
+			rock1 = Resources.Load<GameObject>(rock1Name);
 
-			if (log != null)
+            #region 프리팹 예외처리
+            if (log != null)
 			{
 				Debug.Log($"프리팹 '{logName}'을(를) Load 하였습니다.");
 			}
@@ -39,9 +43,19 @@ namespace MyeongJin
 				Debug.LogError($"프리팹 '{rockName}'을(를) 찾을 수 없습니다.");
 				// 예외처리 코드 추가
 			}
-		}
+            if (rock1 != null)
+            {
+                Debug.Log($"프리팹 '{rock1Name}'을(를) Load 하였습니다.");
+            }
+            else
+            {
+                Debug.LogError($"프리팹 '{rock1Name}'을(를) 찾을 수 없습니다.");
+                // 예외처리 코드 추가
+            }
+            #endregion
+        }
 
-		public IObjectPool<CObstacle> Pool
+        public IObjectPool<CObstacle> Pool
 		{
 			get
 			{
@@ -74,11 +88,17 @@ namespace MyeongJin
 					break;
 				case 1:
 					go = Instantiate(rock);
-					go.name = "Stone";
+					go.name = "Rock";
 
 					obstacle = go.AddComponent<CObstacle>();
 					break;
-				default:
+                case 2:
+                    go = Instantiate(rock1);
+                    go.name = "Rock1";
+
+                    obstacle = go.AddComponent<CObstacle>();
+                    break;
+                default:
 					obstacle = null;
 					break;
 			}
@@ -91,7 +111,6 @@ namespace MyeongJin
 		{
 			obstacle.gameObject.SetActive(false);
 		}
-
 		private void OnTakeFromPool(CObstacle obstacle)
 		{
 			obstacle.gameObject.SetActive(true);
