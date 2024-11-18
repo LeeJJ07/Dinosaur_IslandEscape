@@ -24,7 +24,7 @@ namespace JongJin
 		[SerializeField] private float thirdMissionRate = 80.0f;
 
 		private bool isPossibleTailMission = false;
-		private bool isFirstMissionCompleted = false;
+		public bool isFirstMissionCompleted = false;
 		private bool isSecondMissionCompleted = false;
 		private bool isThirdMissionCompleted = false;
 

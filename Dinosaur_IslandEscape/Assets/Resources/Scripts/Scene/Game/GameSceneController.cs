@@ -13,6 +13,11 @@ namespace JongJin
         [SerializeField] private FirstMissionState firstMissionState;
         [SerializeField] private SecondMissionState secondMissionState;
         [SerializeField] private ThirdMissionState thirdMissionState;
+ 
+        [SerializeField] private GameObject missionGround_1;
+        [SerializeField] private GameObject missionGround_2;
+        [SerializeField] private GameObject missionGround_3;
+
 
         private GameStateContext gameStateContext;
         private EGameState curState;
@@ -29,6 +34,10 @@ namespace JongJin
             gameStateContext = new GameStateContext(this);
             gameStateContext.Transition(runningState);
             curState = EGameState.RUNNING;
+
+            missionGround_1.SetActive(false);           // missionGround_1은 초기에는 꺼둔 상태
+            missionGround_2.SetActive(false);           // missionGround_2은 초기에는 꺼둔 상태
+            missionGround_3.SetActive(false);           // missionGround_3은 초기에는 꺼둔 상태
         }
 
         private void Update()
@@ -37,19 +46,34 @@ namespace JongJin
             {
                 case EGameState.RUNNING:
                     if (runningState.IsFirstMissionTriggered())
+                    {
                         UpdateState(EGameState.FIRSTMISSION);
-                    //else if (runningState.IsSecondMissionTriggered())
-                    //    UpdateState(EGameState.SECONDMISSION);
-                    //else if (runningState.IsThirdMissionTriggered())
-                    //    UpdateState(EGameState.THIRDMISSION);
+                        missionGround_1.SetActive(true);                // FirstMission에 돌입하면 missionGroun_1이 켜짐
+                    }
+                    else if (runningState.IsSecondMissionTriggered())
+                    {
+                        UpdateState(EGameState.SECONDMISSION);
+                        missionGround_1.SetActive(true);
+                    }
+                    else if (runningState.IsThirdMissionTriggered())
+                    {
+                        UpdateState(EGameState.THIRDMISSION);
+                        missionGround_1.SetActive(true);
+                    }
                     //else if (runningState.IsTailMissionTriggered())
+                    //{
                     //    UpdateState(EGameState.TAILMISSION);
+                    //    missionGround_1.SetActive(true);
+                    //}
                     break;
                 case EGameState.TAILMISSION:
                     break;
-                case EGameState.FIRSTMISSION:
-                    if(firstMissionState.test)
-                        UpdateState(EGameState.RUNNING);
+                case EGameState.FIRSTMISSION:           // 첫 번째 미션 상태에서
+                    if (firstMissionState.test)         // 
+                    { 
+                        UpdateState(EGameState.RUNNING);            // 계속 달림
+                        missionGround_1.SetActive(false);               
+                    }
                     break;
                 case EGameState.SECONDMISSION:
                     break;
