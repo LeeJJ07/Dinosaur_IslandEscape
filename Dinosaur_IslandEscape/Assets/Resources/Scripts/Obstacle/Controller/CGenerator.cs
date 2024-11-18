@@ -65,13 +65,18 @@ namespace MyeongJin
 			gameSceneController = GameObject.Find("GameSceneController");
 			gamecSceneController = gameSceneController.GetComponent<GameSceneController>();
             runningState = gameSceneController.GetComponent<RunningState>();
-            curState = gamecSceneController.CurState;
+
+			curState = gamecSceneController.CurState;
         }
 		private void Update()
 		{
 			UpdateCurState();
 
-			switch(curState)
+            // >>: Test
+            curState = EGameState.FIRSTMISSION;
+            // <<
+
+            switch (curState)
 			{
 				case EGameState.RUNNING:
                     if (IsSpawnSection(out curGeneratePosition))
@@ -99,15 +104,6 @@ namespace MyeongJin
 		{
             curState = gamecSceneController.CurState;
         }
-        // TODO < 문명진 > - OnGUI 메소드 내용을 다른 호출 메소드(Update or Observer)로 변경해야함. - 2024.11.09 17:05
-        private void OnGUI()
-		{
-			if (GUILayout.Button("Generate"))
-			{
-				isPlayerRunning = !isPlayerRunning;
-				Timer = 0;
-			}
-		}
 		private void CheckCanSpawnObstacle()
 		{
 			for (int i = 0; i < playerCount; i++)
@@ -131,10 +127,11 @@ namespace MyeongJin
 			{
 				if (CanSpawnObstacle(creatureHerdGenerateChance[i]))
 				{
-					if (!IsSpawnHerd(i))
-						break;
-
-					ResetChance(creatureHerdGenerateChance, i);
+					if (IsSpawnHerd(i))
+                    {
+                        ResetChance(creatureHerdGenerateChance, i);
+                        break;
+					}
 				}
 				else
 					ChanceUp(creatureHerdGenerateChance, i);
@@ -146,7 +143,6 @@ namespace MyeongJin
 		private bool IsSpawnHerd(int i)
 		{
 			return creatureHerdPool.SpawnPteranodon(i, missionGroundPos);
-
         }
 		private bool IsSpawnSection(out int curGeneratePosition)
 		{
