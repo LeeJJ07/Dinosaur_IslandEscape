@@ -6,8 +6,6 @@ using static UnityEditor.Rendering.InspectorCurveEditor;
 
 namespace HakSeung
 {
-    
-
 
     public class UIManager : MonoBehaviour
     {
@@ -22,16 +20,18 @@ namespace HakSeung
         }
 
         //TODO<학승> sceneCanvas에 할당될 캔버스들의 값을 start game event end 총 네개로 구성해서 그 state를 받아와야됨
-        [SerializeField] private GameObject[] sceneCanvas = new GameObject[(int)ECanvasType.END]; 
-        [SerializeField] private int curCanvasTypeIndex = (int)ECanvasType.END;
+        [SerializeField] private CUIScene[] sceneCanvas = new CUIScene[(int)ECanvasType.END];
         
         private const string uiManagerObjectName = "_UIManager";
         private static UIManager s_Instance;
 
         private GameSceneController gameSceneController;
+        
+        private Stack<CUIPopup> popupCanvasStack = new Stack<CUIPopup>();
 
-        //현재 씬에 맞는 팝업들을 받아와야됨
-        private Stack<CUIPopup> popupStack = new Stack<CUIPopup>();
+        private int curCanvasTypeIndex = (int)ECanvasType.END;
+        private int sortIndex;
+
 
         public static UIManager Instance
         {
@@ -95,23 +95,23 @@ namespace HakSeung
             {
                 gameSceneController = GetComponent<GameSceneController>();
 
-                for (int i = (int)ECanvasType.START; i < sceneCanvas.Length; i++)
+                /*for (int i = (int)ECanvasType.START; i < sceneCanvas.Length; i++)
                 {
+                    //캔버스들 받아오기
+                }*/
 
-                }
-
-                sceneCanvas[(int)ECanvasType.START].SetActive(true);
+                sceneCanvas[(int)ECanvasType.START].Show();
 
                 for (int i = (int)ECanvasType.START + 1; i < sceneCanvas.Length; i++)
-                    sceneCanvas[i].SetActive(false);
+                    sceneCanvas[i].Hide();
             }
         }
 
         private void CanvasChange(int nextCanvasIndex)
         {
-            sceneCanvas[curCanvasTypeIndex].SetActive(false);
+            sceneCanvas[curCanvasTypeIndex].Hide();
             curCanvasTypeIndex = nextCanvasIndex;
-            sceneCanvas[curCanvasTypeIndex].SetActive(true);
+            sceneCanvas[curCanvasTypeIndex].Show();
         }
 
 

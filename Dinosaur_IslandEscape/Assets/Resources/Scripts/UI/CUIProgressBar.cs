@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace HakSeung
 {
-    public class CUIProgressBar : CUIScene
+    public class CUIProgressBar : MonoBehaviour
     {
         [Header("Porgress Bar")]
         //[SerializeField] private float curProgress;
@@ -17,6 +17,10 @@ namespace HakSeung
 
         public Image PrograssBarFill;
 
+        private void Awake()
+        {
+            Init();
+        }
 
         public float MaxProgress { 
             set 
@@ -25,7 +29,7 @@ namespace HakSeung
                     maxProgress = value;
             } 
         }
-        protected override void InitUI()
+        private void Init()
         {
             maxProgress = defaultMaxProgress;
         }

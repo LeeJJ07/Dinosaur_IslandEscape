@@ -9,7 +9,7 @@ using static UnityEditor.Progress;
 
 namespace HakSeung
 {
-    public class CUINote : CUIScene
+    public class CUINote : MonoBehaviour
     {
         private enum ENoteImageObject
         {
@@ -37,15 +37,19 @@ namespace HakSeung
         //테스트 용이니까 플레이어 넣어야됨
         public GameObject TestPlayer;
 
-        protected override void InitUI()
+        private void Init()
         {
             curTime = noteFailTime;
         }
 
-        public override void Show()
+        public void Show()
         {
             if (curTime == noteFailTime)
-                base.Show();
+                this.gameObject.SetActive(true);
+        }
+        private void Awake()
+        {
+            Init();
         }
 
         private void OnEnable()
@@ -111,7 +115,7 @@ namespace HakSeung
             }
 
 
-            Hide();
+            this.gameObject.SetActive(false);
             
         }
 
