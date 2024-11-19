@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6749841578431293832}
   - component: {fileID: 7689843512083198069}
   m_Layer: 0
-  m_Name: FlyParticle
+  m_Name: Fly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

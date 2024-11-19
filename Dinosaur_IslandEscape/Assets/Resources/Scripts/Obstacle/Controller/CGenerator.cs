@@ -13,10 +13,11 @@ namespace MyeongJin
 		[SerializeField] GameObject player1Node;
 		[SerializeField] GameObject player2Node;
 		[SerializeField] GameObject missionGround;
-		[SerializeField] GameObject fly;
+		//[SerializeField] private GameObject fly;
 
 		private CObstacleObjectPool obstaclePool;
 		private CCreatureHerdPool creatureHerdPool;
+		private CCreatureBackgroundPool creatureBackgroundPool;
 		private CFlyPool flyPool;
 		private GameObject gameSceneController;
 		private GameObject[] playerNode;
@@ -63,6 +64,7 @@ namespace MyeongJin
 
             obstaclePool = gameObject.AddComponent<CObstacleObjectPool>();
 			creatureHerdPool = gameObject.AddComponent<CCreatureHerdPool>();
+            creatureBackgroundPool = gameObject.AddComponent<CCreatureBackgroundPool>();
             flyPool = gameObject.AddComponent<CFlyPool>();
 
 			gameSceneController = GameObject.Find("GameSceneController");
@@ -74,6 +76,8 @@ namespace MyeongJin
 		private void Update()
 		{
 			UpdateCurState();
+
+			curState = EGameState.FIRSTMISSION;
 
             switch (curState)
 			{
@@ -88,13 +92,16 @@ namespace MyeongJin
                 case EGameState.FIRSTMISSION:
                     TimerRunning();
 
-                    if (IsSpawnTime())
+                    if (IsSpawnTime(50))
+                        SpawnCreatureHerdBackground();
+
+                    if (IsSpawnTime(300))
                         CheckCanSpawnCreatureHerd();
                     break;
                 case EGameState.SECONDMISSION:
                     TimerRunning();
 
-                    if (IsSpawnTime())
+                    if (IsSpawnTime(300))
                         GenerateFly();
                     break;
                 case EGameState.THIRDMISSION:
@@ -102,7 +109,13 @@ namespace MyeongJin
                     break;
             }
 		}
-		private void UpdateCurState()
+
+        private void SpawnCreatureHerdBackground()
+        {
+            creatureBackgroundPool.SpawnCreatureHerd(missionGroundPos);
+        }
+
+        private void UpdateCurState()
 		{
             curState = gamecSceneController.CurState;
         }
@@ -156,9 +169,9 @@ namespace MyeongJin
 
 			return curGeneratePosition != oldGeneratePosition && !Convert.ToBoolean((curGeneratePosition % 16));
 		}
-		private bool IsSpawnTime()
+		private bool IsSpawnTime(int time)
 		{
-			return !Convert.ToBoolean((Timer % 300));
+			return !Convert.ToBoolean((Timer % time));
 		}
 		private void TimerRunning()
 		{

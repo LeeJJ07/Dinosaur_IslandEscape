@@ -15,9 +15,9 @@ namespace MyeongJin
 		private int creatureNum = 0;
 		private int bigCreatureStack = 0;
 
-		private string smallPteranodonName = "Prefabs/Obstacle/Team/SmallPteranodon";      // 프리팹이 존재하는 폴더 위치
-		private string bigPteranodonName = "Prefabs/Obstacle/Team/BigPteranodon";      // 프리팹이 존재하는 폴더 위치
-		private string crocodileName = "Prefabs/Obstacle/Team/Crocodile";      // 프리팹이 존재하는 폴더 위치
+		private string smallPteranodonName = "Prefabs/Obstacle/Team/FirstMission/SmallPteranodon";      // 프리팹이 존재하는 폴더 위치
+		private string bigPteranodonName = "Prefabs/Obstacle/Team/FirstMission/BigPteranodon";      // 프리팹이 존재하는 폴더 위치
+		private string crocodileName = "Prefabs/Obstacle/Team/FirstMission/Crocodile";      // 프리팹이 존재하는 폴더 위치
 		private GameObject smallPteranodon;
 		private GameObject bigPteranodon;
 		private GameObject crocodile;
