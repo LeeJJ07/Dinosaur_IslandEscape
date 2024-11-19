@@ -42,7 +42,7 @@ namespace MyeongJin
 
 			for (int i = 0; i < maxPoolSize; i++)
             {
-				flyDictionary.Add(false, basePosition + flyOffset[i]);
+				//flyDictionary.Add(false, basePosition + flyOffset[i]);
             }
 
 			for (int i = 0; i < maxPoolSize; i++)

@@ -77,8 +77,6 @@ namespace MyeongJin
 		{
 			UpdateCurState();
 
-			curState = EGameState.FIRSTMISSION;
-
             switch (curState)
 			{
 				case EGameState.RUNNING:

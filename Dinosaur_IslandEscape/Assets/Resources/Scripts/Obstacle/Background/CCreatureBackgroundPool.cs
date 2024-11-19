@@ -88,7 +88,7 @@ namespace MyeongJin
 		{
             CCreatureHerd obstacle = Pool.Get();
 
-			obstacle.transform.position = new Vector3(UnityEngine.Random.Range(-10, 11), 10, 30);
+			obstacle.transform.position = new Vector3(position.x + UnityEngine.Random.Range(-10, 11), position.y + 10, position.z + 30);
 
 			return true;
 		}
