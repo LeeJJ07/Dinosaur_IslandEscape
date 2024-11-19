@@ -31,6 +31,8 @@ namespace JongJin
             gameStateContext = new GameStateContext(this);
             gameStateContext.Transition(cutSceneState);
             curState = EGameState.CUTSCENE;
+            //gameStateContext.Transition(runningState);
+            //curState = EGameState.RUNNING;
         }
 
         private void Update()
@@ -42,6 +44,8 @@ namespace JongJin
                         UpdateState(EGameState.RUNNING);
                     break;
                 case EGameState.RUNNING:
+                    //if (runningState.IsFirstMissionTriggered())
+                    //    UpdateState(EGameState.TAILMISSION);
                     if (runningState.IsFirstMissionTriggered())
                         UpdateState(EGameState.FIRSTMISSION);
                     //else if (runningState.IsSecondMissionTriggered())

@@ -21,7 +21,7 @@ namespace JongJin
 		[Header("ProgressRate")]
 		[SerializeField] private float tailMissionStartRate = 15.0f;
 		// TODO<이종진> - 진행률에 따른 미션 이름 수정 필요 - 20241110
-		[SerializeField] private float firstMissionRate = 35.0f;
+		[SerializeField] private float firstMissionRate = 0.0f;
 		[SerializeField] private float secondMissionRate = 55.0f;
 		[SerializeField] private float thirdMissionRate = 80.0f;
 
