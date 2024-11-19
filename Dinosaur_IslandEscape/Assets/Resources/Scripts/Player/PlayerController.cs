@@ -1,3 +1,4 @@
+using HakSeung;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,7 +26,7 @@ namespace JongJin
 
 
         enum EPlayer { PLAYER1, PLAYER2, PLAYER3, PLAYER4 }
-        enum EPlayerState { RUNNING, MISSION }
+        enum EPlayerState { CUTSCENE, RUNNING, MISSION }
 
         // TODO<이종진> - 테스트용 작성 수정필요 - 20241110
         [SerializeField] private GameSceneController gameSceneController;
@@ -72,7 +73,7 @@ namespace JongJin
                 runningController = gameSceneController.GetComponent<RunningState>();
                 animator.SetFloat(paramSpeed, speed);
             }
-            curState = EPlayerState.RUNNING;
+            curState = EPlayerState.CUTSCENE;
         }
 
         private void Update()
@@ -84,6 +85,13 @@ namespace JongJin
 
         private void OnKeyBoard()
         {
+            if (gameSceneController == null &&
+                ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.LeftShift))
+                || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.RightShift))))
+            {
+                Heart();
+            }
+
             if (isGrounded <= 0 || isActivated)
                 return;
 
@@ -117,11 +125,6 @@ namespace JongJin
             {
                 Crouch();
             }
-            if ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.LeftShift))
-                || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.RightShift)))
-            {
-                Heart();
-            }
         }
         private void OnCollisionEnter(Collision collision)
         {
@@ -145,7 +148,8 @@ namespace JongJin
                 && gameSceneController.CurState == EGameState.RUNNING)
                 SetRunningState();
             else if (curState != EPlayerState.MISSION
-                  && gameSceneController.CurState != EGameState.RUNNING)
+                  && gameSceneController.CurState != EGameState.RUNNING
+                  && gameSceneController.CurState != EGameState.CUTSCENE)
                 SetMissionState();
         }
         private void SetRunningState()
@@ -193,7 +197,10 @@ namespace JongJin
         }
         private void Heart()
         {
-            StartCoroutine(HeartActive());
+            if (SceneManagerExtended.Instance.GetReady((int)playerId))
+                HeartDeActive();
+            else
+                HeartActive();
         }
         private void LeftTouch()
         {
@@ -221,6 +228,21 @@ namespace JongJin
             speed -= Time.deltaTime * decreaseSpeed;
             animator.SetFloat(paramSpeed, speed);
         }
+        private void HeartActive()
+        {
+            animator.SetBool(paramHeart, true);
+            isActivated = true;
+
+            SceneManagerExtended.Instance.SetReady((int)playerId, true);
+            if (SceneManagerExtended.Instance.CheckReady())
+                StartCoroutine(SceneManagerExtended.Instance.GoToGameScene());
+        }
+        private void HeartDeActive()
+        {
+            SceneManagerExtended.Instance.SetReady((int)playerId, false);
+            isActivated = false;
+            animator.SetBool(paramHeart, false);
+        }
 
         IEnumerator CrouchActive()
         {
@@ -236,19 +258,6 @@ namespace JongJin
             animator.SetBool(paramCrouch, false);
         }
 
-        IEnumerator HeartActive()
-        {
-            animator.SetBool(paramHeart, true);
-            isActivated = true;
-
-            yield return new WaitForSeconds(0.3f);
-            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            float curAnimationTime = stateInfo.length;
-            yield return new WaitForSeconds(curAnimationTime);
-
-            isActivated = false;
-            animator.SetBool(paramHeart, false);
-        }
         IEnumerator LeftTouchActive()
         {
             animator.SetBool(paramLeftTouch, true);

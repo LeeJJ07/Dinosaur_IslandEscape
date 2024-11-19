@@ -8,6 +8,7 @@ namespace JongJin
     public class GameSceneController : MonoBehaviour
     {
         [Header("GameScene States")]
+        [SerializeField] private CutSceneState cutSceneState;
         [SerializeField] private RunningState runningState;
         [SerializeField] private TailMissionState tailMissionState;
         [SerializeField] private FirstMissionState firstMissionState;
@@ -20,6 +21,7 @@ namespace JongJin
 
         private void Start()
         {
+            cutSceneState = GetComponent<CutSceneState>();
             runningState = GetComponent<RunningState>();
             tailMissionState = GetComponent<TailMissionState>();
             firstMissionState = GetComponent<FirstMissionState>();
@@ -27,14 +29,18 @@ namespace JongJin
             thirdMissionState = GetComponent<ThirdMissionState>();
 
             gameStateContext = new GameStateContext(this);
-            gameStateContext.Transition(runningState);
-            curState = EGameState.RUNNING;
+            gameStateContext.Transition(cutSceneState);
+            curState = EGameState.CUTSCENE;
         }
 
         private void Update()
         {
             switch (curState)
             {
+                case EGameState.CUTSCENE:
+                    if (cutSceneState.IsFinishedCutScene())
+                        UpdateState(EGameState.RUNNING);
+                    break;
                 case EGameState.RUNNING:
                     if (runningState.IsFirstMissionTriggered())
                         UpdateState(EGameState.FIRSTMISSION);
