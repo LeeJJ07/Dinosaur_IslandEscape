@@ -235,10 +235,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 --- !u!1001 &184483563
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -498,11 +494,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 232763359}
   m_PrefabAsset: {fileID: 0}
->>>>>>> feature/obstacle_v3.0.3
-=======
->>>>>>> 5e435e61d7cc2043054f80172fb7165dfaffe35f
-=======
->>>>>>> 5e435e61d7cc2043054f80172fb7165dfaffe35f
 --- !u!1 &263211126
 GameObject:
   m_ObjectHideFlags: 0
@@ -1797,13 +1788,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 5e435e61d7cc2043054f80172fb7165dfaffe35f
-=======
->>>>>>> 5e435e61d7cc2043054f80172fb7165dfaffe35f
     - target: {fileID: 2147841809479262293, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
         type: 3}
       propertyPath: gameSceneController
@@ -1811,9 +1795,6 @@ PrefabInstance:
       objectReference: {fileID: 2047471993}
     - target: {fileID: 2206348138624526545, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
         type: 3}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     - target: {fileID: 121864, guid: caeffe6dee1013c4fa90d49ba86e861d, type: 3}
       propertyPath: m_Name
       value: Dinosaur
@@ -1831,11 +1812,6 @@ PrefabInstance:
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 420554, guid: caeffe6dee1013c4fa90d49ba86e861d, type: 3}
->>>>>>> feature/obstacle_v3.0.3
-=======
->>>>>>> 5e435e61d7cc2043054f80172fb7165dfaffe35f
-=======
->>>>>>> 5e435e61d7cc2043054f80172fb7165dfaffe35f
       propertyPath: m_LocalPosition.x
       value: -1.745
       objectReference: {fileID: 0}
@@ -1884,20 +1860,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 5e435e61d7cc2043054f80172fb7165dfaffe35f
-=======
->>>>>>> 5e435e61d7cc2043054f80172fb7165dfaffe35f
     - target: {fileID: 7015843230738409125, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
         type: 3}
       propertyPath: m_Name
       value: Player2
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     - target: {fileID: 420554, guid: caeffe6dee1013c4fa90d49ba86e861d, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
@@ -1909,11 +1875,6 @@ PrefabInstance:
     - target: {fileID: 11193250, guid: caeffe6dee1013c4fa90d49ba86e861d, type: 3}
       propertyPath: m_CullingType
       value: 1
->>>>>>> feature/obstacle_v3.0.3
-=======
->>>>>>> 5e435e61d7cc2043054f80172fb7165dfaffe35f
-=======
->>>>>>> 5e435e61d7cc2043054f80172fb7165dfaffe35f
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2106,17 +2067,7 @@ SceneRoots:
   - {fileID: 1095839201}
   - {fileID: 2075869690}
   - {fileID: 176385698}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  - {fileID: 1704316673}
-=======
   - {fileID: 184483563}
   - {fileID: 114138182}
->>>>>>> feature/obstacle_v3.0.3
-=======
   - {fileID: 1704316673}
->>>>>>> 5e435e61d7cc2043054f80172fb7165dfaffe35f
-=======
   - {fileID: 1704316673}
->>>>>>> 5e435e61d7cc2043054f80172fb7165dfaffe35f
