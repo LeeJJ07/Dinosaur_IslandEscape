@@ -26,7 +26,7 @@ namespace JongJin
 
 
         enum EPlayer { PLAYER1, PLAYER2, PLAYER3, PLAYER4 }
-        enum EPlayerState { RUNNING, MISSION }
+        enum EPlayerState { CUTSCENE, RUNNING, MISSION }
 
         // TODO<이종진> - 테스트용 작성 수정필요 - 20241110
         [SerializeField] private GameSceneController gameSceneController;
@@ -73,7 +73,7 @@ namespace JongJin
                 runningController = gameSceneController.GetComponent<RunningState>();
                 animator.SetFloat(paramSpeed, speed);
             }
-            curState = EPlayerState.RUNNING;
+            curState = EPlayerState.CUTSCENE;
         }
 
         private void Update()
@@ -148,7 +148,8 @@ namespace JongJin
                 && gameSceneController.CurState == EGameState.RUNNING)
                 SetRunningState();
             else if (curState != EPlayerState.MISSION
-                  && gameSceneController.CurState != EGameState.RUNNING)
+                  && gameSceneController.CurState != EGameState.RUNNING
+                  && gameSceneController.CurState != EGameState.CUTSCENE)
                 SetMissionState();
         }
         private void SetRunningState()

@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace JongJin
 		[SerializeField] private float totalRunningDistance = 100.0f;
 		[SerializeField] private float minDistance = 5.0f;
 		[SerializeField] private float maxDistance = 15.0f;
+		[SerializeField] private float playerSpacing = 2.0f;
 
 		[Header("ProgressRate")]
 		[SerializeField] private float tailMissionStartRate = 15.0f;
@@ -23,7 +25,10 @@ namespace JongJin
 		[SerializeField] private float secondMissionRate = 55.0f;
 		[SerializeField] private float thirdMissionRate = 80.0f;
 
-		private bool isPossibleTailMission = false;
+        [Header("Virtual Camera")] 
+		[SerializeField] private GameObject runningViewCam;
+
+        private bool isPossibleTailMission = false;
 		private bool isFirstMissionCompleted = false;
 		private bool isSecondMissionCompleted = false;
 		private bool isThirdMissionCompleted = false;
@@ -50,7 +55,11 @@ namespace JongJin
 		{
 			return prevPlayerPosition[playerNumber];
 		}
-		public void EnterState()
+        private void Start()
+        {
+			InitPlayerPos();
+        }
+        public void EnterState()
 		{
 			dinosaurSpeed = dinosaur.GetComponent<DinosaurController>().Speed;
 
@@ -59,8 +68,8 @@ namespace JongJin
 
 			SetInfo();
 
-			Camera.main.GetComponent<CameraController>().enabled = true;
-		}
+            runningViewCam.GetComponent<CinemachineVirtualCamera>().Priority = 20;
+        }
 		public void UpdateState()
 		{
 			if (!isPossibleTailMission && ProgressRate > tailMissionStartRate)
@@ -73,7 +82,7 @@ namespace JongJin
 		public void ExitState()
 		{
 			SaveInfo();
-			Camera.main.GetComponent<CameraController>().enabled = false;
+            runningViewCam.GetComponent<CinemachineVirtualCamera>().Priority = 16;
         }
 		private void Move()
 		{
@@ -81,6 +90,13 @@ namespace JongJin
 		}
 
 		#region 씬 전환시 플레이어, 공룡 정보 Setting
+		private void InitPlayerPos()
+		{
+			float offset = -1.0f * (players.Length - 1) / 2.0f * playerSpacing;
+
+			for (int playerNum = 0; playerNum < players.Length; playerNum++)
+				prevPlayerPosition[playerNum] = new Vector3(offset + playerNum * playerSpacing, 0.0f, 0.0f);
+		}
 		private void SetInfo()
 		{
 			for(int playerNum = 0; playerNum < players.Length; playerNum++)
