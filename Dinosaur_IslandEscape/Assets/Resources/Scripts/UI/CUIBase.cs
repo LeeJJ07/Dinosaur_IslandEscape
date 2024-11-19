@@ -8,7 +8,9 @@ namespace HakSeung
 {
     public abstract class CUIBase : MonoBehaviour
     {
-        public string canvasName = "?";
+        [SerializeField]private string uiName = null;
+
+        public string UIName { get { return uiName; } }
 
         private void Awake()
         {

@@ -6,6 +6,8 @@ namespace HakSeung
 {
     public abstract class CUIPopup : CUIBase
     {
-      
+       
+
+
     }
 }
