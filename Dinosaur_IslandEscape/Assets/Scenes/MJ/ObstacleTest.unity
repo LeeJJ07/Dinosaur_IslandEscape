@@ -25553,7 +25553,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -25946,7 +25947,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player1Node: {fileID: 1203391438}
   player2Node: {fileID: 240756190}
+<<<<<<< HEAD
   missionGround: {fileID: 1439484070}
+=======
+  missionGround: {fileID: 0}
+>>>>>>> 5e435e61d7cc2043054f80172fb7165dfaffe35f
 --- !u!1 &1654304570
 GameObject:
   m_ObjectHideFlags: 0

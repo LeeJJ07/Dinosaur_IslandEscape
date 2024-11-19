@@ -8,6 +8,8 @@ namespace HakSeung
 {
     public abstract class CUIBase : MonoBehaviour
     {
+        public string canvasName = "?";
+
         private void Awake()
         {
             InitUI();
@@ -18,6 +20,7 @@ namespace HakSeung
         /// </summary>
         public virtual void Show()
         {
+            Debug.Log($"UI/<color=yellow>{canvasName}</color> 활성화");
             gameObject.SetActive(true);
         }
 
@@ -26,6 +29,7 @@ namespace HakSeung
         /// </summary>
         public virtual void Hide()
         {
+            Debug.Log($"UI/<color=yellow>{canvasName}</color> 비활성화");
             gameObject.SetActive(false);
         }
 

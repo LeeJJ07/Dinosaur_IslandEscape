@@ -19,6 +19,7 @@ namespace JongJin
                 return sInstance;
             }
         }
+
         private void Awake() 
         {
             if (sInstance != null && sInstance != this) 

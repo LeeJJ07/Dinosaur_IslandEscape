@@ -1,3 +1,4 @@
+using HakSeung;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,9 +15,18 @@ namespace JongJin
         private readonly string paramJump = "isJump";
         private readonly string jumpAniName = "Jump";
         private readonly string paramCrouch = "isCrouch";
+        private readonly string crouchAniName = "Crouch";
+        private readonly string paramHeart = "isHeart";
+        private readonly string heartAniName = "Heart";
+        private readonly string paramLeftTouch = "isLeftTouch";
+        private readonly string leftTouchAniName = "Left Touch";
+        private readonly string paramRightTouch = "isRightTouch";
+        private readonly string rightTouchAniName = "Right Touch";
+        private readonly string idleAniName = "Idle";
+
 
         enum EPlayer { PLAYER1, PLAYER2, PLAYER3, PLAYER4 }
-        enum EPlayerState { RUNNING, MISSION }
+        enum EPlayerState { CUTSCENE, RUNNING, MISSION }
 
         // TODO<이종진> - 테스트용 작성 수정필요 - 20241110
         [SerializeField] private GameSceneController gameSceneController;
@@ -35,6 +45,7 @@ namespace JongJin
         private EPlayerState curState;
 
         private int isGrounded = 0;
+        private bool isActivated = false;
 
         private Rigidbody rigid;
         private Animator animator;
@@ -57,10 +68,12 @@ namespace JongJin
                 break;
             }
 
-            runningController = gameSceneController.GetComponent<RunningState>();
-            curState = EPlayerState.RUNNING;
-
-            animator.SetFloat(paramSpeed, speed);
+            if (gameSceneController != null)
+            {
+                runningController = gameSceneController.GetComponent<RunningState>();
+                animator.SetFloat(paramSpeed, speed);
+            }
+            curState = EPlayerState.CUTSCENE;
         }
 
         private void Update()
@@ -72,7 +85,14 @@ namespace JongJin
 
         private void OnKeyBoard()
         {
-            if (isGrounded <= 0)
+            if (gameSceneController == null &&
+                ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.LeftShift))
+                || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.RightShift))))
+            {
+                Heart();
+            }
+
+            if (isGrounded <= 0 || isActivated)
                 return;
 
             if (curState == EPlayerState.RUNNING
@@ -87,28 +107,23 @@ namespace JongJin
                 Jump();
             }
 
-            if (curState == EPlayerState.RUNNING)
+            if (curState == EPlayerState.RUNNING && gameSceneController != null)
                 return;
 
             if ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.A))
                 || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.LeftArrow)))
             {
-
+                LeftTouch();
             }
             if ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.D))
                 || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.RightArrow)))
             {
-
+                RightTouch();
             }
             if ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.LeftControl))
                 || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.RightControl)))
             {
                 Crouch();
-            }
-            if ((playerId == EPlayer.PLAYER1 && Input.GetKeyDown(KeyCode.LeftShift))
-                || (playerId == EPlayer.PLAYER2 && Input.GetKeyDown(KeyCode.RightShift)))
-            {
-
             }
         }
         private void OnCollisionEnter(Collision collision)
@@ -126,11 +141,15 @@ namespace JongJin
         }
         private void UpdateState()
         {
+            if (gameSceneController == null)
+                return;
+
             if (curState != EPlayerState.RUNNING
                 && gameSceneController.CurState == EGameState.RUNNING)
                 SetRunningState();
             else if (curState != EPlayerState.MISSION
-                  && gameSceneController.CurState != EGameState.RUNNING)
+                  && gameSceneController.CurState != EGameState.RUNNING
+                  && gameSceneController.CurState != EGameState.CUTSCENE)
                 SetMissionState();
         }
         private void SetRunningState()
@@ -149,6 +168,9 @@ namespace JongJin
         
         private void Move()
         {
+            if (gameSceneController == null)
+                return;
+
             DecreaseSpeed();
 
             if (!runningController.IsBeyondMaxDistance(this.transform.position))
@@ -171,12 +193,31 @@ namespace JongJin
         }
         private void Crouch()
         {
-            animator.SetTrigger(paramCrouch);
+            StartCoroutine(CrouchActive());
+        }
+        private void Heart()
+        {
+            if (SceneManagerExtended.Instance.GetReady((int)playerId))
+                HeartDeActive();
+            else
+                HeartActive();
+        }
+        private void LeftTouch()
+        {
+            StartCoroutine(LeftTouchActive());
+        }
+        private void RightTouch()
+        {
+            StartCoroutine(RightTouchActive());
         }
         private void IncreaseSpeed()
         {
+            if(gameSceneController == null) 
+                return; 
+
             if (speed > maxSpeed)
                 return;
+
             speed += increaseSpeed;
             animator.SetFloat(paramSpeed, speed);
         }
@@ -186,6 +227,62 @@ namespace JongJin
                 return;
             speed -= Time.deltaTime * decreaseSpeed;
             animator.SetFloat(paramSpeed, speed);
+        }
+        private void HeartActive()
+        {
+            animator.SetBool(paramHeart, true);
+            isActivated = true;
+
+            SceneManagerExtended.Instance.SetReady((int)playerId, true);
+            if (SceneManagerExtended.Instance.CheckReady())
+                StartCoroutine(SceneManagerExtended.Instance.GoToGameScene());
+        }
+        private void HeartDeActive()
+        {
+            SceneManagerExtended.Instance.SetReady((int)playerId, false);
+            isActivated = false;
+            animator.SetBool(paramHeart, false);
+        }
+
+        IEnumerator CrouchActive()
+        {
+            animator.SetBool(paramCrouch, true);
+            isActivated = true;
+
+            yield return new WaitForSeconds(0.3f);
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            float curAnimationTime = stateInfo.length;
+            yield return new WaitForSeconds(curAnimationTime);
+
+            isActivated = false;
+            animator.SetBool(paramCrouch, false);
+        }
+
+        IEnumerator LeftTouchActive()
+        {
+            animator.SetBool(paramLeftTouch, true);
+            isActivated = true;
+
+            yield return new WaitForSeconds(0.3f);
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            float curAnimationTime = stateInfo.length;
+            yield return new WaitForSeconds(curAnimationTime);
+
+            isActivated = false;
+            animator.SetBool(paramLeftTouch, false);
+        }
+        IEnumerator RightTouchActive()
+        {
+            animator.SetBool(paramRightTouch, true);
+            isActivated = true;
+
+            yield return new WaitForSeconds(0.3f);
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            float curAnimationTime = stateInfo.length;
+            yield return new WaitForSeconds(curAnimationTime);
+
+            isActivated = false;
+            animator.SetBool(paramRightTouch, false);
         }
     }
 }

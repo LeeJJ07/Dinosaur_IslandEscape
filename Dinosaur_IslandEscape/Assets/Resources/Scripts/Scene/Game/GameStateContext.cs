@@ -4,6 +4,7 @@ namespace JongJin
     // TODO<이종진> - 돌발 미션 이름 및 통일성 수정 필요 - 20241110
     public enum EGameState
     {
+        CUTSCENE,
         RUNNING,
         TAILMISSION,
         FIRSTMISSION,
