@@ -44,7 +44,7 @@ namespace JongJin
                     if (runningState.IsFirstMissionTriggered())
                     {
                         UpdateState(EGameState.FIRSTMISSION);
-                        missionGround.SetActive(true);                // FirstMission에 돌입하면 missionGroun_1이 켜짐
+                        missionGround.SetActive(true);                // FirstMission에 돌입하면 missionGround가 켜짐
                     }
                     else if (runningState.IsSecondMissionTriggered())
                     {
@@ -64,11 +64,11 @@ namespace JongJin
                     break;
                 case EGameState.TAILMISSION:
                     break;
-                case EGameState.FIRSTMISSION:           // 첫 번째 미션 상태에서
-                    if (firstMissionState.test)         // 
+                case EGameState.FIRSTMISSION:           // 첫 번째 돌발 미션 상태에서
+                    if (firstMissionState.test)         // 첫 번째 돌발 미션 끝나면
                     { 
-                        UpdateState(EGameState.RUNNING);            // 계속 달림
-                        missionGround.SetActive(false);               
+                        UpdateState(EGameState.RUNNING);            // 끊긴 지점에서 다시 달림
+                        missionGround.SetActive(false);             // missinoGround 다시 꺼짐
                     }
                     break;
                 case EGameState.SECONDMISSION:          // missionGround.SetActive(false) 넣어야함
