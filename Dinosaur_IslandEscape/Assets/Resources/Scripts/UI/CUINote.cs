@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 using static UnityEditor.Progress;
 
 namespace HakSeung
@@ -81,7 +80,7 @@ namespace HakSeung
         /// 후에 isHit의 여부에 따라 Success와 Fail의 이미지 오브젝트를 활성화 시킨다
         /// </summary>
         /// <returns></returns>
-        private IEnumerator IECheckNoteHitInSuccessTime()
+        /*private IEnumerator IECheckNoteHitInSuccessTime()
         {
             float hitNoteScale = transform.localScale.x;
 
@@ -117,6 +116,48 @@ namespace HakSeung
 
             this.gameObject.SetActive(false);
             
+        }*/
+
+
+        private IEnumerator IECheckNoteHitInSuccessTime()
+        {
+            float hitNoteScale = transform.localScale.x;
+
+            while (curTime > noteFailTime && !isHit)
+            {
+                curTime -= Time.deltaTime;
+                noteObjects[(int)ENoteImageObject.HITCHECKRING].transform.localScale =
+                    Vector3.Lerp(noteObjects[(int)ENoteImageObject.HITCHECKRING].transform.localScale, Vector3.one, Time.deltaTime);
+
+                if (TestPlayer != null)
+                    SyncUIWithPlayerPosition(TestPlayer.transform.position);
+
+                yield return null;
+            }
+
+            curTime = 0;
+
+            if (isHit)
+                gameObject.GetComponent<Image>().color = Color.green; //나중에 이미지로 받아오는거 변경 필요
+            else
+                gameObject.GetComponent<Image>().color = Color.red;
+
+            noteObjects[(int)ENoteImageObject.HITCHECKRING].SetActive(false);
+
+
+            while (curTime <= noteHitResultTime)
+            {
+                curTime += Time.deltaTime;
+
+                if (TestPlayer != null)
+                    SyncUIWithPlayerPosition(TestPlayer.transform.position);
+
+                yield return null;
+            }
+
+            gameObject.GetComponent<Image>().color = Color.white;
+            this.gameObject.SetActive(false);
+
         }
 
         private void SyncUIWithPlayerPosition(Vector3 playerPosition)

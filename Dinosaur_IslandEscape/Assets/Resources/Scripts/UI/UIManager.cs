@@ -1,4 +1,5 @@
 using JongJin;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,6 @@ using static UnityEditor.Rendering.InspectorCurveEditor;
 
 namespace HakSeung
 {
-
     public class UIManager : MonoBehaviour
     {
         public enum ESceneUIType
@@ -76,7 +76,7 @@ namespace HakSeung
             // 24/11/12
 
             
-            int nextCanvasIndex = (int)ESceneUIType.END;
+/*            int nextCanvasIndex = (int)ESceneUIType.END;
 
             //현재 씬이 게임 씬이면 작동될 코드
             switch (gameSceneController.CurState)
@@ -93,7 +93,7 @@ namespace HakSeung
             }
 
             if(curSceneCanvasTypeIndex != nextCanvasIndex)
-                SceneCanvasChange(nextCanvasIndex);
+                SceneCanvasChange(nextCanvasIndex);*/
 
         }
 
@@ -115,14 +115,23 @@ namespace HakSeung
             }
         }
 
-        private void SceneCanvasChange(int nextCanvasIndex)
+        void UIBind<T>(System.Type type) where T : UnityEngine.Object
         {
-            sceneUIs[curSceneCanvasTypeIndex].Hide();
-            curSceneCanvasTypeIndex = nextCanvasIndex;
-            sceneUIs[curSceneCanvasTypeIndex].Show();
+            if (!type.IsEnum)
+                return;
+
+            string[] uiNames = Enum.GetNames(type);
+
+            UnityEngine.Object[] uiObjects = new UnityEngine.Object[uiNames.Length];
+
+            for (int i = 0; i < uiNames.Length; i++)
+            {
+                uiObjects[i] = //
+            }
+
         }
 
-        public T ShowPopupUI<T>(EPopupUIType popupType) where T : CUIPopup
+        /*public T ShowPopupUI<T>(EPopupUIType popupType) where T : CUIPopup
         {
             T popup =  CUIPopup
 
@@ -160,7 +169,7 @@ namespace HakSeung
             {
                 ClosePopupUI();
             }
-        }
+        }*/
 
     }
 }
