@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 namespace JaeHoon
@@ -42,7 +43,7 @@ namespace JaeHoon
         }
         private void DeleteTile()
         {
-            Destroy(activeTiles[0],20f);
+            Destroy(activeTiles[0], 300f);            // Destroy 대신 사라질 타일을 player 앞으로 가져오는 형식으로
             activeTiles.RemoveAt(0);
         }
     }
