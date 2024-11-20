@@ -53,12 +53,12 @@ namespace JongJin
                         UpdateState(EGameState.FIRSTMISSION);
                         missionGround.SetActive(true);                // FirstMission에 돌입하면 missionGround가 켜짐
                         startForestGround.SetActive(false);             // FirstMission에 돌입하면 startForestGround가 꺼짐
-                        RenderSettings.skybox = skyboxVolcano;
                     }
                     else if (runningState.IsSecondMissionTriggered())
                     {
                         UpdateState(EGameState.SECONDMISSION);
                         missionGround.SetActive(true);
+                        RenderSettings.skybox = skyboxVolcano;          // SecondMission 돌입 시 skybox가 붉게 변함
                     }
                     else if (runningState.IsThirdMissionTriggered())
                     {
