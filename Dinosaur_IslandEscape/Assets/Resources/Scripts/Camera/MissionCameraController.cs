@@ -6,10 +6,11 @@ namespace JongJin
 {
     public class MissionCameraController : MonoBehaviour
     {
-        [SerializeField] private GameObject target;
+        [SerializeField] private GameObject lookAt;
         [SerializeField] private GameObject follow;
 
-        private Vector3 targetPos;
+        [SerializeField] private GameSceneController gameSceneController;
+
 
     }
 }

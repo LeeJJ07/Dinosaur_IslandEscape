@@ -13,7 +13,7 @@ namespace JongJin
         private bool isFinished = false;
         public void EnterState()
         {
-            Invoke("SetFinish", (float)timelineDirector.duration - 1f);
+            StartCoroutine(SetFinish());
         }
         public void UpdateState()
         {
@@ -23,7 +23,12 @@ namespace JongJin
         {
             fade.FadeInOut();
         }
-        private void SetFinish() { isFinished = true; }
+
+        IEnumerator SetFinish()
+        {
+            yield return new WaitForSeconds((float)timelineDirector.duration - 1f);
+            isFinished = true;
+        }
         public bool IsFinishedCutScene()
         {
             return isFinished;

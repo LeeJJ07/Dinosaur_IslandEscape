@@ -15,11 +15,17 @@ namespace JongJin
         [SerializeField] private SecondMissionState secondMissionState;
         [SerializeField] private ThirdMissionState thirdMissionState;
 
+        [Header("MissionCamera Set")]
+        [SerializeField] private GameObject curLookAt;
+        [SerializeField] private GameObject curFollow;
+        [SerializeField] private GameObject []lookAt;
+        [SerializeField] private GameObject []follow;
+
         private GameStateContext gameStateContext;
         private EGameState curState;
         public EGameState CurState { get { return curState; } }
 
-        private void Start()
+        private void Awake()
         {
             cutSceneState = GetComponent<CutSceneState>();
             runningState = GetComponent<RunningState>();
@@ -75,6 +81,8 @@ namespace JongJin
                 return;
             curState = nextState;
 
+            UpdateCamera(curState);
+
             switch (curState)
             {
                 case EGameState.RUNNING:
@@ -93,6 +101,15 @@ namespace JongJin
                     gameStateContext.Transition(thirdMissionState);
                     break;
             }
+        }
+
+        private void UpdateCamera(EGameState curState)
+        {
+            if (curState == EGameState.CUTSCENE || curState == EGameState.RUNNING)
+                return;
+
+            curLookAt.transform.position = lookAt[(int)curState].transform.position;
+            curFollow.transform.position = follow[(int)curState].transform.position;
         }
     }
 }
