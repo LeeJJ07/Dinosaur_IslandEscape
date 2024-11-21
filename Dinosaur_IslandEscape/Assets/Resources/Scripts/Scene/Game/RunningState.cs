@@ -39,6 +39,7 @@ namespace JongJin
 		[Header("UI")]
 		[SerializeField] private float imageOffset = -20.0f;
 
+		[SerializeField] private Canvas runningCanvas;
 		[SerializeField] private Image progressBarImage;
 		[SerializeField] private RectTransform dinosaurImagePos;
 		[SerializeField] private RectTransform player1ImagePos;
@@ -83,7 +84,9 @@ namespace JongJin
         }
         public void EnterState()
 		{
-			dinosaurSpeed = dinosaur.GetComponent<DinosaurController>().Speed;
+			runningCanvas.gameObject.SetActive(true);
+
+            dinosaurSpeed = dinosaur.GetComponent<DinosaurController>().Speed;
             runningViewCam.GetComponent<CinemachineVirtualCamera>().Priority = 20;
 
 			if (prevDinosaurPosition.z <= 1e-3)
@@ -108,6 +111,8 @@ namespace JongJin
 		{
 			SaveInfo();
             runningViewCam.GetComponent<CinemachineVirtualCamera>().Priority = 16;
+
+            runningCanvas.gameObject.SetActive(false);
         }
 		private void Move()
 		{

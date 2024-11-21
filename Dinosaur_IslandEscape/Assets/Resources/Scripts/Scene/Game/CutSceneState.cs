@@ -10,7 +10,6 @@ namespace JongJin
         [SerializeField] private PlayableDirector timelineDirector;
         [SerializeField] private Fade fade;
 
-        private bool isFinished = false;
         public void EnterState()
         {
             StartCoroutine(SetFinish());
@@ -21,17 +20,16 @@ namespace JongJin
 
         public void ExitState()
         {
-            fade.FadeInOut();
         }
 
         IEnumerator SetFinish()
         {
             yield return new WaitForSeconds((float)timelineDirector.duration - 1f);
-            isFinished = true;
+            fade.FadeInOut();
         }
         public bool IsFinishedCutScene()
         {
-            return isFinished;
+            return fade.IsFinished;
         }
     }
 }

@@ -23,7 +23,7 @@ namespace JongJin
 
         private Animator dinosaurAnimator;
         private int attackCount;
-        private float attackTime = 2f;
+        private float attackTime = 1.5f;
 
         private float flowTime = 0.0f;
         private float warningFlowTime = 0.0f;
@@ -64,7 +64,7 @@ namespace JongJin
                 dinosaur.SetActive(true);
                 dinosaur.transform.eulerAngles = new Vector3(dinosaurRotX[randomAttackPos], dinosaur.transform.eulerAngles.y, dinosaur.transform.eulerAngles.z);
             }
-            dinosaur.transform.position = new Vector3(Mathf.Lerp(147.0f, 152.0f, attackFlowTime / attackTime), dinosaurPosY[randomAttackPos], dinosaur.transform.position.z);
+            dinosaur.transform.position = new Vector3(Mathf.Lerp(147.0f, 157.0f + randomAttackPos * 2, attackFlowTime / attackTime), dinosaurPosY[randomAttackPos], dinosaur.transform.position.z);
             attackFlowTime += Time.deltaTime;
             if (attackFlowTime < attackTime)
                 return;
