@@ -35,10 +35,10 @@ namespace JongJin
             thirdMissionState = GetComponent<ThirdMissionState>();
 
             gameStateContext = new GameStateContext(this);
-            //gameStateContext.Transition(cutSceneState);
-            //curState = EGameState.CUTSCENE;
-            gameStateContext.Transition(runningState);
-            curState = EGameState.RUNNING;
+            gameStateContext.Transition(cutSceneState);
+            curState = EGameState.CUTSCENE;
+            //gameStateContext.Transition(runningState);
+            //curState = EGameState.RUNNING;
         }
 
         private void Update()
@@ -58,8 +58,8 @@ namespace JongJin
                     //    UpdateState(EGameState.SECONDMISSION);
                     //else if (runningState.IsThirdMissionTriggered())
                     //    UpdateState(EGameState.THIRDMISSION);
-                    //else if (runningState.IsTailMissionTriggered())
-                    //    UpdateState(EGameState.TAILMISSION);
+                    else if (runningState.IsTailMissionTriggered())
+                        UpdateState(EGameState.TAILMISSION);
                     break;
                 case EGameState.TAILMISSION:
                     if(tailMissionState.IsFinishMission())
