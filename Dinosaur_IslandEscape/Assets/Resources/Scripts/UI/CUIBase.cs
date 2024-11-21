@@ -53,7 +53,7 @@ namespace HakSeung
 
             for(int i = 0; i < uiNames.Length; i++)
             {
-                uiObjects[i] = //
+                //uiObjects[i] = 
             }
 
         }

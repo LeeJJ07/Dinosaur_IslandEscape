@@ -2,6 +2,8 @@ using JongJin;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Rendering.InspectorCurveEditor;
 
@@ -24,20 +26,31 @@ namespace HakSeung
 
             END
         }
+        
+        public enum ETestType
+        {
+            RunningScenePanel,
+            TutorialPopupPanel,
+        }
 
-        //TODO<학승> sceneCanvas에 할당될 캔버스들의 값을 start game event end 총 네개로 구성해서 그 state를 받아와야됨
-        [SerializeField] private CUIScene[] sceneUIs = new CUIScene[(int)ESceneUIType.END];
-        [SerializeField] private CUIPopup[] popupUIs = new CUIPopup[(int)EPopupUIType.END];
-
-        private const string uiManagerObjectName = "_UIManager";
         private static UIManager s_Instance;
+        
+        private Dictionary<string, UnityEngine.Object> uiPrefabs = new Dictionary<string, UnityEngine.Object>();
+        private Dictionary<string, CUIBase> uiObjs = new Dictionary<string, CUIBase>();
+
+        private const string UIMANGEROBJECTNAME = "_UIManager";
+        private const string PREFABSPATH = "Prefabs/UI/";
 
         private GameSceneController gameSceneController;
 
+        
         private Stack<CUIPopup> popupStack;
 
-        private int curSceneCanvasTypeIndex = (int)ESceneUIType.END;
+        private int popupIndex = 0;
 
+        public CUIScene CurSceneUI { get; private set; } = null;
+        public GameObject MainCanvas { private get; set; }
+       
 
         public static UIManager Instance
         {
@@ -45,7 +58,7 @@ namespace HakSeung
             {
                 if(s_Instance == null)
                 {
-                    GameObject newUIManagerObject = new GameObject(uiManagerObjectName);
+                    GameObject newUIManagerObject = new GameObject(UIMANGEROBJECTNAME);
                     s_Instance = newUIManagerObject.AddComponent<UIManager>();
                 }
                 return s_Instance;
@@ -65,78 +78,104 @@ namespace HakSeung
 
             DontDestroyOnLoad(this.gameObject);
 
-            Initialize();
+            Initialzie();
         }
 
-        private void Update()
+        //Todo<이학승> 임시로 기본 Find를 통해 받아옴 추후 Tag던 이름이던 참조 해야됨
+        private void Initialzie()
         {
-            //TODO<학승> 
-            //1. 씬에대한 정보확인
-            //2. 현재 씬이 게임씬이면 러닝인지 이벤트 state인지 확인
-            // 24/11/12
-
-            
-/*            int nextCanvasIndex = (int)ESceneUIType.END;
-
-            //현재 씬이 게임 씬이면 작동될 코드
-            switch (gameSceneController.CurState)
-            {
-                case JongJin.EGameState.RUNNING:
-                    nextCanvasIndex = (int)ESceneUIType.RUNNING;
-                    break;
-                case JongJin.EGameState.FIRSTMISSION:
-                case JongJin.EGameState.SECONDMISSION:
-                case JongJin.EGameState.THIRDMISSION:
-                case JongJin.EGameState.TAILMISSION:
-                    nextCanvasIndex = (int)ESceneUIType.EVENT;
-                    break;
-            }
-
-            if(curSceneCanvasTypeIndex != nextCanvasIndex)
-                SceneCanvasChange(nextCanvasIndex);*/
-
+            MainCanvas = GameObject.Find("MainCanvas");
         }
 
-        private void Initialize()
-        {
-            if (curSceneCanvasTypeIndex != (int)ESceneUIType.END)
-            {
-                gameSceneController = GetComponent<GameSceneController>();
-
-                /*for (int i = (int)ECanvasType.START; i < sceneCanvas.Length; i++)
-                {
-                    //캔버스들 받아오기
-                }*/
-
-                sceneUIs[(int)ESceneUIType.START].Show();
-
-                for (int i = (int)ESceneUIType.START + 1; i < sceneUIs.Length; i++)
-                    sceneUIs[i].Hide();
-            }
-        }
-
-        void UIBind<T>(System.Type type) where T : UnityEngine.Object
-        {
+        public UnityEngine.Object UICashing<T>(System.Type type, int enumIndex) where T : UnityEngine.Object
+        { 
             if (!type.IsEnum)
-                return;
+                return null;
 
-            string[] uiNames = Enum.GetNames(type);
+            string uiName = type.GetEnumName(enumIndex) ;
 
-            UnityEngine.Object[] uiObjects = new UnityEngine.Object[uiNames.Length];
+            if (uiPrefabs.ContainsKey(uiName))
+                return uiPrefabs[uiName];
 
-            for (int i = 0; i < uiNames.Length; i++)
+            T uiObj = Resources.Load<T>(PREFABSPATH + $"{uiName}");
+             
+            if(uiObj == null)
+                 Debug.Log("로드 실패: " + PREFABSPATH + $"에 {uiName}는 존재하지 않습니다.");
+
+            uiPrefabs.Add(uiName, uiObj);
+
+            return uiPrefabs[uiName];
+        }
+
+
+        public void ShowSceneUI(string key)
+        {
+            CUIScene sceneUI = null;
+
+            if (CurSceneUI != null)
             {
-                uiObjects[i] = //
+                CurSceneUI.Hide();
+                Destroy(CurSceneUI);
             }
+
+            if (!uiPrefabs.ContainsKey(key))
+            {
+                Debug.Log($"SceneUI Key: {key}가 존재하지 않습니다.");
+                return;
+            }
+            
+            if (sceneUI = uiPrefabs[key].GetComponent<CUIScene>())
+            {
+                if (CurSceneUI = Instantiate(sceneUI))
+                {
+                    CurSceneUI.transform.SetParent(MainCanvas.transform, false);
+                    CurSceneUI.Show();
+                }
+                else
+                    Debug.Log($"{key}생성 실패");
+            }
+            else
+                Debug.Log($"{key}는 CUIScene를 상속받지 않는 타입입니다.");
 
         }
 
-        /*public T ShowPopupUI<T>(EPopupUIType popupType) where T : CUIPopup
+        //TODO<이학승> ShowPopupUI 제외하고 자주쓰이는 팝업 나중에 한번만 뜰 팝업들을 정리하는 메서드가 필요하다. 24/11/21
+        public void ShowPopupUI(string key)
         {
-            T popup =  CUIPopup
+            CUIPopup popUI = null;
 
-            popupIndex++;
-            return popup;
+            if (!uiPrefabs.ContainsKey(key))
+            {
+                Debug.Log($"PopupUI Key: {key}가 존재하지 않습니다.");
+                return;
+            }
+            
+            if (uiObjs[key] != null)
+            {
+                if(popUI = uiObjs[key] as CUIPopup)
+                {
+                    popupStack.Push(popUI);
+                    popupStack.Peek().Show();
+                    ++popupIndex;
+                }
+                else
+                    Debug.Log($"{key}는 CUIPopup을 가지고 있지 않습니다.");
+
+                return;
+            }
+                
+
+            if (popUI = Instantiate(uiPrefabs[key]).GetComponent<CUIPopup>())
+            {
+                popUI.transform.SetParent(MainCanvas.transform, false);
+
+                uiObjs.Add(key, popUI);
+                popupStack.Push(popUI);
+                popupStack.Peek().Show();
+                ++popupIndex;
+            }
+            else
+                Debug.Log($"{key}는 CUIPopup을 가지고 있지 않습니다.");
         }
 
         public void ClosePopupUI()
@@ -144,8 +183,9 @@ namespace HakSeung
             if (popupStack.Count == 0)
                 return;
 
+            popupStack.Peek().Hide();
             popupStack.Pop();
-            popupIndex--;
+            --popupIndex;
         }
 
         public void ClosePopupUI(CUIPopup popupUI)
@@ -159,17 +199,16 @@ namespace HakSeung
                 return;
             }
 
+            popupStack.Peek().Hide();
             popupStack.Pop();
-            popupIndex--;
+            --popupIndex;
         }
 
         public void CloseAllPopupUI()
         {
             while(popupStack.Count > 0)
-            {
                 ClosePopupUI();
-            }
-        }*/
+        }
 
     }
 }
