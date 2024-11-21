@@ -25,11 +25,16 @@ namespace JongJin
 		[SerializeField] private float secondMissionRate = 55.0f;
 		[SerializeField] private float thirdMissionRate = 80.0f;
 
+<<<<<<< HEAD
         [Header("Virtual Camera")] 
 		[SerializeField] private GameObject runningViewCam;
 
         private bool isPossibleTailMission = false;
 		private bool isFirstMissionCompleted = false;
+=======
+		private bool isPossibleTailMission = false;
+		public bool isFirstMissionCompleted = false;
+>>>>>>> feature/map_v3.0.5
 		private bool isSecondMissionCompleted = false;
 		private bool isThirdMissionCompleted = false;
 
