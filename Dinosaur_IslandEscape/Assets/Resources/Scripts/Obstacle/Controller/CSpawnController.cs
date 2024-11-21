@@ -8,7 +8,7 @@ using static UnityEditor.Rendering.InspectorCurveEditor;
 
 namespace MyeongJin
 {
-	public class CGenerator : MonoBehaviour
+	public class CSpawnController : MonoBehaviour
 	{
 		[SerializeField] GameObject player1Node;
 		[SerializeField] GameObject player2Node;
@@ -152,8 +152,8 @@ namespace MyeongJin
 		}
 		private void GenerateFly()
 		{
-
-		}
+			flyPool.SpawnFly(missionGroundPos);
+        }
         /// <summary>
         /// 큰 익룡/악어를 생성 시 true를 반환하여 해당 Line에는 더 이상 소환되지 않음. 즉, 라인 수 상관없이 한마리만 생성
         /// </summary>

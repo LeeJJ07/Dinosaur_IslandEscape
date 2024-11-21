@@ -20,19 +20,30 @@ namespace MyeongJin
 		{
 			controlPoints = GameObject.Find("SkyControlPoints").GetComponent< CSkyControlPoint>().controlPoints;
 		}
-        private void Update()
+		private void Update()
 		{
 			StoopAndClimb();
-        }
-        private void OnEnable()
-        {
-            this.transform.Rotate(45, 0, 0);
-        }
-        private void OnDisable()
+		}
+		private void OnEnable()
+		{
+			this.transform.Rotate(45, 0, 0);
+		}
+		private void OnDisable()
 		{
 			ResetObstacle();
 		}
-		public new void ResetObstacle()
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.tag == "Player1" || other.tag == "Player2")
+            {
+                Debug.Log("SmallPteranodon Attack");
+            }
+            if (other.tag == "ControlPoint")
+            {
+                Debug.Log("Destroy SmallPteranodon");
+            }
+        }
+        public new void ResetObstacle()
 		{
 			SetStartPosition();
 			this.transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -49,8 +60,6 @@ namespace MyeongJin
 		}
 		private void StoopAndClimb()
 		{
-			Debug.Log("DownFall Pteranodon!");
-
 			if (controlPoints.Length < 4) return;
 
 			Transform p0 = controlPoints[currentSegment];
@@ -82,7 +91,6 @@ namespace MyeongJin
 				if (currentSegment >= controlPoints.Length - 3)
 				{
 					currentSegment = 0;
-					Debug.Log("Catmull-Rom Spline 경로 끝까지 도착했습니다!");
 					ReturnToPool();
 				}
 			}

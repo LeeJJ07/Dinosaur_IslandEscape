@@ -25,7 +25,7 @@ namespace MyeongJin
 		}
 		private void Update()
 		{
-			StoopAndClimb();
+			SwimAndAttack();
 		}
 		private void OnEnable()
 		{
@@ -46,7 +46,18 @@ namespace MyeongJin
 		{
 			ResetObstacle();
 		}
-		public new void ResetObstacle()
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.tag == "Player1" || other.tag == "Player2")
+            {
+                Debug.Log("Crocodile Attack");
+            }
+            if (other.tag == "ControlPoint")
+            {
+                Debug.Log("Destroy Crocodile");
+            }
+        }
+        public new void ResetObstacle()
 		{
 			SetStartPosition();
 		}
@@ -60,7 +71,7 @@ namespace MyeongJin
 				this.transform.position = startPosition;
 			}
 		}
-		private void StoopAndClimb()
+		private void SwimAndAttack()
 		{
 			if (controlPoints[targetNum].Length < 4) return;
 
@@ -89,7 +100,6 @@ namespace MyeongJin
 				if (currentSegment >= controlPoints[targetNum].Length - 3)
 				{
 					currentSegment = 0;
-					Debug.Log("Catmull-Rom Spline 경로 끝까지 도착했습니다!");
 					ReturnToPool();
 				}
 			}
