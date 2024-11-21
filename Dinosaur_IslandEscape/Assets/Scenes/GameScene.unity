@@ -2688,7 +2688,8 @@ MonoBehaviour:
   - {fileID: 399136846}
   - {fileID: 663891669}
   dinosaur: {fileID: 1323343827}
-  totalRunningDistance: 100
+  roundTimeLimit: 300
+  totalRunningDistance: 500
   minDistance: 13
   maxDistance: 25
   playerSpacing: 3
@@ -2697,6 +2698,17 @@ MonoBehaviour:
   secondMissionRate: 55
   thirdMissionRate: 80
   runningViewCam: {fileID: 1532651065}
+  progressBarImage: {fileID: 907616422}
+  dinosaurImage: {fileID: 806386988}
+  player1Image: {fileID: 303477546}
+  player2Image: {fileID: 1789756490}
+  endDistanceText: {fileID: 1373621200}
+  dinosaurDistanceText: {fileID: 1027119905}
+  timerText: {fileID: 1457885151}
+  heartImages:
+  - {fileID: 730682322}
+  - {fileID: 2038254991}
+  - {fileID: 1421765216}
 --- !u!4 &807674224
 Transform:
   m_ObjectHideFlags: 0

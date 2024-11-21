@@ -1,16 +1,24 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace JongJin
 {
 	public class RunningState : MonoBehaviour, IGameState
 	{
+		private readonly float progressBarStartX = -650.0f;
+		private readonly float progressBarEndX = 670.0f;
+
 		[Header("Object")]
 		[SerializeField] private GameObject[] players;
 		[SerializeField] private GameObject dinosaur;
+
+		[Header("Time")]
+		[SerializeField] private float roundTimeLimit;
 
 		[Header("Distance")]
 		[SerializeField] private float totalRunningDistance = 100.0f;
@@ -27,6 +35,20 @@ namespace JongJin
 
         [Header("Virtual Camera")] 
 		[SerializeField] private GameObject runningViewCam;
+
+		[Header("UI")]
+		[SerializeField] private float imageOffset = -20.0f;
+
+		[SerializeField] private Image progressBarImage;
+		[SerializeField] private RectTransform dinosaurImagePos;
+		[SerializeField] private RectTransform player1ImagePos;
+		[SerializeField] private RectTransform player2ImagePos;
+		[SerializeField] private TextMeshProUGUI endDistanceText;
+		[SerializeField] private TextMeshProUGUI dinosaurDistanceText;
+		[SerializeField] private TextMeshProUGUI timerText;
+		[SerializeField] private Image[] heartImages;
+
+		private int life = 3;
 
         private bool isPossibleTailMission = false;
 		private bool isFirstMissionCompleted = false;
@@ -71,7 +93,11 @@ namespace JongJin
         }
 		public void UpdateState()
 		{
-			if (!isPossibleTailMission && ProgressRate > tailMissionStartRate)
+			roundTimeLimit -= Time.deltaTime;
+
+			UpdateUI();
+
+            if (!isPossibleTailMission && ProgressRate > tailMissionStartRate)
 				isPossibleTailMission = true;
 			Move();
 			CalculateObjectDistance();
@@ -188,6 +214,64 @@ namespace JongJin
 			return true;
 		}
 
-		#endregion
-	}
+        #endregion
+
+        #region UI 관련 함수
+		private void UpdateUI()
+		{
+			SetProgressBar();
+			SetTimer();
+			SetPlayer1Image();
+			SetPlayer2Image();
+			SetDinosaurImage();
+			SetDinosaurDistanceText();
+            SetEndLineDistanceText();
+        }
+		private void SetProgressBar()
+		{
+			progressBarImage.fillAmount = ProgressRate / 100.0f;
+		}
+		private void SetPlayer1Image()
+		{
+			float player1X = (progressBarEndX - progressBarStartX)
+				* playerDistance[0] / totalRunningDistance + progressBarStartX + imageOffset;
+
+			player1ImagePos.anchoredPosition = new Vector2(player1X, player1ImagePos.anchoredPosition.y);
+        }
+        private void SetPlayer2Image()
+        {
+            float player2X = (progressBarEndX - progressBarStartX)
+                * playerDistance[1] / totalRunningDistance + progressBarStartX + imageOffset;
+
+			player2ImagePos.anchoredPosition = new Vector2(player2X, player2ImagePos.anchoredPosition.y);
+        }
+
+		private void SetDinosaurImage()
+		{
+            float dinosaurX = (progressBarEndX - progressBarStartX)
+                * dinosaurDistance / totalRunningDistance + progressBarStartX + imageOffset;
+
+            dinosaurImagePos.anchoredPosition = new Vector2(dinosaurX, dinosaurImagePos.anchoredPosition.y);
+        }
+
+		private void SetDinosaurDistanceText()
+		{
+			int distance = (int)Mathf.Round(lastRankerDistance - dinosaurDistance);
+			dinosaurDistanceText.text = string.Format("-{0}M", distance);
+        }
+        private void SetEndLineDistanceText()
+        {
+            int distance = (int)Mathf.Round(totalRunningDistance -lastRankerDistance);
+            endDistanceText.text = string.Format("{0}M", distance);
+        }
+        private void SetTimer()
+		{
+			int hour = (int)(roundTimeLimit / 60.0f);
+			int minute = (int)(roundTimeLimit % 60.0f);
+
+            timerText.text = string.Format("{0:D2} : {1:D2}", hour, minute);
+        }
+
+        #endregion
+    }
 }
