@@ -20158,6 +20158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ae90731b52e84f42a9f13f727d3dcb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cutSceneState: {fileID: 0}
   runningState: {fileID: 0}
   tailMissionState: {fileID: 0}
   firstMissionState: {fileID: 0}
@@ -20236,11 +20237,12 @@ MonoBehaviour:
   totalRunningDistance: 500
   minDistance: 13
   maxDistance: 25
+  playerSpacing: 2
   tailMissionStartRate: 15
   firstMissionRate: 15
   secondMissionRate: 55
   thirdMissionRate: 90
-  isFirstMissionCompleted: 0
+  runningViewCam: {fileID: 0}
 --- !u!4 &544308616
 Transform:
   m_ObjectHideFlags: 0

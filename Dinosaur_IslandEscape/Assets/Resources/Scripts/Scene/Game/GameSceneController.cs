@@ -38,12 +38,8 @@ namespace JongJin
             thirdMissionState = GetComponent<ThirdMissionState>();
 
             gameStateContext = new GameStateContext(this);
-<<<<<<< HEAD
             gameStateContext.Transition(cutSceneState);
             curState = EGameState.CUTSCENE;
-=======
-            gameStateContext.Transition(runningState);
-            curState = EGameState.RUNNING;
 
             missionGround.SetActive(false);           // missionGround는 초기에는 꺼둔 상태
             startForestGround.SetActive(true);          // startForestGround는 초기에 켜둔 상태
@@ -51,7 +47,6 @@ namespace JongJin
             RenderSettings.skybox = skyboxNormal;       // 초기 skybox는 skyboxNormal
 
             missionRoomVolcano.SetActive(false);
->>>>>>> feature/map_v3.0.5
         }
 
         private void Update()
