@@ -19,6 +19,8 @@ namespace JongJin
 
         [SerializeField] Material skyboxNormal;
         [SerializeField] Material skyboxVolcano;
+
+        [SerializeField] private GameObject missionRoomVolcano;
         
 
         private GameStateContext gameStateContext;
@@ -41,6 +43,8 @@ namespace JongJin
             startForestGround.SetActive(true);          // startForestGround는 초기에 켜둔 상태
 
             RenderSettings.skybox = skyboxNormal;       // 초기 skybox는 skyboxNormal
+
+            missionRoomVolcano.SetActive(false);
         }
 
         private void Update()
@@ -53,11 +57,13 @@ namespace JongJin
                         UpdateState(EGameState.FIRSTMISSION);
                         missionGround.SetActive(true);                // FirstMission에 돌입하면 missionGround가 켜짐
                         startForestGround.SetActive(false);             // FirstMission에 돌입하면 startForestGround가 꺼짐
+                        missionRoomVolcano.SetActive(true);
                     }
                     else if (runningState.IsSecondMissionTriggered())
                     {
                         UpdateState(EGameState.SECONDMISSION);
                         missionGround.SetActive(true);
+                        missionRoomVolcano.SetActive(true);
                         RenderSettings.skybox = skyboxVolcano;          // SecondMission 돌입 시 skybox가 붉게 변함
                     }
                     else if (runningState.IsThirdMissionTriggered())
@@ -78,7 +84,7 @@ namespace JongJin
                     { 
                         UpdateState(EGameState.RUNNING);            // 끊긴 지점에서 다시 달림
                         missionGround.SetActive(false);             // missinoGround 다시 꺼짐
-
+                        missionRoomVolcano.SetActive(false);
                     }
                     break;
                 case EGameState.SECONDMISSION:          // missionGround.SetActive(false) 넣어야함
