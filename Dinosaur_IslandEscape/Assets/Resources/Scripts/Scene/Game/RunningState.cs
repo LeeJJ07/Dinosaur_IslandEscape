@@ -21,7 +21,7 @@ namespace JongJin
 		[Header("ProgressRate")]
 		[SerializeField] private float tailMissionStartRate = 15.0f;
 		// TODO<이종진> - 진행률에 따른 미션 이름 수정 필요 - 20241110
-		[SerializeField] private float firstMissionRate = 0.0f;
+		[SerializeField] private float firstMissionRate = 35.0f;
 		[SerializeField] private float secondMissionRate = 55.0f;
 		[SerializeField] private float thirdMissionRate = 80.0f;
 
@@ -62,13 +62,12 @@ namespace JongJin
         public void EnterState()
 		{
 			dinosaurSpeed = dinosaur.GetComponent<DinosaurController>().Speed;
+            runningViewCam.GetComponent<CinemachineVirtualCamera>().Priority = 20;
 
 			if (prevDinosaurPosition.z <= 1e-3)
 				return;
 
 			SetInfo();
-
-            runningViewCam.GetComponent<CinemachineVirtualCamera>().Priority = 20;
         }
 		public void UpdateState()
 		{
@@ -92,10 +91,10 @@ namespace JongJin
 		#region 씬 전환시 플레이어, 공룡 정보 Setting
 		private void InitPlayerPos()
 		{
-			float offset = -1.0f * (players.Length - 1) / 2.0f * playerSpacing;
+			float offset = 1.0f * (players.Length - 1) / 2.0f * playerSpacing;
 
 			for (int playerNum = 0; playerNum < players.Length; playerNum++)
-				prevPlayerPosition[playerNum] = new Vector3(offset + playerNum * playerSpacing, 0.0f, 0.0f);
+				prevPlayerPosition[playerNum] = new Vector3(offset + playerNum * -playerSpacing, 0.0f, 0.0f);
 		}
 		private void SetInfo()
 		{
