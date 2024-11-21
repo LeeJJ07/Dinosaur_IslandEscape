@@ -20166,7 +20166,7 @@ MonoBehaviour:
   missionGround: {fileID: 1004509306}
   startForestGround: {fileID: 764586809}
   skyboxNormal: {fileID: 2100000, guid: 01f4eb1c73693428d923f1520032e7f9, type: 2}
-  skyboxVolcano: {fileID: 2100000, guid: 170f2a047c448444ca1b8e2d20f504f1, type: 2}
+  skyboxVolcano: {fileID: 2100000, guid: cf09bdd74268f184498d51e302193dbf, type: 2}
   missionRoomVolcano: {fileID: 813136928}
 --- !u!114 &544308611
 MonoBehaviour:
@@ -20237,8 +20237,8 @@ MonoBehaviour:
   minDistance: 13
   maxDistance: 25
   tailMissionStartRate: 15
-  firstMissionRate: 5
-  secondMissionRate: 10
+  firstMissionRate: 15
+  secondMissionRate: 55
   thirdMissionRate: 90
   isFirstMissionCompleted: 0
 --- !u!4 &544308616
