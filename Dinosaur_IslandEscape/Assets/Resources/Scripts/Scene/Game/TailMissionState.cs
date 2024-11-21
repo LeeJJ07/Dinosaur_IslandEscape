@@ -21,7 +21,6 @@ namespace JongJin
         private float[] dinosaurPosY = { 0.6f, -3.8f };
         private float[] dinosaurRotX = { -16.0f, 12.0f  };
 
-        private Animator dinosaurAnimator;
         private int attackCount;
         private float attackTime = 1.5f;
 
@@ -30,10 +29,6 @@ namespace JongJin
         private float attackFlowTime = 0.0f;
 
         private int randomAttackPos = -1;
-        private void Awake()
-        {
-            dinosaurAnimator = dinosaur.GetComponent<Animator>();
-        }
         public void EnterState()
         {
             attackCount = ATTACKCOUNT;
