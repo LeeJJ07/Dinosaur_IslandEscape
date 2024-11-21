@@ -31,7 +31,17 @@ namespace MyeongJin
 		{
 			targetNum = UnityEngine.Random.Range(0, 2);
 			SetStartPosition();
-		}
+			if(targetNum == 1)
+			{
+				Vector3 rotation = new Vector3(5, 220, 0);
+				this.transform.rotation = Quaternion.Euler(rotation);
+			}
+            else
+            {
+                Vector3 rotation = new Vector3(5, 140, 0);
+                this.transform.rotation = Quaternion.Euler(rotation);
+            }
+        }
 		private void OnDisable()
 		{
 			ResetObstacle();
@@ -74,9 +84,7 @@ namespace MyeongJin
 
 				// 마지막 구간을 지나면 스크립트 중지
 				if (currentSegment == 1)
-				{
-					this.GetComponentInChildren<Animator>().SetBool("isTouch", true);
-				}
+                    this.GetComponentInChildren<Animator>().SetBool("isTouch", true);
 
 				if (currentSegment >= controlPoints[targetNum].Length - 3)
 				{

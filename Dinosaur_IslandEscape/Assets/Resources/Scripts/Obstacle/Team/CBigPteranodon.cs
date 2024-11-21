@@ -72,14 +72,14 @@ namespace MyeongJin
 				t = 0f; // 곡선 시간 초기화
 				currentSegment++;
 
-				// 마지막 구간을 지나면 스크립트 중지
 				if(currentSegment == 1)
 				{
 					this.GetComponentInChildren<Animator>().SetBool("isTouch", true);
                     this.transform.Rotate(-45, 0, 0);
                 }
 
-				if (currentSegment >= controlPoints.Length - 3)
+                // 마지막 구간을 지나면 스크립트 중지
+                if (currentSegment >= controlPoints.Length - 3)
 				{
 					currentSegment = 0;
 					Debug.Log("Catmull-Rom Spline 경로 끝까지 도착했습니다!");
