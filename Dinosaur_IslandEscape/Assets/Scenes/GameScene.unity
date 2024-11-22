@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac2b220c226989418ed3dbfba341838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 663891669}
+  player: {fileID: 2102326777}
 --- !u!1 &18085889
 GameObject:
   m_ObjectHideFlags: 0
@@ -1432,18 +1432,6 @@ Transform:
   - {fileID: 1374799547}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &399136846 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 479253395773534452, guid: afa35d528dcfb984296ea9823357d499,
-    type: 3}
-  m_PrefabInstance: {fileID: 2016109464}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &399136847 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4839155676036760774, guid: afa35d528dcfb984296ea9823357d499,
-    type: 3}
-  m_PrefabInstance: {fileID: 2016109464}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &430477284
 GameObject:
   m_ObjectHideFlags: 0
@@ -1972,13 +1960,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 663891670}
-  - {fileID: 399136847}
   - {fileID: 1323343830}
   - {fileID: 1618646707987631982}
   - {fileID: 1543934362}
   - {fileID: 9856944}
   - {fileID: 2123275321}
+  - {fileID: 2102326778}
+  - {fileID: 1624126776}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &541895963
@@ -2589,18 +2577,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 646663802}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &663891669 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7015843230738409125, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1168968498}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &663891670 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2206348138624526545, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1168968498}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &730682320
 GameObject:
   m_ObjectHideFlags: 0
@@ -2712,8 +2688,8 @@ MonoBehaviour:
   tileRespawnPoint: 0
   tileLength: 16
   numberOfTiles: 3
-  firstPlayerTransform: {fileID: 399136847}
-  secondPlayerTransform: {fileID: 663891670}
+  firstPlayerTransform: {fileID: 2102326778}
+  secondPlayerTransform: {fileID: 1624126776}
 --- !u!4 &739289675
 Transform:
   m_ObjectHideFlags: 0
@@ -2935,8 +2911,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   players:
-  - {fileID: 399136846}
-  - {fileID: 663891669}
+  - {fileID: 2102326777}
+  - {fileID: 1624126775}
   dinosaur: {fileID: 1323343827}
   roundTimeLimit: 300
   totalRunningDistance: 500
@@ -3363,7 +3339,7 @@ PrefabInstance:
         type: 3}
       propertyPath: TestPlayer
       value: 
-      objectReference: {fileID: 663891669}
+      objectReference: {fileID: 0}
     - target: {fileID: 3424261845958337826, guid: b9083335acbbb55408b35872d4fbce5d,
         type: 3}
       propertyPath: m_Enabled
@@ -3373,7 +3349,7 @@ PrefabInstance:
         type: 3}
       propertyPath: TestPlayer
       value: 
-      objectReference: {fileID: 399136846}
+      objectReference: {fileID: 0}
     - target: {fileID: 7403012224709323706, guid: b9083335acbbb55408b35872d4fbce5d,
         type: 3}
       propertyPath: m_Name
@@ -3394,7 +3370,10 @@ PrefabInstance:
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6478409424071128865, guid: b9083335acbbb55408b35872d4fbce5d, type: 3}
+    - {fileID: 3424261845958337826, guid: b9083335acbbb55408b35872d4fbce5d, type: 3}
+    - {fileID: 2730876405299533320, guid: b9083335acbbb55408b35872d4fbce5d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 69383787914741431, guid: b9083335acbbb55408b35872d4fbce5d,
@@ -4604,6 +4583,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player1
       objectReference: {fileID: 0}
+    - target: {fileID: 8155759913201001040, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
+        type: 3}
+      propertyPath: gameSceneController
+      value: 
+      objectReference: {fileID: 807674218}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6706,6 +6690,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1580610662}
   m_CullTransparentMesh: 1
+--- !u!1 &1624126775 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 479253395773534452, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1168968498}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1624126776 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4839155676036760774, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1168968498}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1684785417
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7957,6 +7953,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player2
       objectReference: {fileID: 0}
+    - target: {fileID: 2147841809479262293, guid: afa35d528dcfb984296ea9823357d499,
+        type: 3}
+      propertyPath: gameSceneController
+      value: 
+      objectReference: {fileID: 807674218}
     - target: {fileID: 4839155676036760774, guid: afa35d528dcfb984296ea9823357d499,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8203,6 +8204,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2085010359}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2102326777 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7015843230738409125, guid: afa35d528dcfb984296ea9823357d499,
+    type: 3}
+  m_PrefabInstance: {fileID: 2016109464}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2102326778 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2206348138624526545, guid: afa35d528dcfb984296ea9823357d499,
+    type: 3}
+  m_PrefabInstance: {fileID: 2016109464}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2123275320
 GameObject:
   m_ObjectHideFlags: 0
@@ -8249,7 +8262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac2b220c226989418ed3dbfba341838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 399136846}
+  player: {fileID: 1624126775}
 --- !u!1 &1618646707987478956 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2079846796619956638, guid: c76ac0ced8acd924c9d917da9e4c0224,
