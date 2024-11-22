@@ -6,6 +6,9 @@ namespace HakSeung
 {
     public abstract class CUIScene : CUIBase
     {
+        
+
+
 
     }
 }
