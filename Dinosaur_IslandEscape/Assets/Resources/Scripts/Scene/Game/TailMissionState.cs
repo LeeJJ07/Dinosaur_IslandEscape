@@ -18,7 +18,7 @@ namespace JongJin
         [SerializeField] private float warningTime = 3.0f;
         [SerializeField] private float attackDelayTime = 3.0f;
 
-        private float[] dinosaurPosY = { 0.6f, -3.8f };
+        private float[] dinosaurPosY = { 0.4f, -3.8f };
         private float[] dinosaurRotX = { -16.0f, 12.0f  };
 
         private int attackCount;
