@@ -25,5 +25,18 @@ public class Test : MonoBehaviour
         {
             UIManager.Instance.ShowPopupUI(UIManager.ETestType.TutorialPopupPanel.ToString());
         }
+
+  
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            UIManager.Instance.ClosePopupUI();
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            UIManager.Instance.ClearUIObj();
+        }
+
     }
 }

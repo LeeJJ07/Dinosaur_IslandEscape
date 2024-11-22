@@ -31,24 +31,24 @@ namespace HakSeung
         {
             RunningScenePanel,
             TutorialPopupPanel,
+            TestCanvas,
+
         }
 
         private static UIManager s_Instance;
         
         private Dictionary<string, UnityEngine.Object> uiPrefabs = new Dictionary<string, UnityEngine.Object>();
-        private Dictionary<string, CUIBase> uiObjs = new Dictionary<string, CUIBase>();
+        private Dictionary<string, CUIBase> uiObjs;
 
         private const string UIMANGEROBJECTNAME = "_UIManager";
         private const string PREFABSPATH = "Prefabs/UI/";
 
         private GameSceneController gameSceneController;
 
-        
-        private Stack<CUIPopup> popupStack;
-
         private int popupIndex = 0;
 
         public CUIScene CurSceneUI { get; private set; } = null;
+        public Stack<CUIPopup> PopupUIStack { get; private set; } = null;
         public GameObject MainCanvas { private get; set; }
        
 
@@ -85,6 +85,9 @@ namespace HakSeung
         private void Initialzie()
         {
             MainCanvas = GameObject.Find("MainCanvas");
+            uiPrefabs = new Dictionary<string, UnityEngine.Object>();
+            uiObjs = new Dictionary<string, CUIBase>();
+            PopupUIStack = new Stack<CUIPopup>();
         }
 
         public UnityEngine.Object UICashing<T>(System.Type type, int enumIndex) where T : UnityEngine.Object
@@ -115,7 +118,7 @@ namespace HakSeung
             if (CurSceneUI != null)
             {
                 CurSceneUI.Hide();
-                Destroy(CurSceneUI);
+                Destroy(CurSceneUI.gameObject);
             }
 
             if (!uiPrefabs.ContainsKey(key))
@@ -139,76 +142,100 @@ namespace HakSeung
 
         }
 
-        //TODO<이학승> ShowPopupUI 제외하고 자주쓰이는 팝업 나중에 한번만 뜰 팝업들을 정리하는 메서드가 필요하다. 24/11/21
-        public void ShowPopupUI(string key)
+        //TODO<이학승> ShowPopupUI 제외하고 자주쓰이는 팝업 나중에 한번만 뜰 팝업들을 정리하는 메서드가 필요하다. 24/11/21 if문 보기 안좋으니수정필요
+        public bool ShowPopupUI(string key)
         {
             CUIPopup popUI = null;
 
             if (!uiPrefabs.ContainsKey(key))
             {
                 Debug.Log($"PopupUI Key: {key}가 존재하지 않습니다.");
-                return;
+                return false;
             }
-            
-            if (uiObjs[key] != null)
+
+            if (uiObjs.ContainsKey(key))
             {
-                if(popUI = uiObjs[key] as CUIPopup)
+                if (popUI = uiObjs[key] as CUIPopup)
                 {
-                    popupStack.Push(popUI);
-                    popupStack.Peek().Show();
+                    PopupUIStack.Push(popUI);
+                    PopupUIStack.Peek().Show();
                     ++popupIndex;
                 }
                 else
+                {
                     Debug.Log($"{key}는 CUIPopup을 가지고 있지 않습니다.");
-
-                return;
+                    return false;
+                }
             }
-                
-
-            if (popUI = Instantiate(uiPrefabs[key]).GetComponent<CUIPopup>())
+            else if (popUI = Instantiate(uiPrefabs[key]).GetComponent<CUIPopup>())
             {
                 popUI.transform.SetParent(MainCanvas.transform, false);
 
                 uiObjs.Add(key, popUI);
-                popupStack.Push(popUI);
-                popupStack.Peek().Show();
+                PopupUIStack.Push(popUI);
+                PopupUIStack.Peek().Show();
                 ++popupIndex;
             }
             else
+            {
                 Debug.Log($"{key}는 CUIPopup을 가지고 있지 않습니다.");
+                return false;
+            }
+
+            PopupUIStack.Peek().gameObject.transform.SetAsLastSibling();
+            return true;
+
         }
 
         public void ClosePopupUI()
         {
-            if (popupStack.Count == 0)
+            if (PopupUIStack.Count == 0)
                 return;
 
-            popupStack.Peek().Hide();
-            popupStack.Pop();
+            PopupUIStack.Peek().Hide();
+            PopupUIStack.Pop();
             --popupIndex;
         }
 
         public void ClosePopupUI(CUIPopup popupUI)
         {
-            if (popupStack.Count == 0)
+            if (PopupUIStack.Count == 0)
                 return;
 
-            if (popupStack.Peek() != popupUI)
+            if (PopupUIStack.Peek() != popupUI)
             {
                 Debug.Log($"popupUi: {popupUI.UIName}은 닫을 수 없습니다.");
                 return;
             }
 
-            popupStack.Peek().Hide();
-            popupStack.Pop();
+            PopupUIStack.Peek().Hide();
+            PopupUIStack.Pop();
             --popupIndex;
         }
 
         public void CloseAllPopupUI()
         {
-            while(popupStack.Count > 0)
+            while(PopupUIStack.Count > 0)
                 ClosePopupUI();
         }
+
+        public void ClearUIObj()
+        {
+            if (uiObjs.Count == 0)
+                return;
+
+            CloseAllPopupUI();
+
+            foreach (CUIBase items in uiObjs.Values)
+            {
+                Destroy(items.gameObject);
+                Debug.Log(items.name + "파괴");
+            }
+            uiObjs.Clear();
+            PopupUIStack.Clear();
+        }
+        
+
 
     }
 }
