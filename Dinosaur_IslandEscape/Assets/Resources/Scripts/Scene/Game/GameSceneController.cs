@@ -42,12 +42,12 @@ namespace JongJin
             secondMissionState = GetComponent<SecondMissionState>();
             thirdMissionState = GetComponent<ThirdMissionState>();
 
-            missionGround.SetActive(false);           // missionGround�� �ʱ⿡�� ���� ����
-            startForestGround.SetActive(true);          // startForestGround�� �ʱ⿡ �ѵ� ����
+            //missionGround.SetActive(false);           // missionGround�� �ʱ⿡�� ���� ����
+            //startForestGround.SetActive(true);          // startForestGround�� �ʱ⿡ �ѵ� ����
 
-            RenderSettings.skybox = skyboxNormal;       // �ʱ� skybox�� skyboxNormal
+            //RenderSettings.skybox = skyboxNormal;       // �ʱ� skybox�� skyboxNormal
 
-            missionRoomVolcano.SetActive(false);
+            //missionRoomVolcano.SetActive(false);
             
             gameStateContext = new GameStateContext(this);
             //gameStateContext.Transition(cutSceneState);
@@ -68,21 +68,21 @@ namespace JongJin
                     if (runningState.IsFirstMissionTriggered())
                     {
                         UpdateState(EGameState.FIRSTMISSION);
-                        missionGround.SetActive(true);                // FirstMission�� �����ϸ� missionGround�� ����
-                        startForestGround.SetActive(false);             // FirstMission�� �����ϸ� startForestGround�� ����
-                        missionRoomVolcano.SetActive(true);
+                        //missionGround.SetActive(true);                // FirstMission�� �����ϸ� missionGround�� ����
+                        //startForestGround.SetActive(false);             // FirstMission�� �����ϸ� startForestGround�� ����
+                        //missionRoomVolcano.SetActive(true);
                     }
                     else if (runningState.IsSecondMissionTriggered())
                     {
                         UpdateState(EGameState.SECONDMISSION);
-                        missionGround.SetActive(true);
-                        missionRoomVolcano.SetActive(true);
-                        RenderSettings.skybox = skyboxVolcano;          // SecondMission ���� �� skybox�� �Ӱ� ����
+                        //missionGround.SetActive(true);
+                        //missionRoomVolcano.SetActive(true);
+                        //RenderSettings.skybox = skyboxVolcano;          // SecondMission ���� �� skybox�� �Ӱ� ����
                     }
                     else if (runningState.IsThirdMissionTriggered())
                     {
                         UpdateState(EGameState.THIRDMISSION);
-                        missionGround.SetActive(true);
+                        //missionGround.SetActive(true);
                     }
                     //else if (runningState.IsTailMissionTriggered())
                     //{
@@ -98,8 +98,8 @@ namespace JongJin
                     if (firstMissionState.test)         // ù ��° ���� �̼� ������
                     { 
                         UpdateState(EGameState.RUNNING);            // ���� �������� �ٽ� �޸�
-                        missionGround.SetActive(false);             // missinoGround �ٽ� ����
-                        missionRoomVolcano.SetActive(false);
+                        //missionGround.SetActive(false);             // missinoGround �ٽ� ����
+                        //missionRoomVolcano.SetActive(false);
                     }
                     break;
                 case EGameState.SECONDMISSION:          // missionGround.SetActive(false) �־����
