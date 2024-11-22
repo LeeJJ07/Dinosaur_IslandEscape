@@ -11,14 +11,15 @@ namespace MyeongJin
 		// >>: Stoop
 		private Transform[] controlPoints;  // 제어점 (최소 4개 필요)
 
-		private float moveSpeed = 12f;       // 이동 속도
+		private float moveSpeed = 20f;       // 이동 속도
 		private float t = 0f;               // Catmull-Rom 곡선의 시간 변수
 		private int currentSegment = 0;     // 현재 이동 중인 곡선 구간
-		// <<
+											// <<
+		private int rotateSpeed = 15;
 
 		private void Start()
 		{
-			controlPoints = GameObject.Find("SkyControlPoints").GetComponent<CSkyControlPoint>().controlPoints;
+			controlPoints = GameObject.Find("BigPteranodonControlPoints").GetComponent<CSkyControlPoint>().controlPoints;
 		}
 		private void Update()
 		{
@@ -26,7 +27,7 @@ namespace MyeongJin
 		}
 		private void OnEnable()
 		{
-			this.transform.Rotate(45, 0, 0);
+			this.transform.Rotate(-45, 0, 0);
 		}
 		private void OnDisable()
 		{
@@ -47,7 +48,8 @@ namespace MyeongJin
 		{
 			SetStartPosition();
 			this.transform.rotation = Quaternion.Euler(0, 0, 0);
-		}
+			rotateSpeed = 15;
+        }
 		private void SetStartPosition()
 		{
 			if(controlPoints != null)
@@ -74,6 +76,7 @@ namespace MyeongJin
 
 			// 곡선의 t 값을 점진적으로 업데이트 (speed로 곡선 이동 속도 조정)
 			t += Time.deltaTime * moveSpeed / Vector3.Distance(p1.position, p2.position);
+			this.transform.Rotate(rotateSpeed * Time.deltaTime, 0, 0);
 
 			// t가 1에 도달하면 다음 구간으로 전환
 			if (t >= 1f)
@@ -84,7 +87,7 @@ namespace MyeongJin
 				if(currentSegment == 1)
 				{
 					this.GetComponentInChildren<Animator>().SetBool("isTouch", true);
-					this.transform.Rotate(-45, 0, 0);
+					rotateSpeed *= 8;
 				}
 
 				// 마지막 구간을 지나면 스크립트 중지

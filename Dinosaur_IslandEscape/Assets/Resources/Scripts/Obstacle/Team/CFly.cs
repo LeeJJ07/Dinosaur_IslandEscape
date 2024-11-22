@@ -12,21 +12,28 @@ namespace MyeongJin
 		public IObjectPool<CFly> Pool { get; set; }
 
 		private Vector3 startPosition;
+
 		private GameObject blood;
-		bool isFirst = true;
+
+		private ParticleSystem flyParticleSystem;
+		private ParticleSystem lightBugParticleSystem;
 
 		private void Awake()
 		{
+            flyParticleSystem = this.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>();
+            lightBugParticleSystem = this.transform.GetChild(1).gameObject.GetComponent<ParticleSystem>();
 			blood = this.transform.GetChild(2).gameObject;
 		}
-		private void OnEnable()
-		{
-			if (isFirst)
-				isFirst = false;
-			else
+        //private void OnEnable()
+        //{
+        //	OnTriggerEnter(null);
+        //}
+        private void Update()
+        {
+			if (Input.GetKeyDown(KeyCode.Space))
 				OnTriggerEnter(null);
-		}
-		private void OnDisable()
+        }
+        private void OnDisable()
 		{
 			ResetObstacle();
 		}
@@ -38,6 +45,12 @@ namespace MyeongJin
 		{
 			this.GetComponent<BoxCollider>().enabled = true;
             blood.SetActive(false);
+
+            var mainModule = flyParticleSystem.main;
+            mainModule.gravityModifier = 0f;
+
+            var mainModule2 = lightBugParticleSystem.main;
+            mainModule2.gravityModifier = 0f;
         }
 		private void OnTriggerEnter(Collider other)
 		{
@@ -45,7 +58,13 @@ namespace MyeongJin
 
             Debug.Log("Catch Bug");
 
-            blood.SetActive(true);
+			blood.SetActive(true);
+
+			var mainModule = flyParticleSystem.main;
+            mainModule.gravityModifier = 0.6f;
+
+            var mainModule2 = lightBugParticleSystem.main;
+            mainModule2.gravityModifier = 0.6f;
 
             StartCoroutine("Catch");
 		}

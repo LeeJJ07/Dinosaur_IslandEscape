@@ -45,7 +45,7 @@ namespace JongJin
                     break;
                 case EGameState.RUNNING:
                     if (runningState.IsFirstMissionTriggered())
-                        UpdateState(EGameState.SECONDMISSION);
+                        UpdateState(EGameState.FIRSTMISSION);
                     //else if (runningState.IsSecondMissionTriggered())
                     //    UpdateState(EGameState.SECONDMISSION);
                     //else if (runningState.IsThirdMissionTriggered())

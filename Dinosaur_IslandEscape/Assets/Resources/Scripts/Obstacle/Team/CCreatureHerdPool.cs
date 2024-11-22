@@ -23,7 +23,8 @@ namespace MyeongJin
 		private GameObject crocodile;
 
 		// >>: 익룡 이동 점
-		private Transform[] skycontrolPoints;
+		private Transform[] smallPteranodonControlPoints;
+		private Transform[] bigPteranodonControlPoints;
 		private Transform[] groundControlPoints;
 		// <<
 
@@ -65,9 +66,10 @@ namespace MyeongJin
 		}
 		private void Start()
 		{
-			skycontrolPoints = GameObject.Find("SkyControlPoints").GetComponent<CSkyControlPoint>().controlPoints;
+            smallPteranodonControlPoints = GameObject.Find("SmallPteranodonControlPoints").GetComponent<CSkyControlPoint>().controlPoints;
+            bigPteranodonControlPoints = GameObject.Find("BigPteranodonControlPoints").GetComponent<CSkyControlPoint>().controlPoints;
 
-			for (int i = 0; i < maxPoolSize; i++)
+            for (int i = 0; i < maxPoolSize; i++)
 			{
 				CreatedPooledItem().ReturnToPool();
 			}
@@ -204,11 +206,11 @@ namespace MyeongJin
 			// "30"과 "20"을 Line에 맞춰서 생성해야 함.
 			if (obstacle is CSmallPteranodon)
 			{
-				obstacle.transform.position = new Vector3(lineNum * space + position.x - 2, skycontrolPoints[1].position.y, skycontrolPoints[1].position.z);
+				obstacle.transform.position = new Vector3(lineNum * space + position.x - 2, smallPteranodonControlPoints[1].position.y, smallPteranodonControlPoints[1].position.z);
 			}
 			else if (obstacle is CBigPteranodon)
 			{
-				obstacle.transform.position = new Vector3(space / 2 + position.x - 2, skycontrolPoints[1].position.y, skycontrolPoints[1].position.z);
+				obstacle.transform.position = new Vector3(space / 2 + position.x - 2, bigPteranodonControlPoints[1].position.y, bigPteranodonControlPoints[1].position.z);
 			}
 			return true;
 		}

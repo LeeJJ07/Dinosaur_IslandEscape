@@ -13,7 +13,6 @@ namespace MyeongJin
 		[SerializeField] GameObject player1Node;
 		[SerializeField] GameObject player2Node;
 		[SerializeField] GameObject missionGround;
-		//[SerializeField] private GameObject fly;
 
 		private CObstacleObjectPool obstaclePool;
 		private CCreatureHerdPool creatureHerdPool;
@@ -22,7 +21,7 @@ namespace MyeongJin
 		private GameObject gameSceneController;
 		private GameObject[] playerNode;
 
-		private Vector3 missionGroundPos;
+		public Vector3 MissionGroundPos { get; private set; }
 
         private int playerCount = 2;
 		private float[] obstacleGenerateChance;
@@ -60,7 +59,7 @@ namespace MyeongJin
 			playerNode[0] = player1Node;
 			playerNode[1] = player2Node;
 
-            missionGroundPos = missionGround.GetComponent<Transform>().position;
+            MissionGroundPos = missionGround.GetComponent<Transform>().position;
 
             obstaclePool = gameObject.AddComponent<CObstacleObjectPool>();
 			creatureHerdPool = gameObject.AddComponent<CCreatureHerdPool>();
@@ -90,7 +89,7 @@ namespace MyeongJin
                 case EGameState.FIRSTMISSION:
                     TimerRunning();
 
-                    if (IsSpawnTime(50))
+                    if (IsSpawnTime(150))
                         SpawnCreatureHerdBackground();
 
                     if (IsSpawnTime(300))
@@ -110,7 +109,7 @@ namespace MyeongJin
 
         private void SpawnCreatureHerdBackground()
         {
-            creatureBackgroundPool.SpawnCreatureHerd(missionGroundPos);
+            creatureBackgroundPool.SpawnCreatureHerd(MissionGroundPos);
         }
 
         private void UpdateCurState()
@@ -152,14 +151,14 @@ namespace MyeongJin
 		}
 		private void GenerateFly()
 		{
-			flyPool.SpawnFly(missionGroundPos);
+			flyPool.SpawnFly(MissionGroundPos);
         }
         /// <summary>
         /// 큰 익룡/악어를 생성 시 true를 반환하여 해당 Line에는 더 이상 소환되지 않음. 즉, 라인 수 상관없이 한마리만 생성
         /// </summary>
         private bool IsSpawnHerd(int i)
 		{
-			return creatureHerdPool.SpawnCreatureHerd(i, missionGroundPos);
+			return creatureHerdPool.SpawnCreatureHerd(i, MissionGroundPos);
         }
 		private bool IsSpawnSection(out int curGeneratePosition)
 		{

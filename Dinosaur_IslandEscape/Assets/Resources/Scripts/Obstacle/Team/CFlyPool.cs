@@ -15,6 +15,7 @@ namespace MyeongJin
 
 		// TODO <문명진> : 추후 장애물 위치를 저장하고 있는 변수를 가져올 것
 		private Vector3 mainCameraPosition;
+		private Vector3 missionGroundPosition;
 
 		private Vector3[] flyArr;
 		private Vector3[] flyOffset;
@@ -96,6 +97,14 @@ namespace MyeongJin
 		private void OnReturnedToPool(CFly obstacle)
 		{
 			obstacle.gameObject.SetActive(false);
+
+			for (int i = 0; i < maxPoolSize; i++)
+			{
+				if(obstacle.transform.position == missionGroundPosition + flyArr[i])
+				{
+					isFlyExist[i] = false;
+                }
+			}
 		}
 		private void OnTakeFromPool(CFly obstacle)
 		{
@@ -107,13 +116,15 @@ namespace MyeongJin
 		}
 		public void SpawnFly(Vector3 groundPosition)
 		{
-			for (int i = 0; i < maxPoolSize; i++)
+            missionGroundPosition = groundPosition;
+
+            for (int i = 0; i < maxPoolSize; i++)
 			{
-				if (/*isFlyExist[i] ||*/ UnityEngine.Random.Range(0, 2) == 0)
+				if (isFlyExist[i] || UnityEngine.Random.Range(0, 2) == 0)
 					continue;
 
 				CFly obstacle = Pool.Get();
-                //isFlyExist[i] = true;
+                isFlyExist[i] = true;
 
                 obstacle.transform.position = groundPosition + flyArr[i];
 			}

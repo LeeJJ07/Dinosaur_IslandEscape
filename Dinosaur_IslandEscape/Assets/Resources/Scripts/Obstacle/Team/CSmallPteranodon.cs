@@ -18,7 +18,7 @@ namespace MyeongJin
 
 		private void Start()
 		{
-			controlPoints = GameObject.Find("SkyControlPoints").GetComponent< CSkyControlPoint>().controlPoints;
+			controlPoints = GameObject.Find("SmallPteranodonControlPoints").GetComponent< CSkyControlPoint>().controlPoints;
 		}
 		private void Update()
 		{
