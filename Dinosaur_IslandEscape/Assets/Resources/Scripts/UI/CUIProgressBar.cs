@@ -11,11 +11,11 @@ namespace HakSeung
         [Header("Porgress Bar")]
         //[SerializeField] private float curProgress;
         [SerializeField]private float maxProgress;
+        [SerializeField]private Image PrograssBarFill;
 
         private const float maxFillAmount = 1f;
         private const float defaultMaxProgress = 0;
 
-        public Image PrograssBarFill;
 
         private void Awake()
         {
@@ -33,7 +33,6 @@ namespace HakSeung
         {
             maxProgress = defaultMaxProgress;
         }
-
 
         private void FillProgressBar(float curProgress)
         {

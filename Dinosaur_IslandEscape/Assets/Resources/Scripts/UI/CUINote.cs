@@ -26,6 +26,7 @@ namespace HakSeung
         [SerializeField] private const float noteHitResultTime = 2f;
         [SerializeField] private const float hitCheckRingScale = 5f;
         [SerializeField] private const float distanceToPlayerPostion = 1f;
+        [SerializeField] private Transform playerTransform;
 
         private const float noteFailTime = 0f;
 
@@ -33,8 +34,7 @@ namespace HakSeung
 
         Coroutine coCheckNoteHit; // 코루틴 명명법 모르겠어서 임시
 
-        //테스트 용이니까 플레이어 넣어야됨
-        public GameObject TestPlayer;
+
 
         private void Init()
         {
@@ -74,51 +74,6 @@ namespace HakSeung
             noteObjects[(int)ENoteImageObject.HITCHECKRING].transform.localScale = Vector3.one;
         }
 
-        /// <summary>
-        /// curTime이 0이 될때까지 작동하는 코루틴 
-        /// 선형보간을 통해 HitCheckRing이 Vector3.one까지 줄어들게 하고
-        /// 후에 isHit의 여부에 따라 Success와 Fail의 이미지 오브젝트를 활성화 시킨다
-        /// </summary>
-        /// <returns></returns>
-        /*private IEnumerator IECheckNoteHitInSuccessTime()
-        {
-            float hitNoteScale = transform.localScale.x;
-
-            while (curTime > noteFailTime && !isHit)
-            {
-                curTime -= Time.deltaTime;
-                noteObjects[(int)ENoteImageObject.HITCHECKRING].transform.localScale =
-                    Vector3.Lerp(noteObjects[(int)ENoteImageObject.HITCHECKRING].transform.localScale, Vector3.one, Time.deltaTime);
-
-                if (TestPlayer != null) 
-                    SyncUIWithPlayerPosition(TestPlayer.transform.position);
-
-                yield return null;
-            }
-
-            if (isHit)
-                noteObjects[(int)ENoteImageObject.SUCCESS].SetActive(true);
-            else
-                noteObjects[(int)ENoteImageObject.FAIL].SetActive(true);
-
-            noteObjects[(int)ENoteImageObject.HITCHECKRING].SetActive(false);
-
-            while (curTime <= noteHitResultTime)
-            {
-                curTime += Time.deltaTime;
-
-                if (TestPlayer != null)
-                    SyncUIWithPlayerPosition(TestPlayer.transform.position);
-
-                yield return null;
-            }
-
-
-            this.gameObject.SetActive(false);
-            
-        }*/
-
-
         private IEnumerator IECheckNoteHitInSuccessTime()
         {
             float hitNoteScale = transform.localScale.x;
@@ -129,8 +84,8 @@ namespace HakSeung
                 noteObjects[(int)ENoteImageObject.HITCHECKRING].transform.localScale =
                     Vector3.Lerp(noteObjects[(int)ENoteImageObject.HITCHECKRING].transform.localScale, Vector3.one, Time.deltaTime);
 
-                if (TestPlayer != null)
-                    SyncUIWithPlayerPosition(TestPlayer.transform.position);
+                if (playerTransform != null)
+                    SyncUIWithPlayerPosition(playerTransform.position);
 
                 yield return null;
             }
@@ -149,8 +104,8 @@ namespace HakSeung
             {
                 curTime += Time.deltaTime;
 
-                if (TestPlayer != null)
-                    SyncUIWithPlayerPosition(TestPlayer.transform.position);
+                if (playerTransform != null)
+                    SyncUIWithPlayerPosition(playerTransform.position);
 
                 yield return null;
             }
