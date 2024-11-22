@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,8 +11,11 @@ namespace JongJin
         [SerializeField] private Image panel;
         private float time = 0.0f;
         private float fTime = 1.0f;
+
+        public bool IsFinished { get; private set; } = false;
         public void FadeInOut()
         {
+            IsFinished = false;
             StartCoroutine(FadeFlow());
         }
 
@@ -31,6 +35,7 @@ namespace JongJin
 
             time = 0.0f;
             yield return new WaitForSeconds(1.0f);
+            IsFinished = true;
 
             while (alpha.a > 0.0f)
             {
