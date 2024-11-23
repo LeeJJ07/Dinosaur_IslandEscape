@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-public class CUIRunningPanel : CUIScene
+public class CUIRunningCanvas : CUIScene
 {
     private const int TOTALPLAYERS = 2;
     private readonly float progressBarStartX = -650.0f;
@@ -16,8 +16,6 @@ public class CUIRunningPanel : CUIScene
     [SerializeField] private Image progressBarImage;
     [SerializeField] private RectTransform dinosaurImagePos;
     [SerializeField] private RectTransform[] playerImagepos = new RectTransform[TOTALPLAYERS];
-    [SerializeField] private RectTransform player1ImagePos;
-    [SerializeField] private RectTransform player2ImagePos;
     [SerializeField] private TextMeshProUGUI endDistanceText;
     [SerializeField] private TextMeshProUGUI dinosaurDistanceText;
     [SerializeField] private TextMeshProUGUI timerText;
@@ -39,7 +37,7 @@ public class CUIRunningPanel : CUIScene
         float playerX = (progressBarEndX - progressBarStartX)
             * playerDistance / totalRunningDistance + progressBarStartX + imageOffset;
 
-        playerImagepos[playerNumber].anchoredPosition = new Vector2(playerX, player1ImagePos.anchoredPosition.y);
+        playerImagepos[playerNumber].anchoredPosition = new Vector2(playerX, playerImagepos[playerNumber].anchoredPosition.y);
     }
 
     private void SetDinosaurImage(float dinosaurDistance, float totalRunningDistance)
