@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7407676857875052737}
   - component: {fileID: 6183738561620007099}
   m_Layer: 5
-  m_Name: RunningScenePanel
+  m_Name: EventScenePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bee385ce59da5147bf8f5d4c59a2d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiName: RunningScenePanel
+  uiName: EventScenePanel
   progressBar: {fileID: 4967215897592627996}
   player1Note: {fileID: 6040208612048389332}
   player2Note: {fileID: 4242316598128525612}

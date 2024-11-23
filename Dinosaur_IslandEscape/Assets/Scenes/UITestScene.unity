@@ -723,6 +723,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1647562377}
   - component: {fileID: 1647562378}
+  - component: {fileID: 1647562379}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -757,6 +758,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5ed0ce338be3ee4e9f87effad431ae5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1647562379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647562376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b91c2f35d21f7443965488f64a3a43b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiName: 
+  imageOffset: -20
+  runningCanvas: {fileID: 2091552745}
+  progressBarImage: {fileID: 0}
+  dinosaurImagePos: {fileID: 0}
+  playerImagepos:
+  - {fileID: 0}
+  - {fileID: 0}
+  player1ImagePos: {fileID: 0}
+  player2ImagePos: {fileID: 0}
+  endDistanceText: {fileID: 0}
+  dinosaurDistanceText: {fileID: 0}
+  timerText: {fileID: 0}
+  heartImages: []
 --- !u!1 &1785841443
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,7 +29,7 @@ namespace HakSeung
         
         public enum ETestType
         {
-            RunningScenePanel,
+            EventScenePanel,
             TutorialPopupPanel,
             TestCanvas,
 
@@ -42,14 +42,16 @@ namespace HakSeung
 
         private const string UIMANGEROBJECTNAME = "_UIManager";
         private const string PREFABSPATH = "Prefabs/UI/";
+        private const int MAXSCENEUICOUNT = 2;
 
         private GameSceneController gameSceneController;
 
         private int popupIndex = 0;
 
-        public CUIScene CurSceneUI { get; private set; } = null;
+        private List<CUIScene> SceneUIList = null;
         public Stack<CUIPopup> PopupUIStack { get; private set; } = null;
         public GameObject MainCanvas { private get; set; }
+        public CUIScene CurSceneUI { get; private set; } = null;
 
         public static UIManager Instance
         {
@@ -87,6 +89,9 @@ namespace HakSeung
             uiPrefabs = new Dictionary<string, UnityEngine.Object>();
             uiObjs = new Dictionary<string, CUIBase>();
             PopupUIStack = new Stack<CUIPopup>();
+            SceneUIList = new List<CUIScene>();
+            for (int i = 0; i < MAXSCENEUICOUNT; i++)
+                SceneUIList.Add(null);
         }
 
         public UnityEngine.Object UICashing<T>(System.Type type, int enumIndex) where T : UnityEngine.Object
@@ -102,44 +107,74 @@ namespace HakSeung
             T uiObj = Resources.Load<T>(PREFABSPATH + $"{uiName}");
              
             if(uiObj == null)
-                 Debug.Log("로드 실패: " + PREFABSPATH + $"에 {uiName}는 존재하지 않습니다.");
+                 Debug.LogError("로드 실패: " + PREFABSPATH + $"에 {uiName}는 존재하지 않습니다.");
 
             uiPrefabs.Add(uiName, uiObj);
 
             return uiPrefabs[uiName];
         }
 
-
-        public void ShowSceneUI(string key)
+        public void CreateSceneUI(string key, int sceneUIIndex = 0)
         {
             CUIScene sceneUI = null;
 
-            if (CurSceneUI != null)
-            {
-                CurSceneUI.Hide();
-                Destroy(CurSceneUI.gameObject);
-            }
-
             if (!uiPrefabs.ContainsKey(key))
             {
-                Debug.Log($"SceneUI Key: {key}가 존재하지 않습니다.");
+                Debug.LogError($"SceneUI Key: {key}가 존재하지 않습니다.");
                 return;
+            }
+
+            Debug.Log(SceneUIList.Count);
+
+            if (SceneUIList[sceneUIIndex] != null)
+            {
+                SceneUIList[sceneUIIndex].Hide();
+                Destroy(SceneUIList[sceneUIIndex].gameObject);
             }
             
             if (sceneUI = uiPrefabs[key].GetComponent<CUIScene>())
             {
-                if (CurSceneUI = Instantiate(sceneUI))
+                if (SceneUIList[sceneUIIndex] = Instantiate(sceneUI))
                 {
-                    CurSceneUI.transform.SetParent(MainCanvas.transform, false);
-                    CurSceneUI.Show();
+                    SceneUIList[sceneUIIndex].transform.SetParent(MainCanvas.transform, false);
+                    //SceneUIList[sceneUIIndex].Show();
                 }
                 else
-                    Debug.Log($"{key}생성 실패");
+                    Debug.LogError($"{key}생성 실패");
             }
             else
-                Debug.Log($"{key}는 CUIScene를 상속받지 않는 타입입니다.");
+                Debug.LogError($"{key}는 CUIScene를 상속받지 않는 타입입니다.");
+
+            if (sceneUIIndex == 0)
+                SceneUISwap();
+        }
+
+        public void SceneUISwap(int sceneUIIndex = 0)
+        {
+            if (sceneUIIndex >= SceneUIList.Count)
+                return;
+
+            if (CurSceneUI != null)
+                CurSceneUI.Hide();
+
+            CurSceneUI = SceneUIList[sceneUIIndex];
+            CurSceneUI.Show();
 
         }
+
+        public void ClearSceneUI()
+        {
+            if (SceneUIList.Count == 0)
+                return;
+
+            for(int i = 0; i < SceneUIList.Count; i++)
+            {
+                SceneUIList[i].Hide();
+                Destroy(SceneUIList[i].gameObject);
+            }
+            SceneUIList.Clear();
+        }
+
 
         //TODO<이학승> ShowPopupUI 제외하고 자주쓰이는 팝업 나중에 한번만 뜰 팝업들을 정리하는 메서드가 필요하다. 24/11/21 if문 보기 안좋으니수정필요
         public bool ShowPopupUI(string key)
@@ -148,7 +183,7 @@ namespace HakSeung
 
             if (!uiPrefabs.ContainsKey(key))
             {
-                Debug.Log($"PopupUI Key: {key}가 존재하지 않습니다.");
+                Debug.LogError($"PopupUI Key: {key}가 존재하지 않습니다.");
                 return false;
             }
 
@@ -162,7 +197,7 @@ namespace HakSeung
                 }
                 else
                 {
-                    Debug.Log($"{key}는 CUIPopup을 가지고 있지 않습니다.");
+                    Debug.LogError($"{key}는 CUIPopup을 가지고 있지 않습니다.");
                     return false;
                 }
             }
@@ -177,7 +212,7 @@ namespace HakSeung
             }
             else
             {
-                Debug.Log($"{key}는 CUIPopup을 가지고 있지 않습니다.");
+                Debug.LogError($"{key}는 CUIPopup을 가지고 있지 않습니다.");
                 return false;
             }
 
@@ -203,7 +238,7 @@ namespace HakSeung
 
             if (PopupUIStack.Peek() != popupUI)
             {
-                Debug.Log($"popupUi: {popupUI.UIName}은 닫을 수 없습니다.");
+                Debug.LogError($"popupUi: {popupUI.UIName}은 닫을 수 없습니다.");
                 return;
             }
 

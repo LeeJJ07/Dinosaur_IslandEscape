@@ -15,7 +15,8 @@ public class Test : MonoBehaviour
 
     void Start()
     {
-        UIManager.Instance.ShowSceneUI(UIManager.ETestType.RunningScenePanel.ToString());
+        UIManager.Instance.CreateSceneUI(UIManager.ETestType.EventScenePanel.ToString(), 0);
+        
     }
 
     // Update is called once per frame
