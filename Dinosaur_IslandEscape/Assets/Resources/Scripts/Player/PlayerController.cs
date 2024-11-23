@@ -31,7 +31,12 @@ namespace JongJin
         // TODO<이종진> - 테스트용 작성 수정필요 - 20241110
         [SerializeField] private GameSceneController gameSceneController;
 
+        [SerializeField] private BoxCollider upCollider;
+        [SerializeField] private BoxCollider downCollider;
+
         [SerializeField] private float speed = 1.0f;
+        [SerializeField] private float increaseSuccessSpeed = 1.0f;
+        [SerializeField] private float decreaseFailSpeed = 0.5f;
         [SerializeField] private float jumpForce = 5.0f;
 
         [SerializeField] private float increaseSpeed = 0.1f;
@@ -132,12 +137,15 @@ namespace JongJin
                 return;
             animator.SetBool(paramJump, false);
             isGrounded++;
+            downCollider.enabled = true;
         }
         private void OnCollisionExit(Collision collision)
         {
             if (!collision.gameObject.CompareTag(groundTag))
                 return;
             isGrounded--;
+
+            downCollider.enabled = false;
         }
         private void UpdateState()
         {
@@ -157,6 +165,9 @@ namespace JongJin
             curState = EPlayerState.RUNNING;
             animator.SetBool(paramMission, false);
             transform.position = runningController.GetPlayerPrevPosition((int)playerId);
+
+            if (runningController.isMissionSuccess) speed += increaseSuccessSpeed;
+            else speed -= decreaseFailSpeed;
         }
         private void SetMissionState()
         {
@@ -248,12 +259,14 @@ namespace JongJin
         {
             animator.SetBool(paramCrouch, true);
             isActivated = true;
+            upCollider.enabled = false;
 
             yield return new WaitForSeconds(0.3f);
             AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
             float curAnimationTime = stateInfo.length;
             yield return new WaitForSeconds(curAnimationTime);
 
+            upCollider.enabled = true;
             isActivated = false;
             animator.SetBool(paramCrouch, false);
         }

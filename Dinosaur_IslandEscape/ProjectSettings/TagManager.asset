@@ -8,6 +8,7 @@ TagManager:
   - Player2
   - Ground
   - ControlPoint
+  - PlayerCollider
   layers:
   - Default
   - TransparentFX
