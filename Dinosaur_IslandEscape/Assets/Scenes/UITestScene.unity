@@ -515,6 +515,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiName: TutorialPopup
+  guideImage: {fileID: 0}
+  timerFillImage: {fileID: 0}
+  timerCountText: {fileID: 0}
+  guideSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &917567299
 GameObject:
   m_ObjectHideFlags: 0

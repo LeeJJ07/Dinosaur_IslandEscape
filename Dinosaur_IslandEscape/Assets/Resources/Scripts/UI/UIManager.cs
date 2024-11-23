@@ -50,7 +50,6 @@ namespace HakSeung
         public CUIScene CurSceneUI { get; private set; } = null;
         public Stack<CUIPopup> PopupUIStack { get; private set; } = null;
         public GameObject MainCanvas { private get; set; }
-       
 
         public static UIManager Instance
         {
