@@ -49,8 +49,11 @@ namespace JongJin
 		[SerializeField] private TextMeshProUGUI timerText;
 		[SerializeField] private Image[] heartImages;
 
+		[HideInInspector] public bool isMissionSuccess = false;
+
 		private int life = 3;
 
+		private bool isRunning = true;
         private bool isPossibleTailMission = false;
 		private bool isFirstMissionCompleted = false;
 		private bool isSecondMissionCompleted = false;
@@ -70,6 +73,7 @@ namespace JongJin
 		public float DinosaurSpeed { get { return dinosaurSpeed; } }
 		private float dinosaurSpeed = 2.0f;
 
+
 		public float GetPlayerDistance(int playerNumber)
 		{
 			return playerDistance[playerNumber];
@@ -84,15 +88,16 @@ namespace JongJin
         }
         public void EnterState()
 		{
-			runningCanvas.gameObject.SetActive(true);
+            runningCanvas.gameObject.SetActive(true);
 
             dinosaurSpeed = dinosaur.GetComponent<DinosaurController>().Speed;
             runningViewCam.GetComponent<CinemachineVirtualCamera>().Priority = 20;
 
-			if (prevDinosaurPosition.z <= 1e-3)
+			if (dinosaurDistance <= 1e-3)
 				return;
 
 			SetInfo();
+			isRunning = true;
         }
 		public void UpdateState()
 		{
@@ -113,10 +118,12 @@ namespace JongJin
             runningViewCam.GetComponent<CinemachineVirtualCamera>().Priority = 16;
 
             runningCanvas.gameObject.SetActive(false);
+
+			isRunning = false;
         }
 		private void Move()
 		{
-			transform.position = dinosaur.transform.forward * firstRankerDistance;
+			transform.position = Vector3.forward * firstRankerDistance;
 		}
 
 		#region 씬 전환시 플레이어, 공룡 정보 Setting
@@ -130,13 +137,16 @@ namespace JongJin
 		private void SetInfo()
 		{
 			for(int playerNum = 0; playerNum < players.Length; playerNum++)
-				players[playerNum].transform.position = prevPlayerPosition[playerNum];
+				players[playerNum].transform.position 
+					= new Vector3(prevPlayerPosition[playerNum].x, prevPlayerPosition[playerNum].y, prevPlayerPosition[playerNum].z);
 			dinosaur.transform.position = prevDinosaurPosition;
+
 		}
 		private void SaveInfo()
 		{
 			for (int playerNum = 0; playerNum < players.Length; playerNum++)
-				prevPlayerPosition[playerNum] = players[playerNum].transform.position;
+				prevPlayerPosition[playerNum] =
+					new Vector3(players[playerNum].transform.position.x, players[playerNum].transform.position.y, players[playerNum].transform.position.z + 5.0f);
 			prevDinosaurPosition = dinosaur.transform.position;
 		}
 		#endregion
@@ -183,7 +193,9 @@ namespace JongJin
 		{
 			if (!isPossibleTailMission)
 				return false;
-			if (minDistance < lastRankerDistance - dinosaurDistance)
+			if (!isRunning)
+				return false;
+			if (minDistance <= lastRankerDistance - dinosaurDistance)
 				return false;
 			return true;
 		}

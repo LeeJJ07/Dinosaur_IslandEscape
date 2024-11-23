@@ -84,14 +84,14 @@ namespace JongJin
                         UpdateState(EGameState.THIRDMISSION);
                         //missionGround.SetActive(true);
                     }
-                    //else if (runningState.IsTailMissionTriggered())
-                    //{
-                    //    UpdateState(EGameState.TAILMISSION);
-                    //    missionGround_1.SetActive(true);
-                    //}
+                    else if (runningState.IsTailMissionTriggered())
+                    {
+                        UpdateState(EGameState.TAILMISSION);
+                        //missionGround_1.SetActive(true);
+                    }
                     break;
                 case EGameState.TAILMISSION:
-                    if(tailMissionState.IsFinishMission())
+                    if(tailMissionState.IsFinishMission(out runningState.isMissionSuccess))
                         UpdateState(EGameState.RUNNING);
                     break;
                 case EGameState.FIRSTMISSION:           // ù ��° ���� �̼� ���¿���
