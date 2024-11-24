@@ -152,6 +152,7 @@ namespace HakSeung
 
         public void SceneUISwap(int sceneUIIndex = 0)
         {
+            Debug.Log("¾ÀÀüÈ¯");
             if (sceneUIIndex >= SceneUIList.Count)
                 return;
 

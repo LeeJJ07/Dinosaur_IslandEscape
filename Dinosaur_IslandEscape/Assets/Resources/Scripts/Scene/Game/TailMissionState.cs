@@ -1,8 +1,10 @@
+using HakSeung;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using Unity.VisualScripting;
 using UnityEngine;
+using static HakSeung.UIManager;
 
 namespace JongJin
 {
@@ -95,6 +97,8 @@ namespace JongJin
 
         public void ExitState()
         {
+            UIManager.Instance.SceneUISwap((int)ESceneUIType.RunningCanvas);
+
             dinosaur.SetActive(false);
 
             flowTime = 0.0f;
