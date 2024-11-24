@@ -169,11 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac2b220c226989418ed3dbfba341838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
   player: {fileID: 1607709622}
-=======
-  player: {fileID: 2016109466}
->>>>>>> cb3d95a3f916894e1f81d83dad010b04e836c633
 --- !u!1 &18085889
 GameObject:
   m_ObjectHideFlags: 0
@@ -2644,13 +2640,8 @@ Transform:
   - {fileID: 1543934362}
   - {fileID: 9856944}
   - {fileID: 2123275321}
-<<<<<<< HEAD
   - {fileID: 442396277}
   - {fileID: 1607709623}
-=======
-  - {fileID: 1168968499}
-  - {fileID: 2016109465}
->>>>>>> cb3d95a3f916894e1f81d83dad010b04e836c633
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &541895963
@@ -3440,13 +3431,8 @@ MonoBehaviour:
   tileRespawnPoint: 0
   tileLength: 16
   numberOfTiles: 3
-<<<<<<< HEAD
   firstPlayerTransform: {fileID: 1607709623}
   secondPlayerTransform: {fileID: 442396277}
-=======
-  firstPlayerTransform: {fileID: 2016109465}
-  secondPlayerTransform: {fileID: 1168968499}
->>>>>>> cb3d95a3f916894e1f81d83dad010b04e836c633
 --- !u!4 &739289675
 Transform:
   m_ObjectHideFlags: 0
@@ -3673,13 +3659,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   players:
-<<<<<<< HEAD
   - {fileID: 1607709622}
   - {fileID: 442396276}
-=======
-  - {fileID: 2016109466}
-  - {fileID: 1168968500}
->>>>>>> cb3d95a3f916894e1f81d83dad010b04e836c633
   dinosaur: {fileID: 1323343827}
   roundTimeLimit: 300
   totalRunningDistance: 500
@@ -10808,11 +10789,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac2b220c226989418ed3dbfba341838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
   player: {fileID: 442396276}
-=======
-  player: {fileID: 1168968500}
->>>>>>> cb3d95a3f916894e1f81d83dad010b04e836c633
 --- !u!1 &1618646707987478956 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2079846796619956638, guid: c76ac0ced8acd924c9d917da9e4c0224,
@@ -11132,12 +11109,6 @@ SceneRoots:
   - {fileID: 1403532859}
   - {fileID: 1321351933}
   - {fileID: 965631250}
-<<<<<<< HEAD
   - {fileID: 387105017}
   - {fileID: 460833730}
   - {fileID: 1887083564}
-=======
-  - {fileID: 579615313}
-  - {fileID: 332274470}
-  - {fileID: 1743742068}
->>>>>>> cb3d95a3f916894e1f81d83dad010b04e836c633
