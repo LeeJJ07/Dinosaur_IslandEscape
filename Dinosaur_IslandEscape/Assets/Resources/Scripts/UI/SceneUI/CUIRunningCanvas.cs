@@ -4,30 +4,33 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-public class CUIRunningPanel : CUIScene
+public class CUIRunningCanvas : CUIScene
 {
-    private const int TOTALPLAYERS = 2;
+    
     private readonly float progressBarStartX = -650.0f;
     private readonly float progressBarEndX = 670.0f;
+    public CUINote[] playerNotes = new CUINote[TOTALPLAYERS];
 
     [SerializeField] private float imageOffset = -20.0f;
 
     [SerializeField] private Canvas runningCanvas;
     [SerializeField] private Image progressBarImage;
     [SerializeField] private RectTransform dinosaurImagePos;
-    [SerializeField] private RectTransform[] playerImagepos = new RectTransform[TOTALPLAYERS];
-    [SerializeField] private RectTransform player1ImagePos;
-    [SerializeField] private RectTransform player2ImagePos;
+
     [SerializeField] private TextMeshProUGUI endDistanceText;
     [SerializeField] private TextMeshProUGUI dinosaurDistanceText;
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private Image[] heartImages;
+    
+    [SerializeField] private RectTransform[] playerImageposes = new RectTransform[TOTALPLAYERS];
+
     protected override void InitUI()
     {
         float playerPosX = progressBarEndX - progressBarStartX;
+        runningCanvas = UIManager.Instance.MainCanvas.GetComponent<Canvas>();
 
-        for (int i = 0; i < playerImagepos.Length; i++)
-            playerImagepos[i].anchoredPosition = new Vector2(playerPosX, playerImagepos[i].anchoredPosition.y);
+        /*for (int i = 0; i < playerImagepos.Length; i++)
+                playerImagepos[i].anchoredPosition = new Vector2(playerPosX, playerImagepos[i].anchoredPosition.y);*/
     }
 
     private void SetProgressBar(float progressRate)
@@ -36,10 +39,10 @@ public class CUIRunningPanel : CUIScene
     }
     private void SetPlayerImage(int playerNumber, float playerDistance, float totalRunningDistance)
     {
-        float playerX = (progressBarEndX - progressBarStartX)
+        float playerPosX = (progressBarEndX - progressBarStartX)
             * playerDistance / totalRunningDistance + progressBarStartX + imageOffset;
 
-        playerImagepos[playerNumber].anchoredPosition = new Vector2(playerX, player1ImagePos.anchoredPosition.y);
+        playerImageposes[playerNumber].anchoredPosition = new Vector2(playerPosX, playerImageposes[playerNumber].anchoredPosition.y);
     }
 
     private void SetDinosaurImage(float dinosaurDistance, float totalRunningDistance)
