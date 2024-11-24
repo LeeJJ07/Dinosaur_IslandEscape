@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac2b220c226989418ed3dbfba341838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1969226723}
+  player: {fileID: 201744959}
 --- !u!1 &18085889
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,6 +589,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 105244835}
   m_CullTransparentMesh: 1
+--- !u!1 &134523745 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 479253395773534452, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1168968498}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &134523746 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4839155676036760774, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1168968498}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &190933179
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,6 +673,18 @@ Transform:
   - {fileID: 910785816}
   m_Father: {fileID: 846572354}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &201744959 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7015843230738409125, guid: afa35d528dcfb984296ea9823357d499,
+    type: 3}
+  m_PrefabInstance: {fileID: 2016109464}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &201744960 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2206348138624526545, guid: afa35d528dcfb984296ea9823357d499,
+    type: 3}
+  m_PrefabInstance: {fileID: 2016109464}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &248754373 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4718278268771390, guid: 6868647ae330a8842a9fc0a13fea4efd,
@@ -1365,7 +1389,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 430477284}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1835,10 +1859,10 @@ Transform:
   - {fileID: 1323343830}
   - {fileID: 1618646707987631982}
   - {fileID: 1543934362}
+  - {fileID: 201744960}
+  - {fileID: 134523746}
   - {fileID: 9856944}
   - {fileID: 2123275321}
-  - {fileID: 1969226724}
-  - {fileID: 1391504628}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &541895963
@@ -2113,7 +2137,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 558685300}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2560,8 +2584,8 @@ MonoBehaviour:
   tileRespawnPoint: 0
   tileLength: 16
   numberOfTiles: 3
-  firstPlayerTransform: {fileID: 1969226724}
-  secondPlayerTransform: {fileID: 1391504628}
+  firstPlayerTransform: {fileID: 9856944}
+  secondPlayerTransform: {fileID: 2123275321}
 --- !u!4 &739289675
 Transform:
   m_ObjectHideFlags: 0
@@ -2788,8 +2812,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   players:
-  - {fileID: 1969226723}
-  - {fileID: 1391504627}
+  - {fileID: 201744959}
+  - {fileID: 134523745}
   dinosaur: {fileID: 1323343827}
   roundTimeLimit: 300
   totalRunningDistance: 500
@@ -4402,6 +4426,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8155759913201001040, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
         type: 3}
+      propertyPath: upCollider
+      value: 
+      objectReference: {fileID: 1449063608}
+    - target: {fileID: 8155759913201001040, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
+        type: 3}
+      propertyPath: downCollider
+      value: 
+      objectReference: {fileID: 430477286}
+    - target: {fileID: 8155759913201001040, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
+        type: 3}
       propertyPath: gameSceneController
       value: 
       objectReference: {fileID: 807674218}
@@ -5297,18 +5331,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 397565938}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1391504627 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 479253395773534452, guid: afa35d528dcfb984296ea9823357d499,
-    type: 3}
-  m_PrefabInstance: {fileID: 2016109464}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1391504628 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4839155676036760774, guid: afa35d528dcfb984296ea9823357d499,
-    type: 3}
-  m_PrefabInstance: {fileID: 2016109464}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1403532855
 GameObject:
   m_ObjectHideFlags: 0
@@ -5586,7 +5608,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1449063606}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -7604,18 +7626,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1969226723 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7015843230738409125, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1168968498}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1969226724 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2206348138624526545, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1168968498}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1971099701
 GameObject:
   m_ObjectHideFlags: 0
@@ -7841,6 +7851,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player2
       objectReference: {fileID: 0}
+    - target: {fileID: 2147841809479262293, guid: afa35d528dcfb984296ea9823357d499,
+        type: 3}
+      propertyPath: upCollider
+      value: 
+      objectReference: {fileID: 558685302}
+    - target: {fileID: 2147841809479262293, guid: afa35d528dcfb984296ea9823357d499,
+        type: 3}
+      propertyPath: downCollider
+      value: 
+      objectReference: {fileID: 2085010361}
     - target: {fileID: 2147841809479262293, guid: afa35d528dcfb984296ea9823357d499,
         type: 3}
       propertyPath: gameSceneController
@@ -8079,7 +8099,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2085010359}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -8168,7 +8188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac2b220c226989418ed3dbfba341838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1391504627}
+  player: {fileID: 134523745}
 --- !u!1 &1618646707987478956 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2079846796619956638, guid: c76ac0ced8acd924c9d917da9e4c0224,

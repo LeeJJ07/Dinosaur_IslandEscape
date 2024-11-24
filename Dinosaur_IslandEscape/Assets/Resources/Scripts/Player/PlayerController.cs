@@ -137,7 +137,8 @@ namespace JongJin
                 return;
             animator.SetBool(paramJump, false);
             isGrounded++;
-            downCollider.enabled = true;
+
+            if (downCollider != null) downCollider.enabled = true;
         }
         private void OnCollisionExit(Collision collision)
         {
@@ -145,7 +146,7 @@ namespace JongJin
                 return;
             isGrounded--;
 
-            downCollider.enabled = false;
+            if (downCollider != null) downCollider.enabled = false;
         }
         private void UpdateState()
         {
@@ -259,14 +260,14 @@ namespace JongJin
         {
             animator.SetBool(paramCrouch, true);
             isActivated = true;
-            upCollider.enabled = false;
+            if (upCollider != null) upCollider.enabled = false;
 
             yield return new WaitForSeconds(0.3f);
             AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
             float curAnimationTime = stateInfo.length;
             yield return new WaitForSeconds(curAnimationTime);
 
-            upCollider.enabled = true;
+            if (upCollider != null) upCollider.enabled = true;
             isActivated = false;
             animator.SetBool(paramCrouch, false);
         }
