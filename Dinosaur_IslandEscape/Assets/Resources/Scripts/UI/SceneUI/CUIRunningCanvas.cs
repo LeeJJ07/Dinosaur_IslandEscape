@@ -33,11 +33,11 @@ public class CUIRunningCanvas : CUIScene
                 playerImagepos[i].anchoredPosition = new Vector2(playerPosX, playerImagepos[i].anchoredPosition.y);*/
     }
 
-    private void SetProgressBar(float progressRate)
+    public void SetProgressBar(float progressRate)
     {
         progressBarImage.fillAmount = progressRate / 100.0f;
     }
-    private void SetPlayerImage(int playerNumber, float playerDistance, float totalRunningDistance)
+    public void SetPlayerImage(int playerNumber, float playerDistance, float totalRunningDistance)
     {
         float playerPosX = (progressBarEndX - progressBarStartX)
             * playerDistance / totalRunningDistance + progressBarStartX + imageOffset;
@@ -45,7 +45,7 @@ public class CUIRunningCanvas : CUIScene
         playerImageposes[playerNumber].anchoredPosition = new Vector2(playerPosX, playerImageposes[playerNumber].anchoredPosition.y);
     }
 
-    private void SetDinosaurImage(float dinosaurDistance, float totalRunningDistance)
+    public void SetDinosaurImage(float dinosaurDistance, float totalRunningDistance)
     {
         float dinosaurX = (progressBarEndX - progressBarStartX)
             * dinosaurDistance / totalRunningDistance + progressBarStartX + imageOffset;
@@ -53,17 +53,17 @@ public class CUIRunningCanvas : CUIScene
         dinosaurImagePos.anchoredPosition = new Vector2(dinosaurX, dinosaurImagePos.anchoredPosition.y);
     }
 
-    private void SetDinosaurDistanceText(float lastRankerDistance, float dinosaurDistance)
+    public void SetDinosaurDistanceText(float lastRankerDistance, float dinosaurDistance)
     {
         int distance = (int)Mathf.Round(lastRankerDistance - dinosaurDistance);
         dinosaurDistanceText.text = string.Format("-{0}M", distance);
     }
-    private void SetEndLineDistanceText(float lastRankerDistance, float totalRunningDistance)
+    public void SetEndLineDistanceText(float lastRankerDistance, float totalRunningDistance)
     {
         int distance = (int)Mathf.Round(totalRunningDistance - lastRankerDistance);
         endDistanceText.text = string.Format("{0}M", distance);
     }
-    private void SetTimer(float roundTimeLimit)
+    public void SetTimer(float roundTimeLimit)
     {
         int hour = (int)(roundTimeLimit / 60.0f);
         int minute = (int)(roundTimeLimit % 60.0f);
