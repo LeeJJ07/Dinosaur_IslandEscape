@@ -20,17 +20,17 @@ namespace MyeongJin
         }
         private void Update()
         {
-            int alphaValue = Random.Range(1, 10);
-            var color = sprite.color;
-            if (color.a < 1)
-            {
-                color.a += alphaValue * 0.0001f;
-                sprite.color = color;
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                //OnTriggerEnter(null);
-            }
+            //int alphaValue = Random.Range(1, 10);
+            //var color = sprite.color;
+            //if (color.a < 1)
+            //{
+            //    color.a += alphaValue * 0.0001f;
+            //    sprite.color = color;
+            //}
+            //if (Input.GetKeyDown(KeyCode.Space))
+            //{
+            //    //OnTriggerEnter(null);
+            //}
         }
         private void OnEnable()
         {

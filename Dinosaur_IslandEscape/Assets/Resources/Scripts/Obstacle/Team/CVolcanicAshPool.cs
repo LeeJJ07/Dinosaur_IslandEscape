@@ -29,7 +29,7 @@ namespace MyeongJin
 
 			for (int i = 0; i < maxPoolSize; i++)
 			{
-				volcanicAshOffset[i] = new Vector3(Random.Range(-1, 2), 2.5f, i - 5);
+				volcanicAshOffset[i] = new Vector3(Random.Range(-1, 2), 2.5f, i * 0.5f - 5);
             }
 
 			for (int i = 0; i < maxPoolSize; i++)

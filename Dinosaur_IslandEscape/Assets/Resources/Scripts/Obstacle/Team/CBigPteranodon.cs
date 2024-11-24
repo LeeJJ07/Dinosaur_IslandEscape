@@ -39,6 +39,7 @@ namespace MyeongJin
             if (other.tag == "PlayerCollider" || other.tag == "PlayerCollider")
             {
 				Debug.Log("BigPterandon Attack");
+                this.GetComponent<BoxCollider>().enabled = false;
                 hitCount--;
             }
 		}
@@ -46,7 +47,8 @@ namespace MyeongJin
 		{
 			SetStartPosition();
 			this.transform.rotation = Quaternion.Euler(0, 0, 0);
-			rotateSpeed = 15;
+            this.GetComponent<BoxCollider>().enabled = true;
+            rotateSpeed = 15;
 			hitCount = 2;
         }
 		private void SetStartPosition()

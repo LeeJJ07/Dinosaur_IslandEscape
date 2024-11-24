@@ -39,7 +39,7 @@ namespace HakSeung
             //if (maxProgress <= defaultMaxProgress) return;
 
             if(curProgress <= maxProgress)
-                PrograssBarFill.fillAmount = curProgress / maxProgress;
+                PrograssBarFill.fillAmount += curProgress / maxProgress;
             else
                 PrograssBarFill.fillAmount = maxFillAmount;
         }

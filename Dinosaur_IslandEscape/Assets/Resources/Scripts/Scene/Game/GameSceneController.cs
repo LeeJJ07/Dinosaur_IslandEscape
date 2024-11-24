@@ -80,7 +80,7 @@ namespace JongJin
                 case EGameState.RUNNING:
                     if (runningState.IsFirstMissionTriggered())
                     {
-                        UpdateState(EGameState.FIRSTMISSION);
+                        UpdateState(EGameState.THIRDMISSION);
                         missionGround.SetActive(true);                // FirstMission�� �����ϸ� missionGround�� ����
                         startForestGround.SetActive(false);             // FirstMission�� �����ϸ� startForestGround�� ����
                         missionRoomVolcano.SetActive(true);

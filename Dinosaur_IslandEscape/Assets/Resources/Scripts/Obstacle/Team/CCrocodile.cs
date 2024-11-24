@@ -18,7 +18,7 @@ namespace MyeongJin
 		private int targetNum = 0;
 		// <<
 		private int hitCount = 1;
-		private void Start()
+		private void Awake()
 		{
 			controlPoints.Add(GameObject.Find("GroundControlPoint1").GetComponent<CGroundControlPoint>().controlPoints);
 			controlPoints.Add(GameObject.Find("GroundControlPoint2").GetComponent<CGroundControlPoint>().controlPoints);
@@ -51,12 +51,14 @@ namespace MyeongJin
             if (other.tag == "PlayerCollider" || other.tag == "PlayerCollider")
             {
                 Debug.Log("Crocodile Attack");
-				hitCount--;
+                this.GetComponent<BoxCollider>().enabled = false;
+                hitCount--;
             }
         }
         public new void ResetObstacle()
 		{
 			hitCount = 1;
+            this.GetComponent<BoxCollider>().enabled = true;
 
             SetStartPosition();
 		}

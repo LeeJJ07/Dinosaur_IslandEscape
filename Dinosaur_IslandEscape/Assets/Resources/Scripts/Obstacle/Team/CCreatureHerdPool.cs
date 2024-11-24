@@ -1,3 +1,4 @@
+using HakSeung;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -136,7 +137,7 @@ namespace MyeongJin
 		{
 			Destroy(obstacle.gameObject);
 		}
-		public GameObject SpawnCreatureHerd(int lineNum, Vector3 position)
+		public void SpawnCreatureHerd(int lineNum, Vector3 position)
 		{
 			// TODO < 문명진 > - space를 Line의 x값을 받아서 사용해야 함. - 2024.11.11 17:30
 			float space = 4f;
@@ -208,7 +209,13 @@ namespace MyeongJin
 			{
 				obstacle.transform.position = new Vector3(lineNum * space + position.x - 2, smallPteranodonControlPoints[1].position.y, smallPteranodonControlPoints[1].position.z);
 			}
-			return obstacle.gameObject;
+            if (obstacle is CBigPteranodon)
+            {
+                ((CUIEventPanel)UIManager.Instance.CurSceneUI).playerNotes[0].Show(obstacle.gameObject, 0);
+                ((CUIEventPanel)UIManager.Instance.CurSceneUI).playerNotes[1].Show(obstacle.gameObject, 1);
+				return;
+            }
+            ((CUIEventPanel)UIManager.Instance.CurSceneUI).playerNotes[lineNum].Show(obstacle.gameObject, lineNum);
 		}
 	}
 }

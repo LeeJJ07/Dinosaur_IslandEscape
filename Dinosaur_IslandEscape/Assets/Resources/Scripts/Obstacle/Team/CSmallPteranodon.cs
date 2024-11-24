@@ -37,6 +37,7 @@ namespace MyeongJin
             if (other.tag == "PlayerCollider" || other.tag == "PlayerCollider")
             {
                 Debug.Log("SmallPteranodon Attack");
+				this.GetComponent<BoxCollider>().enabled = false;
 				hitCount--;
             }
         }
@@ -44,7 +45,9 @@ namespace MyeongJin
 		{
 			SetStartPosition();
 			this.transform.rotation = Quaternion.Euler(0, 0, 0);
-			hitCount = 1;
+			this.GetComponent<BoxCollider>().enabled = true;
+
+            hitCount = 1;
         }
 		private void SetStartPosition()
 		{

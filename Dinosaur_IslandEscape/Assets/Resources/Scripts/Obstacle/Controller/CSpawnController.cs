@@ -9,10 +9,10 @@ using static UnityEditor.Rendering.InspectorCurveEditor;
 namespace MyeongJin
 {
 	public class CSpawnController : MonoBehaviour
-	{
-		[SerializeField] GameObject player1Node;
-		[SerializeField] GameObject player2Node;
-		[SerializeField] GameObject missionGround;
+    {
+        public Vector3 MissionGroundPos { get; private set; }
+
+        [SerializeField] private GameObject missionGround;
 
 		private CObstacleObjectPool obstaclePool;
 		private CCreatureHerdPool creatureHerdPool;
@@ -20,17 +20,14 @@ namespace MyeongJin
 		private CFlyPool flyPool;
 		private CVolcanicAshPool volcanicAshPool;
 		private GameObject gameSceneController;
-		private GameObject[] playerNode;
+		private GameObject swatter;
 
-		public Vector3 MissionGroundPos { get; private set; }
+        private string swatterPath = "Prefabs/Obstacle/Team/SecondMission/Swatter";      // 프리팹이 존재하는 폴더 위치
 
-		private int playerCount = 2;
-		private float[] obstacleGenerateChance;
-		private float[] creatureHerdGenerateChance;
-		private System.Random random = new System.Random();
-
-		private bool isPlayerRunning = false;
-		private bool isChangedState = false;
+        private float creatureTimer = 0;
+        private float flyTimer = 0;
+        private float backgroundTimer = 0;
+        private int playerCount = 2;
 		private bool isThirdMissionGenerate = false;
 
 		private int curGeneratePosition;
@@ -49,19 +46,9 @@ namespace MyeongJin
 
 		private void Start()
 		{
-			obstacleGenerateChance = new float[playerCount];
-			for (int i = 0; i < playerCount; i++)
-				obstacleGenerateChance[i] = 0.2f;
+            swatter = Resources.Load<GameObject>(swatterPath);
 
-			creatureHerdGenerateChance = new float[playerCount];
-			for (int i = 0; i < playerCount; i++)
-				creatureHerdGenerateChance[i] = 0.2f;
-
-			playerNode = new GameObject[playerCount];
-			playerNode[0] = player1Node;
-			playerNode[1] = player2Node;
-
-			MissionGroundPos = missionGround.GetComponent<Transform>().position;
+            MissionGroundPos = missionGround.GetComponent<Transform>().position;
 
 			obstaclePool = gameObject.AddComponent<CObstacleObjectPool>();
 			creatureHerdPool = gameObject.AddComponent<CCreatureHerdPool>();
@@ -90,18 +77,19 @@ namespace MyeongJin
 
 					break;
 				case EGameState.FIRSTMISSION:
-					TimerRunning();
+                    TimerIncrease();
 
-					if (IsSpawnTime(150))
+                    if (IsBackgroundSpawnTime(1.5f))
 						SpawnCreatureHerdBackground();
 
-					if (IsSpawnTime(600))
+
+                    if (IsCreatureSpawnTime(6))
 						CheckCanSpawnCreatureHerd();
 					break;
 				case EGameState.SECONDMISSION:
-					TimerRunning();
+                    TimerIncrease();
 
-					if (IsSpawnTime(300))
+					if (IsFlySpawnTime(3))
 						GenerateFly();
 					break;
 				case EGameState.THIRDMISSION:
@@ -114,11 +102,26 @@ namespace MyeongJin
 					break;
 			}
 		}
+		public void GenerateSwatter(int playerIndex, int vertical)
+		{
+            var go = Instantiate(swatter);
+            go.name = "Swatter" + playerIndex;
 
+            go.AddComponent<CSwatter>();
+
+			go.GetComponent<CSwatter>().Init(playerIndex, vertical);
+        }
+		private void TimerIncrease()
+		{
+            creatureTimer += Time.deltaTime;
+			flyTimer += Time.deltaTime;
+			backgroundTimer += Time.deltaTime;
+        }
 		private void SpawnCreatureHerdBackground()
 		{
 			creatureBackgroundPool.SpawnCreatureHerd(MissionGroundPos);
-		}
+			backgroundTimer = 0;
+        }
 
 		private void UpdateCurState()
 		{
@@ -126,40 +129,24 @@ namespace MyeongJin
 		}
 		private void CheckCanSpawnObstacle()
 		{
-			for (int i = 0; i < playerCount; i++)
-			{
-				if (CanSpawnObstacle(obstacleGenerateChance[i]))
-				{
-					// TODO < 문명진 > - "10"을 RubberBand Size로 바꿔줘야 함. - 2024.11.11 18:55
+			// TODO < 문명진 > - "10"을 RubberBand Size로 바꿔줘야 함. - 2024.11.11 18:55
+			int playerindex = UnityEngine.Random.Range(0, playerCount);
 
-					GameObject obstacle = obstaclePool.SpawnObstacle(i, runningState.GetPlayerDistance(i) + 10);
+			GameObject obstacle = obstaclePool.SpawnObstacle(playerindex, runningState.GetPlayerDistance(playerindex) + 10);
 
-					((CUIRunningCanvas)UIManager.Instance.CurSceneUI).playerNotes[i].Show(obstacle, i);
-
-					ResetChance(obstacleGenerateChance, i);
-				}
-				else
-					ChanceUp(obstacleGenerateChance, i);
-			}
+			((CUIRunningCanvas)UIManager.Instance.CurSceneUI).playerNotes[playerindex].Show(obstacle, playerindex);
 		}
 		private void CheckCanSpawnCreatureHerd()
 		{
-			for (int i = 0; i < playerCount; i++)
-			{
-				if (CanSpawnObstacle(creatureHerdGenerateChance[i]))
-				{
-					IsSpawnHerd(i);
-					ResetChance(creatureHerdGenerateChance, i);
-					break;
-				}
-				else
-					ChanceUp(creatureHerdGenerateChance, i);
-			}
+			IsSpawnHerd(UnityEngine.Random.Range(0, playerCount));
+
+			creatureTimer = 0;
 		}
 		private void GenerateFly()
 		{
 			flyPool.SpawnFly(MissionGroundPos);
-		}
+			flyTimer = 0;
+        }
 		private void GenerateVolcanicAsh()
 		{
 			volcanicAshPool.SpawnVolcanicAshes(MissionGroundPos);
@@ -169,8 +156,7 @@ namespace MyeongJin
 		/// </summary>
 		private void IsSpawnHerd(int i)
         {
-            GameObject obstacle = creatureHerdPool.SpawnCreatureHerd(i, MissionGroundPos);
-            ((CUIEventPanel)UIManager.Instance.CurSceneUI).playerNotes[i].Show(obstacle, i);
+            creatureHerdPool.SpawnCreatureHerd(i, MissionGroundPos);
 		}
 		private bool IsSpawnSection(out int curGeneratePosition)
 		{
@@ -178,26 +164,17 @@ namespace MyeongJin
 
 			return curGeneratePosition != oldGeneratePosition && !Convert.ToBoolean((curGeneratePosition % 16));
 		}
-		private bool IsSpawnTime(int time)
+		private bool IsCreatureSpawnTime(float time)
 		{
-			return !Convert.ToBoolean((Timer % time));
+			return creatureTimer > time;
 		}
-		private void TimerRunning()
-		{
-			Timer++;
-		}
-		private bool CanSpawnObstacle(float chance)
-		{
-			float randomValue = (float)random.NextDouble();
-			return randomValue < chance;
-		}
-		private void ResetChance(float[] arr, int index)
-		{
-			arr[index] = 0.2f;
-		}
-		private void ChanceUp(float[] arr, int index)
-		{
-			arr[index] += 0.2f;
-		}
+        private bool IsBackgroundSpawnTime(float time)
+        {
+            return backgroundTimer > time;
+        }
+        private bool IsFlySpawnTime(float time)
+        {
+            return flyTimer > time;
+        }
 	}
 }

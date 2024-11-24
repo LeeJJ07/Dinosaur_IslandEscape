@@ -23,7 +23,7 @@ namespace HakSeung
 		[SerializeField] private bool isHit;
 		[SerializeField] private float curTime;
 		[SerializeField] private const float noteHitCheckTime = 3f;
-		[SerializeField] private const float noteHitResultTime = 2f;
+		[SerializeField] private const float noteHitResultTime = 1f;
 		[SerializeField] private const float hitCheckRingScale = 3f;
 		[SerializeField] private const float distanceToPlayerPostion = 1f;
 		[SerializeField] private Transform playerTransform;
@@ -50,12 +50,9 @@ namespace HakSeung
 		}
 		public void Show(GameObject newObstacle, int playerNum)
 		{
-			if (curTime == noteFailTime)
-			{
-				myPlayerNum = playerNum;
-                obstacle = newObstacle;
-				this.gameObject.SetActive(true);
-			}
+			myPlayerNum = playerNum;
+            obstacle = newObstacle;
+			this.gameObject.SetActive(true);
 		}
 		private void Awake()
 		{
@@ -89,29 +86,23 @@ namespace HakSeung
 			float hitNoteScale = transform.localScale.x;
 			Vector3 initGap = GetObstaclePosition(obstacle) - GetPlayerPosition(player[myPlayerNum]);
 
-			//while (curTime > noteFailTime && !isHit)
-			//{
-			//	curTime -= Time.deltaTime;
-			//	noteObjects[(int)ENoteImageObject.HITCHECKRING].transform.localScale =
-			//		Vector3.Lerp(noteObjects[(int)ENoteImageObject.HITCHECKRING].transform.localScale, Vector3.one, Time.deltaTime);
-
-			//	if (playerTransform != null)
-			//		SyncUIWithPlayerPosition(playerTransform.position);
-
-			//	yield return null;
-			//}
-			while (GetPlayerPosition(player[myPlayerNum]).z < GetObstaclePosition(obstacle).z && !isHit)
+			while (GetPlayerPosition(player[myPlayerNum]).z < GetObstaclePosition(obstacle).z)
 			{
                 float progress = (GetObstaclePosition(obstacle).z - GetPlayerPosition(player[myPlayerNum]).z) / initGap.z;
                 noteObjects[(int)ENoteImageObject.HITCHECKRING].transform.localScale =
                     Vector3.Lerp(Vector3.one * hitCheckRingScale, Vector3.one, 1 - Mathf.Clamp01(progress));
 
-                yield return null;
+				SyncUIWithPlayerPosition(GetPlayerPosition(player[myPlayerNum]));
+
+				yield return null;
             }
 
 			curTime = 0;
 
-			if (isHit)
+			if (obstacle.GetComponent<BoxCollider>().enabled)
+				isHit = true;
+
+            if (isHit)
 				gameObject.GetComponent<Image>().color = Color.green; //나중에 이미지로 받아오는거 변경 필요
 			else
 				gameObject.GetComponent<Image>().color = Color.red;
@@ -122,8 +113,7 @@ namespace HakSeung
 			{
 				curTime += Time.deltaTime;
 
-				if (playerTransform != null)
-					SyncUIWithPlayerPosition(playerTransform.position);
+				SyncUIWithPlayerPosition(GetPlayerPosition(player[myPlayerNum]));
 
 				yield return null;
 			}

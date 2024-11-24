@@ -126,7 +126,7 @@ namespace MyeongJin
 
 			var obstacle = Pool.Get();
 
-			obstacle.transform.position = new Vector3(lineNum * space + -space / 2, 0.25f, zPosition);
+			obstacle.transform.position = new Vector3(lineNum * -space + space / 2, 0.25f, zPosition);
 
 			return obstacle.gameObject;
         }
