@@ -133,7 +133,6 @@ namespace MyeongJin
 					// TODO < πÆ∏Ì¡¯ > - "10"¿ª RubberBand Size∑Œ πŸ≤„¡‡æﬂ «‘. - 2024.11.11 18:55
 
 					obstaclePool.SpawnObstacle(i, runningState.GetPlayerDistance(i) + 10);
-					playerNode[i].GetComponent<CUINote>().Show();
 
 					ResetChance(obstacleGenerateChance, i);
 				}
