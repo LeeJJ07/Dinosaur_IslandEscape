@@ -29,10 +29,8 @@ namespace JongJin
             thirdMissionState = GetComponent<ThirdMissionState>();
 
             gameStateContext = new GameStateContext(this);
-            /*gameStateContext.Transition(cutSceneState);
-            curState = EGameState.CUTSCENE;*/
-            gameStateContext.Transition(runningState);
-            curState = EGameState.RUNNING;
+            gameStateContext.Transition(cutSceneState);
+            curState = EGameState.CUTSCENE;
         }
 
         private void Update()

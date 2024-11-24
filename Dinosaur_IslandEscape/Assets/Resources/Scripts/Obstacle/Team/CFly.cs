@@ -13,21 +13,16 @@ namespace MyeongJin
 
 		private Vector3 startPosition;
 
-		private GameObject blood;
-
 		private ParticleSystem flyParticleSystem;
 		private ParticleSystem lightBugParticleSystem;
+        private GameObject blood;
 
-		private void Awake()
+        private void Awake()
 		{
             flyParticleSystem = this.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>();
             lightBugParticleSystem = this.transform.GetChild(1).gameObject.GetComponent<ParticleSystem>();
 			blood = this.transform.GetChild(2).gameObject;
 		}
-        //private void OnEnable()
-        //{
-        //	OnTriggerEnter(null);
-        //}
         private void Update()
         {
 			if (Input.GetKeyDown(KeyCode.Space))
