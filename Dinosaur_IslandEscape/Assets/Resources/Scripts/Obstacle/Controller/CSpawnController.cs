@@ -95,7 +95,7 @@ namespace MyeongJin
 					if (IsSpawnTime(150))
 						SpawnCreatureHerdBackground();
 
-					if (IsSpawnTime(300))
+					if (IsSpawnTime(600))
 						CheckCanSpawnCreatureHerd();
 					break;
 				case EGameState.SECONDMISSION:
