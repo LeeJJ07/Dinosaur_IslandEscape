@@ -5,10 +5,9 @@ using UnityEngine;
 
 public class CUIEventPanel: CUIScene
 {
-    [SerializeField] private CUIProgressBar progressBar;
+    [SerializeField] public CUIProgressBar progressBar;
     public CUINote[] playerNotes = new CUINote[TOTALPLAYERS];
 
-    public CUIProgressBar ProgressBar { get; }
 
     protected override void InitUI()
     {
