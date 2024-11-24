@@ -11,31 +11,44 @@ namespace MyeongJin
 		// >>: Stoop
 		private Transform[] controlPoints;  // 제어점 (최소 4개 필요)
 
-		private float moveSpeed = 12f;       // 이동 속도
+		private float moveSpeed = 20f;       // 이동 속도
 		private float t = 0f;               // Catmull-Rom 곡선의 시간 변수
 		private int currentSegment = 0;     // 현재 이동 중인 곡선 구간
-		// <<
+											// <<
+		private int rotateSpeed = 15;
 
 		private void Start()
-        {
-            controlPoints = GameObject.Find("SkyControlPoints").GetComponent<CSkyControlPoint>().controlPoints;
+		{
+			controlPoints = GameObject.Find("BigPteranodonControlPoints").GetComponent<CSkyControlPoint>().controlPoints;
 		}
 		private void Update()
 		{
 			StoopAndClimb();
-        }
-        private void OnEnable()
-        {
-            this.transform.Rotate(45, 0, 0);
-        }
-        private void OnDisable()
+		}
+		private void OnEnable()
+		{
+			this.transform.Rotate(-45, 0, 0);
+		}
+		private void OnDisable()
 		{
 			ResetObstacle();
+		}
+		private void OnTriggerEnter(Collider other)
+		{
+            if (other.tag == "Player1" || other.tag == "Player2")
+            {
+				Debug.Log("BigPterandon Attack");
+			}
+			if (other.tag == "ControlPoint")
+			{
+				Debug.Log("Destroy BigPterandon");
+			}
 		}
 		public new void ResetObstacle()
 		{
 			SetStartPosition();
-            this.transform.rotation = Quaternion.Euler(0, 0, 0);
+			this.transform.rotation = Quaternion.Euler(0, 0, 0);
+			rotateSpeed = 15;
         }
 		private void SetStartPosition()
 		{
@@ -49,8 +62,6 @@ namespace MyeongJin
 		}
 		private void StoopAndClimb()
 		{
-			Debug.Log("DownFall Pteranodon!");
-
 			if (controlPoints.Length < 4) return;
 
 			Transform p0 = controlPoints[currentSegment];
@@ -65,6 +76,7 @@ namespace MyeongJin
 
 			// 곡선의 t 값을 점진적으로 업데이트 (speed로 곡선 이동 속도 조정)
 			t += Time.deltaTime * moveSpeed / Vector3.Distance(p1.position, p2.position);
+			this.transform.Rotate(rotateSpeed * Time.deltaTime, 0, 0);
 
 			// t가 1에 도달하면 다음 구간으로 전환
 			if (t >= 1f)
@@ -72,17 +84,16 @@ namespace MyeongJin
 				t = 0f; // 곡선 시간 초기화
 				currentSegment++;
 
-				// 마지막 구간을 지나면 스크립트 중지
 				if(currentSegment == 1)
 				{
 					this.GetComponentInChildren<Animator>().SetBool("isTouch", true);
-                    this.transform.Rotate(-45, 0, 0);
-                }
+					rotateSpeed *= 8;
+				}
 
+				// 마지막 구간을 지나면 스크립트 중지
 				if (currentSegment >= controlPoints.Length - 3)
 				{
 					currentSegment = 0;
-					Debug.Log("Catmull-Rom Spline 경로 끝까지 도착했습니다!");
 					ReturnToPool();
 				}
 			}

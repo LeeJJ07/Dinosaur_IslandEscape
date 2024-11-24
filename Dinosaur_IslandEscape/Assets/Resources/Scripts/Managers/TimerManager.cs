@@ -43,8 +43,8 @@ namespace MyeongJin
             gameSceneControllerObject = GameObject.Find("GameSceneController");
             gameSceneController = gameSceneControllerObject.GetComponent<GameSceneController>();
 
-            Timer = new float[5];
-            for (int i = 0; i < 5; i++)
+            Timer = new float[(int)EGameState.END];
+            for (int i = 0; i < (int)EGameState.END; i++)
                 Timer[i] = 20.0f;
                 Timer[0] = 300.0f;
         }
