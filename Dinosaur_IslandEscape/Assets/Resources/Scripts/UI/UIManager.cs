@@ -13,12 +13,9 @@ namespace HakSeung
     {
         public enum ESceneUIType
         {
-            START,
-            RUNNING,
-            EVENT,
-            ENDING,
-
-            END
+            RunningCanvas,
+            EventScenePanel,
+            
         }
 
         public enum EPopupUIType
@@ -29,9 +26,9 @@ namespace HakSeung
         
         public enum ETestType
         {
+            RunningCanvas,
             EventScenePanel,
             TutorialPopupPanel,
-            RunningCanvas,
 
         }
 
