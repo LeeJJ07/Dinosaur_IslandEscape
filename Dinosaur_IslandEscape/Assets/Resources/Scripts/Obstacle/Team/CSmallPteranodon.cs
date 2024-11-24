@@ -14,8 +14,8 @@ namespace MyeongJin
 		private float moveSpeed = 12f;       // 이동 속도
 		private float t = 0f;               // Catmull-Rom 곡선의 시간 변수
 		private int currentSegment = 0;     // 현재 이동 중인 곡선 구간
-		// <<
-
+											// <<
+		private int hitCount = 0;
 		private void Start()
 		{
 			controlPoints = GameObject.Find("SmallPteranodonControlPoints").GetComponent< CSkyControlPoint>().controlPoints;
@@ -34,20 +34,17 @@ namespace MyeongJin
 		}
         private void OnTriggerEnter(Collider other)
         {
-            if (other.tag == "Player1" || other.tag == "Player2")
+            if (other.tag == "PlayerCollider" || other.tag == "PlayerCollider")
             {
                 Debug.Log("SmallPteranodon Attack");
-            }
-            if (other.tag == "ControlPoint")
-            {
-                Debug.Log("Destroy SmallPteranodon");
             }
         }
         public new void ResetObstacle()
 		{
 			SetStartPosition();
 			this.transform.rotation = Quaternion.Euler(0, 0, 0);
-		}
+			hitCount = 0;
+        }
 		private void SetStartPosition()
 		{
 			if (controlPoints != null)
@@ -91,7 +88,10 @@ namespace MyeongJin
 				if (currentSegment >= controlPoints.Length - 3)
 				{
 					currentSegment = 0;
-					ReturnToPool();
+
+                    // TODO <문명진> : hitCount만큼 프로그래스바 늘리기
+
+                    ReturnToPool();
 				}
 			}
 		}

@@ -1,3 +1,4 @@
+using HakSeung;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,6 +36,9 @@ namespace JongJin
 
         private void Awake()
         {
+            UIManager.Instance.UICashing<GameObject>(typeof(UIManager.ESceneUIType), (int)UIManager.ESceneUIType.RunningCanvas);
+            UIManager.Instance.UICashing<GameObject>(typeof(UIManager.ESceneUIType), (int)UIManager.ESceneUIType.EventScenePanel);
+
             cutSceneState = GetComponent<CutSceneState>();
             runningState = GetComponent<RunningState>();
             tailMissionState = GetComponent<TailMissionState>();
@@ -54,6 +58,15 @@ namespace JongJin
             //curState = EGameState.CUTSCENE;
             gameStateContext.Transition(runningState);
             curState = EGameState.RUNNING;
+
+        }
+
+        private void Start()
+        {
+            UIManager.Instance.CreateSceneUI(UIManager.ESceneUIType.RunningCanvas.ToString(), (int)UIManager.ESceneUIType.RunningCanvas);
+            UIManager.Instance.CreateSceneUI(UIManager.ESceneUIType.EventScenePanel.ToString(), (int)UIManager.ESceneUIType.EventScenePanel);
+
+
         }
 
         private void Update()
@@ -146,5 +159,9 @@ namespace JongJin
             curLookAt.transform.position = lookAt[(int)curState].transform.position;
             curFollow.transform.position = follow[(int)curState].transform.position;
         }
+
+        //TODO <이학승> 씬 전환시 작동 될 코드
+        //private void DestroyUI;
+        
     }
 }

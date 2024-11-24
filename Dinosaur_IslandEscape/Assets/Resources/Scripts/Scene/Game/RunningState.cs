@@ -1,9 +1,11 @@
 using Cinemachine;
+using HakSeung;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static HakSeung.UIManager;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace JongJin
@@ -36,7 +38,7 @@ namespace JongJin
         [Header("Virtual Camera")] 
 		[SerializeField] private GameObject runningViewCam;
 
-		[Header("UI")]
+		/*[Header("UI")]
 		[SerializeField] private float imageOffset = -20.0f;
 
 		[SerializeField] private Canvas runningCanvas;
@@ -47,7 +49,7 @@ namespace JongJin
 		[SerializeField] private TextMeshProUGUI endDistanceText;
 		[SerializeField] private TextMeshProUGUI dinosaurDistanceText;
 		[SerializeField] private TextMeshProUGUI timerText;
-		[SerializeField] private Image[] heartImages;
+		[SerializeField] private Image[] heartImages;*/
 
 		[HideInInspector] public bool isMissionSuccess = false;
 
@@ -84,11 +86,14 @@ namespace JongJin
 		}
         private void Start()
         {
-			InitPlayerPos();
+            InitPlayerPos();
         }
         public void EnterState()
 		{
-            runningCanvas.gameObject.SetActive(true);
+
+			
+			//UIManager.Instance.SceneUISwap((int)ESceneUIType.RunningCanvas);
+			
 
             dinosaurSpeed = dinosaur.GetComponent<DinosaurController>().Speed;
             runningViewCam.GetComponent<CinemachineVirtualCamera>().Priority = 20;
@@ -117,9 +122,9 @@ namespace JongJin
 			SaveInfo();
             runningViewCam.GetComponent<CinemachineVirtualCamera>().Priority = 16;
 
-            runningCanvas.gameObject.SetActive(false);
+            UIManager.Instance.SceneUISwap((int)UIManager.ESceneUIType.EventScenePanel);
 
-			isRunning = false;
+            isRunning = false;
         }
 		private void Move()
 		{
@@ -238,55 +243,37 @@ namespace JongJin
 		{
 			SetProgressBar();
 			SetTimer();
-			SetPlayer1Image();
-			SetPlayer2Image();
+			SetPlayerImage();
 			SetDinosaurImage();
 			SetDinosaurDistanceText();
             SetEndLineDistanceText();
         }
 		private void SetProgressBar()
 		{
-			progressBarImage.fillAmount = ProgressRate / 100.0f;
+			((CUIRunningCanvas)UIManager.Instance.CurSceneUI).SetProgressBar(ProgressRate);
 		}
-		private void SetPlayer1Image()
+		private void SetPlayerImage()
 		{
-			float player1X = (progressBarEndX - progressBarStartX)
-				* playerDistance[0] / totalRunningDistance + progressBarStartX + imageOffset;
-
-			player1ImagePos.anchoredPosition = new Vector2(player1X, player1ImagePos.anchoredPosition.y);
-        }
-        private void SetPlayer2Image()
-        {
-            float player2X = (progressBarEndX - progressBarStartX)
-                * playerDistance[1] / totalRunningDistance + progressBarStartX + imageOffset;
-
-			player2ImagePos.anchoredPosition = new Vector2(player2X, player2ImagePos.anchoredPosition.y);
+			for(int playerNum = 0; playerNum < 2; playerNum++)
+				((CUIRunningCanvas)UIManager.Instance.CurSceneUI).SetPlayerImage(playerNum, playerDistance[playerNum], totalRunningDistance);
         }
 
 		private void SetDinosaurImage()
 		{
-            float dinosaurX = (progressBarEndX - progressBarStartX)
-                * dinosaurDistance / totalRunningDistance + progressBarStartX + imageOffset;
-
-            dinosaurImagePos.anchoredPosition = new Vector2(dinosaurX, dinosaurImagePos.anchoredPosition.y);
+            ((CUIRunningCanvas)UIManager.Instance.CurSceneUI).SetDinosaurImage(dinosaurDistance, totalRunningDistance);
         }
 
 		private void SetDinosaurDistanceText()
 		{
-			int distance = (int)Mathf.Round(lastRankerDistance - dinosaurDistance);
-			dinosaurDistanceText.text = string.Format("-{0}M", distance);
+			((CUIRunningCanvas)UIManager.Instance.CurSceneUI).SetDinosaurDistanceText(lastRankerDistance, dinosaurDistance);
         }
         private void SetEndLineDistanceText()
         {
-            int distance = (int)Mathf.Round(totalRunningDistance -lastRankerDistance);
-            endDistanceText.text = string.Format("{0}M", distance);
+			((CUIRunningCanvas)UIManager.Instance.CurSceneUI).SetEndLineDistanceText(lastRankerDistance, totalRunningDistance);
         }
         private void SetTimer()
 		{
-			int hour = (int)(roundTimeLimit / 60.0f);
-			int minute = (int)(roundTimeLimit % 60.0f);
-
-            timerText.text = string.Format("{0:D2} : {1:D2}", hour, minute);
+			((CUIRunningCanvas)UIManager.Instance.CurSceneUI).SetTimer(roundTimeLimit);
         }
 
         #endregion

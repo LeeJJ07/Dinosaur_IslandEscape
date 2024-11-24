@@ -13,12 +13,9 @@ namespace HakSeung
     {
         public enum ESceneUIType
         {
-            START,
-            RUNNING,
-            EVENT,
-            ENDING,
-
-            END
+            RunningCanvas,
+            EventScenePanel,
+            
         }
 
         public enum EPopupUIType
@@ -29,9 +26,9 @@ namespace HakSeung
         
         public enum ETestType
         {
+            RunningCanvas,
             EventScenePanel,
             TutorialPopupPanel,
-            RunningCanvas,
 
         }
 
@@ -155,6 +152,7 @@ namespace HakSeung
 
         public void SceneUISwap(int sceneUIIndex = 0)
         {
+            Debug.Log("¾ÀÀüÈ¯");
             if (sceneUIIndex >= SceneUIList.Count)
                 return;
 

@@ -9,17 +9,17 @@ public class Test : MonoBehaviour
     private void Awake()
     {
         //사용할 UI 미리 Cashing 이 과정을 씬 초반에 무조건 해주어야 한다.
-        UIManager.Instance.UICashing<GameObject>(typeof(UIManager.ETestType), 0);
-        UIManager.Instance.UICashing<GameObject>(typeof(UIManager.ETestType), 1);
-        UIManager.Instance.UICashing<GameObject>(typeof(UIManager.ETestType), 2);
+        UIManager.Instance.UICashing<GameObject>(typeof(UIManager.ETestType), (int)UIManager.ETestType.RunningCanvas);
+        UIManager.Instance.UICashing<GameObject>(typeof(UIManager.ETestType), (int)UIManager.ETestType.EventScenePanel);
+        UIManager.Instance.UICashing<GameObject>(typeof(UIManager.ETestType), (int)UIManager.ETestType.TutorialPopupPanel);
         
     }
 
     void Start()
     {
         //씬 UI 생성 사용할 씬들을 미리 준비해 놓기. Default로 0번은 켜진 상태로 유지됨
-        UIManager.Instance.CreateSceneUI(UIManager.ETestType.EventScenePanel.ToString(), 1);
-        UIManager.Instance.CreateSceneUI(UIManager.ETestType.RunningCanvas.ToString(), 0);
+        UIManager.Instance.CreateSceneUI(UIManager.ETestType.EventScenePanel.ToString(), (int)UIManager.ETestType.RunningCanvas);
+        UIManager.Instance.CreateSceneUI(UIManager.ETestType.RunningCanvas.ToString(), (int)UIManager.ETestType.EventScenePanel);
     }
 
     // Update is called once per frame
@@ -64,6 +64,7 @@ public class Test : MonoBehaviour
         #endregion
 
 
+        
         //노트 값 설정
         ((CUIEventPanel)UIManager.Instance.CurSceneUI).playerNotes[1].Show();
         //프로그래스 바의 맥스 값 설정

@@ -16,7 +16,7 @@ namespace MyeongJin
 		private int currentSegment = 0;     // 현재 이동 중인 곡선 구간
 											// <<
 		private int rotateSpeed = 15;
-
+		private int hitCount = 0;
 		private void Start()
 		{
 			controlPoints = GameObject.Find("BigPteranodonControlPoints").GetComponent<CSkyControlPoint>().controlPoints;
@@ -35,20 +35,18 @@ namespace MyeongJin
 		}
 		private void OnTriggerEnter(Collider other)
 		{
-            if (other.tag == "Player1" || other.tag == "Player2")
+            if (other.tag == "PlayerCollider" || other.tag == "PlayerCollider")
             {
 				Debug.Log("BigPterandon Attack");
-			}
-			if (other.tag == "ControlPoint")
-			{
-				Debug.Log("Destroy BigPterandon");
-			}
+                hitCount++;
+            }
 		}
 		public new void ResetObstacle()
 		{
 			SetStartPosition();
 			this.transform.rotation = Quaternion.Euler(0, 0, 0);
 			rotateSpeed = 15;
+			hitCount = 0;
         }
 		private void SetStartPosition()
 		{
@@ -94,7 +92,10 @@ namespace MyeongJin
 				if (currentSegment >= controlPoints.Length - 3)
 				{
 					currentSegment = 0;
-					ReturnToPool();
+
+                    // TODO <문명진> : hitCount만큼 프로그래스바 늘리기
+
+                    ReturnToPool();
 				}
 			}
 		}
