@@ -10,12 +10,13 @@ namespace HakSeung
     public abstract class CUIBase : MonoBehaviour
     {
         [SerializeField]private string uiName = null;
-
+        protected RectTransform baseRectTransform;
         public string UIName { get { return uiName; } }
 
         private void Awake()
         {
             InitUI();
+            baseRectTransform = gameObject.GetComponent<RectTransform>();
         }
 
         /// <summary>
@@ -41,7 +42,7 @@ namespace HakSeung
         /// </summary>
         protected abstract void InitUI();
 
-        void UIBind<T>(System.Type type) where T : UnityEngine.Object
+     /*   private void UIBind<T>(System.Type type) where T : UnityEngine.Object
         {
             //이거 매니저에서 가지고 있어야 하는거잖어
             if (!type.IsEnum)
@@ -56,6 +57,6 @@ namespace HakSeung
                 //uiObjects[i] = 
             }
 
-        }
+        }*/
     }
 }
