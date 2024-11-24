@@ -15,7 +15,7 @@ namespace HakSeung
         {
             RunningCanvas,
             EventScenePanel,
-            END
+            
         }
 
         public enum EPopupUIType
