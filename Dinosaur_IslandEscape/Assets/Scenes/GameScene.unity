@@ -3611,9 +3611,16 @@ MonoBehaviour:
   - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
   - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
   - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
   tileRespawnPoint: 0
   tileLength: 16
-  numberOfTiles: 3
+  numberOfTiles: 10
   firstPlayerTransform: {fileID: 1607709623}
   secondPlayerTransform: {fileID: 442396277}
 --- !u!4 &739289675
