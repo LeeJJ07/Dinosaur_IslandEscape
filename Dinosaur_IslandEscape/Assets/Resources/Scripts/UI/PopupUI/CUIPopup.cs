@@ -11,5 +11,7 @@ namespace HakSeung
             // 상속받는애들은 정보 초기화 처리 해주기
             UIManager.Instance.ClosePopupUI(this);
         }
+
+        protected abstract IEnumerator PlayPopupEffect();
     }
 }
