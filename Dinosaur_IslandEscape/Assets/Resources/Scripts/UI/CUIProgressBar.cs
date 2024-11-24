@@ -34,7 +34,7 @@ namespace HakSeung
             maxProgress = defaultMaxProgress;
         }
 
-        private void FillProgressBar(float curProgress)
+        public void FillProgressBar(float curProgress)
         {
             if (maxProgress <= defaultMaxProgress) return;
 

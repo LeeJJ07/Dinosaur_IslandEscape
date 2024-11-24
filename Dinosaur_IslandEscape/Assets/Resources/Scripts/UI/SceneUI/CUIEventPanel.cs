@@ -15,4 +15,6 @@ public class CUIEventPanel: CUIScene
        
     }
 
+    //이벤트 관련 정보 받아와야됨
+
 }
