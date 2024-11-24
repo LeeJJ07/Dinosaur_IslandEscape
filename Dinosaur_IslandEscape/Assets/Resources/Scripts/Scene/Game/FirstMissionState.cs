@@ -23,7 +23,7 @@ namespace JongJin
 
         IEnumerator Test()
         {
-            yield return new WaitForSeconds(30f);
+            yield return new WaitForSeconds(1500f);
             test = true;
         }
     }

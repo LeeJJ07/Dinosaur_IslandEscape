@@ -2,25 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CGroundControlPoint : MonoBehaviour
+namespace MyeongJin
 {
-    public Transform[] controlPoints;
+    public class CGroundControlPoint : MonoBehaviour
+    {
+        public Transform[] controlPoints;
 
-    private void Start()
-    {
-        SortWithName();
-    }
-    private void SortWithName()
-    {
-        for (int i = 0; i < controlPoints.Length; i++)
+        private void Start()
         {
-            for (int j = i + 1; j < controlPoints.Length; j++)
+            SortWithName();
+        }
+        private void SortWithName()
+        {
+            for (int i = 0; i < controlPoints.Length; i++)
             {
-                if (string.Compare(controlPoints[i].gameObject.name, controlPoints[j].gameObject.name) == 1)
+                for (int j = i + 1; j < controlPoints.Length; j++)
                 {
-                    Transform temp = controlPoints[i];
-                    controlPoints[i] = controlPoints[j];
-                    controlPoints[j] = temp;
+                    if (string.Compare(controlPoints[i].gameObject.name, controlPoints[j].gameObject.name) == 1)
+                    {
+                        Transform temp = controlPoints[i];
+                        controlPoints[i] = controlPoints[j];
+                        controlPoints[j] = temp;
+                    }
                 }
             }
         }

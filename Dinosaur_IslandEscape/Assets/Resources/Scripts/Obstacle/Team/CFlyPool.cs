@@ -12,16 +12,23 @@ namespace MyeongJin
 
 		private string flyName = "Prefabs/Obstacle/Team/SecondMission/Fly";      // 프리팹이 존재하는 폴더 위치
 		private GameObject fly;
-		private Dictionary<bool, Vector3> flyDictionary = new Dictionary<bool, Vector3>();
-		private Vector3 basePosition = new Vector3(0, 4.5f, -15);
-		private Vector3[] flyOffset;
 
-		private void Awake()
+		// TODO <문명진> : 추후 장애물 위치를 저장하고 있는 변수를 가져올 것
+		private Vector3 mainCameraPosition;
+		private Vector3 missionGroundPosition;
+
+		private Vector3[] flyArr;
+		private Vector3[] flyOffset;
+        private Vector3 basePosition = new Vector3(0, 2.5f, 6f);
+
+        private bool[] isFlyExist;
+
+        private void Awake()
 		{
 			fly = Resources.Load<GameObject>(flyName);
 
-			#region 프리팹 예외처리
-			if (fly != null)
+            #region 프리팹 예외처리
+            if (fly != null)
 			{
 				Debug.Log($"프리팹 '{flyName}'을(를) Load 하였습니다.");
 			}
@@ -30,26 +37,31 @@ namespace MyeongJin
 				Debug.LogError($"프리팹 '{flyName}'을(를) 찾을 수 없습니다.");
 				// 예외처리 코드 추가
 			}
-			#endregion
-		}
+            #endregion
+        }
 		private void Start()
-		{
-			//flyOffset[0] = new Vector3(-4, -1.5f, 0);
-			//flyOffset[1] = new Vector3(-2, 1.5f, 0);
-			//flyOffset[2] = new Vector3(0, -1.5f, 0);
-			//flyOffset[3] = new Vector3(2, 1.5f, 0);
-			//flyOffset[4] = new Vector3(4, -1.5f, 0);
+        {
+            flyOffset = new Vector3[maxPoolSize];
+            flyOffset[0] = new Vector3(-4, -1.5f, 0);
+            flyOffset[1] = new Vector3(-2, 1.5f, 0);
+            flyOffset[2] = new Vector3(0, -1.5f, 0);
+            flyOffset[3] = new Vector3(2, 1.5f, 0);
+            flyOffset[4] = new Vector3(4, -1.5f, 0);
 
-			for (int i = 0; i < maxPoolSize; i++)
+            isFlyExist = new bool[maxPoolSize];
+            flyArr = new Vector3[maxPoolSize];
+
+            for (int i = 0; i < maxPoolSize; i++)
             {
-				flyDictionary.Add(false, basePosition + flyOffset[i]);
+                flyArr[i] = basePosition + flyOffset[i];
+                isFlyExist[i] = false;
             }
 
-			for (int i = 0; i < maxPoolSize; i++)
-			{
-				CreatedPooledItem().ReturnToPool();
-			}
-		}
+            for (int i = 0; i < maxPoolSize; i++)
+            {
+                CreatedPooledItem().ReturnToPool();
+            }
+        }
 		public IObjectPool<CFly> Pool
 		{
 			get
@@ -85,6 +97,14 @@ namespace MyeongJin
 		private void OnReturnedToPool(CFly obstacle)
 		{
 			obstacle.gameObject.SetActive(false);
+
+			for (int i = 0; i < maxPoolSize; i++)
+			{
+				if(obstacle.transform.position == missionGroundPosition + flyArr[i])
+				{
+					isFlyExist[i] = false;
+                }
+			}
 		}
 		private void OnTakeFromPool(CFly obstacle)
 		{
@@ -94,19 +114,20 @@ namespace MyeongJin
 		{
 			Destroy(obstacle.gameObject);
 		}
-		public bool SpawnCreatureHerd(int lineNum, Vector3 position)
+		public void SpawnFly(Vector3 groundPosition)
 		{
-			// TODO < 문명진 > - space를 Line의 x값을 받아서 사용해야 함. - 2024.11.11 17:30
-			float space = 4f;
+            missionGroundPosition = groundPosition;
 
-			CFly obstacle = null;
-			List<CFly> temp = new List<CFly>();
+            for (int i = 0; i < maxPoolSize; i++)
+			{
+				if (isFlyExist[i] || UnityEngine.Random.Range(0, 2) == 0)
+					continue;
 
-			obstacle = Pool.Get();
+				CFly obstacle = Pool.Get();
+                isFlyExist[i] = true;
 
-			obstacle.transform.position = new Vector3(lineNum * space + position.x - 2, 0, 0);
-
-			return true;
+                obstacle.transform.position = groundPosition + flyArr[i];
+			}
 		}
 	}
 }

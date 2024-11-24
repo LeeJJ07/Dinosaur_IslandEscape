@@ -26,7 +26,7 @@ namespace MyeongJin
         private void SetStartPosition()
         {
                 startPosition = this.transform.position;
-                startPosition.y = 10;
+                startPosition.y = 15;
                 startPosition.z = -10;
                 this.transform.position = startPosition;
         }

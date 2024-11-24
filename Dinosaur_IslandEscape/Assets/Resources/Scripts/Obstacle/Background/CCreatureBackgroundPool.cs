@@ -12,23 +12,25 @@ namespace MyeongJin
 		public int maxPoolSize = 30;
 		public int stackDefaultCapacity = 30;
 
-		private int creatureNum = 0;
+        private Vector3 missionGroundPos;
 
-		private string smallPteranodonName = "Prefabs/Obstacle/Team/Background/BackgroundPteranodon";      // 프리팹이 존재하는 폴더 위치
-		private GameObject smallPteranodon;
+        private int creatureNum = 0;
+
+		private string backgroundPteranodonName = "Prefabs/Obstacle/Team/Background/BackgroundPteranodon";      // 프리팹이 존재하는 폴더 위치
+		private GameObject backgroundPteranodon;
 
 		private void Awake()
 		{
-			smallPteranodon = Resources.Load<GameObject>(smallPteranodonName);
+            backgroundPteranodon = Resources.Load<GameObject>(backgroundPteranodonName);
 
 			#region 프리팹 예외처리
-			if (smallPteranodon != null)
+			if (backgroundPteranodon != null)
 			{
-				Debug.Log($"프리팹 '{smallPteranodonName}'을(를) Load 하였습니다.");
+				Debug.Log($"프리팹 '{backgroundPteranodonName}'을(를) Load 하였습니다.");
 			}
 			else
 			{
-				Debug.LogError($"프리팹 '{smallPteranodonName}'을(를) 찾을 수 없습니다.");
+				Debug.LogError($"프리팹 '{backgroundPteranodonName}'을(를) 찾을 수 없습니다.");
 				// 예외처리 코드 추가
 			}
 			#endregion
@@ -63,8 +65,8 @@ namespace MyeongJin
 		{
 			CCreatureHerd obstacle = null;
 
-			var go = Instantiate(smallPteranodon);
-			go.name = "SmallPteranodon";
+			var go = Instantiate(backgroundPteranodon);
+			go.name = "BackgroundPteranodon";
 
 			obstacle = go.AddComponent<CCreatureBackground>();
 
@@ -88,7 +90,7 @@ namespace MyeongJin
 		{
             CCreatureHerd obstacle = Pool.Get();
 
-			obstacle.transform.position = new Vector3(UnityEngine.Random.Range(-10, 11), 10, 30);
+			obstacle.transform.position = new Vector3(position.x + UnityEngine.Random.Range(-20, 21), position.y + 15, position.z + 50);
 
 			return true;
 		}
