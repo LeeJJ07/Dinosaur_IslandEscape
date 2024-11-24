@@ -16,11 +16,12 @@ namespace MyeongJin
 		private int currentSegment = 0;     // 현재 이동 중인 곡선 구간
 											// <<
 		private int rotateSpeed = 15;
-		private int hitCount = 0;
-		private void Start()
+		private int hitCount = 2;
+		private void Awake()
 		{
 			controlPoints = GameObject.Find("BigPteranodonControlPoints").GetComponent<CSkyControlPoint>().controlPoints;
-		}
+			SetStartPosition();
+        }
 		private void Update()
 		{
 			StoopAndClimb();
@@ -28,7 +29,7 @@ namespace MyeongJin
 		private void OnEnable()
 		{
 			this.transform.Rotate(-45, 0, 0);
-		}
+        }
 		private void OnDisable()
 		{
 			ResetObstacle();
@@ -38,7 +39,7 @@ namespace MyeongJin
             if (other.tag == "PlayerCollider" || other.tag == "PlayerCollider")
             {
 				Debug.Log("BigPterandon Attack");
-                hitCount++;
+                hitCount--;
             }
 		}
 		public new void ResetObstacle()
@@ -46,15 +47,16 @@ namespace MyeongJin
 			SetStartPosition();
 			this.transform.rotation = Quaternion.Euler(0, 0, 0);
 			rotateSpeed = 15;
-			hitCount = 0;
+			hitCount = 2;
         }
 		private void SetStartPosition()
 		{
 			if(controlPoints != null)
 			{
 				startPosition = this.transform.position;
-				startPosition.y = controlPoints[0].position.y;
-				startPosition.z = controlPoints[0].position.z;
+				startPosition.x = controlPoints[1].position.x;
+				startPosition.y = controlPoints[1].position.y;
+				startPosition.z = controlPoints[1].position.z;
 				this.transform.position = startPosition;
 			}
 		}
@@ -95,7 +97,7 @@ namespace MyeongJin
 
                     // TODO <문명진> : hitCount만큼 프로그래스바 늘리기
 
-                    ReturnToPool();
+                    ReturnToPool(hitCount * 10);
 				}
 			}
 		}

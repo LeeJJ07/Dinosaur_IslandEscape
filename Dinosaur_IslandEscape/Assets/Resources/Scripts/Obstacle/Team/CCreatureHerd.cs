@@ -1,3 +1,4 @@
+using HakSeung;
 using JongJin;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace MyeongJin
 		private Animator animator;
 
 		private GameObject gameSceneController;
+		private GameObject progressBar;
 		private GameSceneController gamecSceneController;
 		private EGameState curState;
 		private EGameState oldState;
@@ -22,16 +24,24 @@ namespace MyeongJin
 		private Vector3 startPosition;
 		// <<
 
-		private void Start()
+		private void Awake()
 		{
 			gameSceneController = GameObject.Find("GameSceneController");
 			gamecSceneController = gameSceneController.GetComponent<GameSceneController>();
-		}
+            progressBar = GameObject.Find("ProgressBar");
+			if (progressBar == null)
+				Debug.Log("Can't Find progressBar");
+        }
 		private void StateCheck()
 		{
 			curState = gamecSceneController.CurState;
 		}
-		private bool IsStateChanged()
+        private void Update()
+        {
+            if(progressBar == null)
+                Debug.Log("Can't Find progressBar");
+        }
+        private bool IsStateChanged()
 		{
 			bool isChanged = false;
 
@@ -50,6 +60,11 @@ namespace MyeongJin
 		{
 			Pool.Release(this);
 		}
+        public void ReturnToPool(int fillValue)
+        {
+            progressBar.GetComponent<CUIProgressBar>().FillProgressBar(fillValue);
+            Pool.Release(this);
+        }
         public void ResetObstacle()
 		{
 

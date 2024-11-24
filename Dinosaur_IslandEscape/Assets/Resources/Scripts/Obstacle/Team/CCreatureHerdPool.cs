@@ -136,7 +136,7 @@ namespace MyeongJin
 		{
 			Destroy(obstacle.gameObject);
 		}
-		public bool SpawnCreatureHerd(int lineNum, Vector3 position)
+		public GameObject SpawnCreatureHerd(int lineNum, Vector3 position)
 		{
 			// TODO < 문명진 > - space를 Line의 x값을 받아서 사용해야 함. - 2024.11.11 17:30
 			float space = 4f;
@@ -208,11 +208,7 @@ namespace MyeongJin
 			{
 				obstacle.transform.position = new Vector3(lineNum * space + position.x - 2, smallPteranodonControlPoints[1].position.y, smallPteranodonControlPoints[1].position.z);
 			}
-			else if (obstacle is CBigPteranodon)
-			{
-				obstacle.transform.position = new Vector3(space / 2 + position.x - 2, bigPteranodonControlPoints[1].position.y, bigPteranodonControlPoints[1].position.z);
-			}
-			return true;
+			return obstacle.gameObject;
 		}
 	}
 }

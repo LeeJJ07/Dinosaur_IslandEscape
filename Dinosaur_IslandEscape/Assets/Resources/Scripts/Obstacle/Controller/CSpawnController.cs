@@ -67,9 +67,9 @@ namespace MyeongJin
 			creatureHerdPool = gameObject.AddComponent<CCreatureHerdPool>();
 			creatureBackgroundPool = gameObject.AddComponent<CCreatureBackgroundPool>();
 			flyPool = gameObject.AddComponent<CFlyPool>();
-            volcanicAshPool = gameObject.AddComponent<CVolcanicAshPool>();
+			volcanicAshPool = gameObject.AddComponent<CVolcanicAshPool>();
 
-            gameSceneController = GameObject.Find("GameSceneController");
+			gameSceneController = GameObject.Find("GameSceneController");
 			gamecSceneController = gameSceneController.GetComponent<GameSceneController>();
 			runningState = gameSceneController.GetComponent<RunningState>();
 
@@ -132,11 +132,11 @@ namespace MyeongJin
 				{
 					// TODO < 문명진 > - "10"을 RubberBand Size로 바꿔줘야 함. - 2024.11.11 18:55
 
-					obstaclePool.SpawnObstacle(i, runningState.GetPlayerDistance(i) + 10);
-					//playerNode[i].GetComponent<CUINote>().Show();
-					((CUIRunningCanvas)UIManager.Instance.CurSceneUI).playerNotes[i].Show();
+					GameObject obstacle = obstaclePool.SpawnObstacle(i, runningState.GetPlayerDistance(i) + 10);
 
-                    ResetChance(obstacleGenerateChance, i);
+					((CUIRunningCanvas)UIManager.Instance.CurSceneUI).playerNotes[i].Show(obstacle, i);
+
+					ResetChance(obstacleGenerateChance, i);
 				}
 				else
 					ChanceUp(obstacleGenerateChance, i);
@@ -148,11 +148,9 @@ namespace MyeongJin
 			{
 				if (CanSpawnObstacle(creatureHerdGenerateChance[i]))
 				{
-					if (IsSpawnHerd(i))
-					{
-						ResetChance(creatureHerdGenerateChance, i);
-						break;
-					}
+					IsSpawnHerd(i);
+					ResetChance(creatureHerdGenerateChance, i);
+					break;
 				}
 				else
 					ChanceUp(creatureHerdGenerateChance, i);
@@ -162,16 +160,17 @@ namespace MyeongJin
 		{
 			flyPool.SpawnFly(MissionGroundPos);
 		}
-        private void GenerateVolcanicAsh()
+		private void GenerateVolcanicAsh()
 		{
 			volcanicAshPool.SpawnVolcanicAshes(MissionGroundPos);
-        }
-        /// <summary>
-        /// 큰 익룡/악어를 생성 시 true를 반환하여 해당 Line에는 더 이상 소환되지 않음. 즉, 라인 수 상관없이 한마리만 생성
-        /// </summary>
-        private bool IsSpawnHerd(int i)
-		{
-			return creatureHerdPool.SpawnCreatureHerd(i, MissionGroundPos);
+		}
+		/// <summary>
+		/// 큰 익룡/악어를 생성 시 true를 반환하여 해당 Line에는 더 이상 소환되지 않음. 즉, 라인 수 상관없이 한마리만 생성
+		/// </summary>
+		private void IsSpawnHerd(int i)
+        {
+            GameObject obstacle = creatureHerdPool.SpawnCreatureHerd(i, MissionGroundPos);
+            ((CUIEventPanel)UIManager.Instance.CurSceneUI).playerNotes[i].Show(obstacle, i);
 		}
 		private bool IsSpawnSection(out int curGeneratePosition)
 		{

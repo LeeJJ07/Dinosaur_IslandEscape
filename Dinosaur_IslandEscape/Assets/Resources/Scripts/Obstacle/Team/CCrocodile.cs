@@ -17,7 +17,7 @@ namespace MyeongJin
 		private int currentSegment = 0;		// 현재 이동 중인 곡선 구간
 		private int targetNum = 0;
 		// <<
-		private int hitCount = 0;
+		private int hitCount = 1;
 		private void Start()
 		{
 			controlPoints.Add(GameObject.Find("GroundControlPoint1").GetComponent<CGroundControlPoint>().controlPoints);
@@ -51,11 +51,12 @@ namespace MyeongJin
             if (other.tag == "PlayerCollider" || other.tag == "PlayerCollider")
             {
                 Debug.Log("Crocodile Attack");
+				hitCount--;
             }
         }
         public new void ResetObstacle()
 		{
-			hitCount = 0;
+			hitCount = 1;
 
             SetStartPosition();
 		}
@@ -64,8 +65,9 @@ namespace MyeongJin
 			if (controlPoints.Count != 0)
 			{
 				startPosition = this.transform.position;
-				startPosition.y = controlPoints[targetNum][0].position.y;
-				startPosition.z = controlPoints[targetNum][0].position.z;
+				startPosition.y = controlPoints[targetNum][1].position.x;
+				startPosition.y = controlPoints[targetNum][1].position.y;
+				startPosition.z = controlPoints[targetNum][1].position.z;
 				this.transform.position = startPosition;
 			}
 		}
@@ -98,10 +100,10 @@ namespace MyeongJin
 				if (currentSegment >= controlPoints[targetNum].Length - 3)
 				{
 					currentSegment = 0;
-					
-                    // TODO <문명진> : hitCount만큼 프로그래스바 늘리기
 
-                    ReturnToPool();
+					// TODO <문명진> : hitCount만큼 프로그래스바 늘리기
+
+					ReturnToPool(hitCount * 10);
 				}
 			}
 		}

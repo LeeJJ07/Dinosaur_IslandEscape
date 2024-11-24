@@ -1106,12 +1106,12 @@ PrefabInstance:
     - target: {fileID: 7737791242488282373, guid: 8c9ca3a0c70aab84396b65ca4aeb0d55,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.061301
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 7737791242488282373, guid: 8c9ca3a0c70aab84396b65ca4aeb0d55,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.1542145
+      value: -0.8
       objectReference: {fileID: 0}
     - target: {fileID: 7737791242488282373, guid: 8c9ca3a0c70aab84396b65ca4aeb0d55,
         type: 3}
@@ -2990,6 +2990,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigPteranodonControlPoints
       objectReference: {fileID: 0}
+    - target: {fileID: 5590468180544081302, guid: d079b48cf54d20f40ab4415236898168,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7439046852932249203, guid: d079b48cf54d20f40ab4415236898168,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3851,7 +3856,7 @@ MonoBehaviour:
   maxDistance: 25
   playerSpacing: 3
   tailMissionStartRate: 15
-  firstMissionRate: 35
+  firstMissionRate: 0
   secondMissionRate: 55
   thirdMissionRate: 80
   runningViewCam: {fileID: 1532651065}
