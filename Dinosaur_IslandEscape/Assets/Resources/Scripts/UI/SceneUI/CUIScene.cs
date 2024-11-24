@@ -6,7 +6,7 @@ namespace HakSeung
 {
     public abstract class CUIScene : CUIBase
     {
-        
+        protected const int TOTALPLAYERS = 2;
 
 
 
