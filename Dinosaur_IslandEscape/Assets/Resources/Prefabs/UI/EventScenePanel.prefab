@@ -93,8 +93,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiName: EventScenePanel
   progressBar: {fileID: 4967215897592627996}
-  player1Note: {fileID: 6040208612048389332}
-  player2Note: {fileID: 4242316598128525612}
+  playerNotes:
+  - {fileID: 6040208612048389332}
+  - {fileID: 4242316598128525612}
 --- !u!1001 &873999005438004840
 PrefabInstance:
   m_ObjectHideFlags: 0

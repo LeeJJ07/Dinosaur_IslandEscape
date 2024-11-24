@@ -31,7 +31,7 @@ namespace HakSeung
         {
             EventScenePanel,
             TutorialPopupPanel,
-            TestCanvas,
+            RunningCanvas,
 
         }
 
@@ -50,8 +50,12 @@ namespace HakSeung
 
         private List<CUIScene> SceneUIList = null;
         public Stack<CUIPopup> PopupUIStack { get; private set; } = null;
-        public GameObject MainCanvas { private get; set; }
         public CUIScene CurSceneUI { get; private set; } = null;
+        
+        //TODO <이학승> RunningCanvas 이용을 위해 Get을 private 에서 해제 추후 Running Canvas 수정 필요
+        public GameObject MainCanvas{ get; set; }
+        //public GameObject MainCanvas{ private get; set; }
+        
 
         public static UIManager Instance
         {
@@ -124,8 +128,6 @@ namespace HakSeung
                 return;
             }
 
-            Debug.Log(SceneUIList.Count);
-
             if (SceneUIList[sceneUIIndex] != null)
             {
                 SceneUIList[sceneUIIndex].Hide();
@@ -147,6 +149,8 @@ namespace HakSeung
 
             if (sceneUIIndex == 0)
                 SceneUISwap();
+            else
+                SceneUIList[sceneUIIndex].Hide();
         }
 
         public void SceneUISwap(int sceneUIIndex = 0)
