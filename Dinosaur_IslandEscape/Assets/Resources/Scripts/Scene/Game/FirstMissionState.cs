@@ -13,10 +13,20 @@ namespace JongJin
 		private bool isWait = false;
 		private float timer = 60f;
 
-		public void EnterState()
+		private GameObject player1;
+		private GameObject player2;
+
+        private void Awake()
+        {
+			player1 = GameObject.FindWithTag("Player1");
+			player2 = GameObject.FindWithTag("Player2");
+        }
+        public void EnterState()
 		{
 			isSuccess = false;
-			timer = 60f;
+			player1.transform.localScale = Vector3.one * 1.5f;
+			player2.transform.localScale = Vector3.one * 1.5f;
+            timer = 60f;
 		}
 		public void UpdateState()
 		{
@@ -27,9 +37,12 @@ namespace JongJin
 		}
 
 		public void ExitState()
-		{
-			UIManager.Instance.SceneUISwap((int)ESceneUIType.RunningCanvas);
-		}
+        {
+            ((CUIEventPanel)UIManager.Instance.CurSceneUI).progressBar.Init();
+            UIManager.Instance.SceneUISwap((int)ESceneUIType.RunningCanvas);
+            player1.transform.localScale = Vector3.one;
+            player2.transform.localScale = Vector3.one;
+        }
 		public bool IsFinishMission(out bool success)
 		{
 			success = false;

@@ -17,7 +17,7 @@ RenderSettings:
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -28,7 +28,7 @@ RenderSettings:
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
-  m_FlareStrength: 1
+  m_FlareStrength: 0.517
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
@@ -3620,9 +3620,16 @@ MonoBehaviour:
   - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
   - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
   - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
   tileRespawnPoint: 0
   tileLength: 16
-  numberOfTiles: 3
+  numberOfTiles: 10
   firstPlayerTransform: {fileID: 1607709623}
   secondPlayerTransform: {fileID: 442396277}
 --- !u!4 &739289675
@@ -3757,11 +3764,6 @@ MonoBehaviour:
   firstMissionState: {fileID: 0}
   secondMissionState: {fileID: 0}
   thirdMissionState: {fileID: 0}
-  missionGround: {fileID: 579223393}
-  startForestGround: {fileID: 387105018}
-  skyboxNormal: {fileID: 2100000, guid: e042e3a075d43734cb2151822f3efb89, type: 2}
-  skyboxVolcano: {fileID: 2100000, guid: cba8250b9d9377f4ca5ccc7bda47897e, type: 2}
-  missionRoomVolcano: {fileID: 1853347469}
   curLookAt: {fileID: 455210295}
   curFollow: {fileID: 341169857}
   lookAt:
@@ -3778,6 +3780,11 @@ MonoBehaviour:
   - {fileID: 548276039}
   - {fileID: 1512101601}
   - {fileID: 646663802}
+  missionGround: {fileID: 579223393}
+  startForestGround: {fileID: 387105018}
+  skyboxNormal: {fileID: 2100000, guid: e042e3a075d43734cb2151822f3efb89, type: 2}
+  skyboxVolcano: {fileID: 2100000, guid: cba8250b9d9377f4ca5ccc7bda47897e, type: 2}
+  missionRoomVolcano: {fileID: 1853347469}
 --- !u!114 &807674219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3859,7 +3866,7 @@ MonoBehaviour:
   maxDistance: 25
   playerSpacing: 3
   tailMissionStartRate: 15
-  firstMissionRate: 0
+  firstMissionRate: 35
   secondMissionRate: 55
   thirdMissionRate: 80
   runningViewCam: {fileID: 1532651065}

@@ -28,6 +28,7 @@ namespace JongJin
 
         public void ExitState()
         {
+            ((CUIEventPanel)UIManager.Instance.CurSceneUI).progressBar.Init();
             UIManager.Instance.SceneUISwap((int)ESceneUIType.RunningCanvas);
         }
         public bool IsFinishMission(out bool success)
