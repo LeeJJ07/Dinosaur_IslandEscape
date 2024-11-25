@@ -11,7 +11,7 @@ namespace MyeongJin
 		// >>: Stoop
 		private Transform[] controlPoints;  // 제어점 (최소 4개 필요)
 
-		private float moveSpeed = 12f;       // 이동 속도
+		private float moveSpeed = 10f;       // 이동 속도
 		private float t = 0f;               // Catmull-Rom 곡선의 시간 변수
 		private int currentSegment = 0;     // 현재 이동 중인 곡선 구간
 											// <<

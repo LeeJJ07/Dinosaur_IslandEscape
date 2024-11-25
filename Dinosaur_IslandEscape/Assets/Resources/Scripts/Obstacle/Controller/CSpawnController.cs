@@ -25,6 +25,7 @@ namespace MyeongJin
 
 		private string swatterPath = "Prefabs/Obstacle/Team/SecondMission/Swatter";      // 프리팹이 존재하는 폴더 위치
 
+		private float obstacleTimer = 0;
 		private float creatureTimer = 0;
 		private float flyTimer = 0;
 		private float backgroundTimer = 0;
@@ -74,9 +75,12 @@ namespace MyeongJin
 			switch (curState)
 			{
 				case EGameState.RUNNING:
-					if (IsSpawnSection(out curGeneratePosition))
+                    TimerIncrease();
+                    if (IsSpawnTime(6f))
+					{
 						CheckCanSpawnObstacle();
-					oldGeneratePosition = curGeneratePosition;
+						obstacleTimer = 0;
+                    }
 					break;
 				case EGameState.TAILMISSION:
 
@@ -108,16 +112,25 @@ namespace MyeongJin
 			}
 			if (Input.GetKeyDown(KeyCode.Space))
 			{
-				switch(curState)
+				if (curState == EGameState.THIRDMISSION)
 				{
-                    case EGameState.SECONDMISSION:
-						GenerateSwatter(1, 0);
-                        break;
-                    case EGameState.THIRDMISSION:
-                        GenerateRay();
-						break;
-                }
+					GenerateRay();
+				}
 			}
+			if (Input.GetKeyDown(KeyCode.LeftArrow))
+			{
+				if (curState == EGameState.SECONDMISSION)
+				{
+					GenerateSwatter(1, 0);
+				}
+			}
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                if (curState == EGameState.SECONDMISSION)
+                {
+                    GenerateSwatter(1, 1);
+                }
+            }
         }
 		/// <summary>
 		/// Player(종진)가 해당 함수를 호출해주고 playerIndex, vertical(좌,우)를 인수로 담아 호출해주면 굿
@@ -143,7 +156,9 @@ namespace MyeongJin
 			creatureTimer += Time.deltaTime;
 			flyTimer += Time.deltaTime;
 			backgroundTimer += Time.deltaTime;
-		}
+			obstacleTimer += Time.deltaTime;
+
+        }
 		private void SpawnCreatureHerdBackground()
 		{
 			creatureBackgroundPool.SpawnCreatureHerd(MissionGroundPos);
@@ -185,12 +200,13 @@ namespace MyeongJin
 		{
 			creatureHerdPool.SpawnCreatureHerd(i, MissionGroundPos);
 		}
-		private bool IsSpawnSection(out int curGeneratePosition)
+		private bool IsSpawnTime(float time)
 		{
-			curGeneratePosition = (int)runningState.FirstRankerDistance;
+			return obstacleTimer > time;
+            //curGeneratePosition = (int)runningState.FirstRankerDistance;
 
-			return curGeneratePosition != oldGeneratePosition && !Convert.ToBoolean((curGeneratePosition % 24));
-		}
+            //return curGeneratePosition != oldGeneratePosition && !Convert.ToBoolean((curGeneratePosition % 24));
+        }
 		private bool IsCreatureSpawnTime(float time)
 		{
 			return creatureTimer > time;
