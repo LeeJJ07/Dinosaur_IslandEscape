@@ -1,5 +1,6 @@
 using HakSeung;
 using JongJin;
+using NUnit.Framework.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -106,7 +107,17 @@ namespace MyeongJin
 					break;
 			}
 			if (Input.GetKeyDown(KeyCode.Space))
-				GenerateRay();
+			{
+				switch(curState)
+				{
+                    case EGameState.SECONDMISSION:
+						GenerateSwatter(1, 0);
+                        break;
+                    case EGameState.THIRDMISSION:
+                        GenerateRay();
+						break;
+                }
+			}
         }
 		/// <summary>
 		/// Player(종진)가 해당 함수를 호출해주고 playerIndex, vertical(좌,우)를 인수로 담아 호출해주면 굿
@@ -148,7 +159,7 @@ namespace MyeongJin
 			// TODO < 문명진 > - "10"을 RubberBand Size로 바꿔줘야 함. - 2024.11.11 18:55
 			int playerindex = UnityEngine.Random.Range(0, playerCount);
 
-			GameObject obstacle = obstaclePool.SpawnObstacle(playerindex, runningState.GetPlayerDistance(playerindex) + 10);
+			GameObject obstacle = obstaclePool.SpawnObstacle(playerindex, runningState.GetPlayerDistance(playerindex) + 15);
 
 			((CUIRunningCanvas)UIManager.Instance.CurSceneUI).playerNotes[playerindex].Show(obstacle, playerindex);
 		}
@@ -178,7 +189,7 @@ namespace MyeongJin
 		{
 			curGeneratePosition = (int)runningState.FirstRankerDistance;
 
-			return curGeneratePosition != oldGeneratePosition && !Convert.ToBoolean((curGeneratePosition % 16));
+			return curGeneratePosition != oldGeneratePosition && !Convert.ToBoolean((curGeneratePosition % 24));
 		}
 		private bool IsCreatureSpawnTime(float time)
 		{

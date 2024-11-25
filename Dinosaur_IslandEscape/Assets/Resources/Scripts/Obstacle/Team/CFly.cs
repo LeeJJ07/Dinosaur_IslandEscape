@@ -24,11 +24,6 @@ namespace MyeongJin
             lightBugParticleSystem = this.transform.GetChild(1).gameObject.GetComponent<ParticleSystem>();
 			blood = this.transform.GetChild(2).gameObject;
 		}
-        private void Update()
-        {
-			if (Input.GetKeyDown(KeyCode.Space))
-				OnTriggerEnter(null);
-        }
         private void OnDisable()
 		{
 			ResetObstacle();
