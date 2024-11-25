@@ -19,6 +19,8 @@ namespace JongJin
 
         private void Awake()
         {
+            UIManager.Instance.UICashing<GameObject>(typeof(UIManager.EPopupUIType), (int)UIManager.EPopupUIType.TutorialPopupPanel);
+
             storyDescriptionState = GetComponent<StoryDescriptionState>();
             storyCutSceneState = GetComponent<StoryCutSceneState>();
             tutorialDescriptionState = GetComponent<TutorialDescriptionState>();

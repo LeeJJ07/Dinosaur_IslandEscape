@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac2b220c226989418ed3dbfba341838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1607709622}
+  player: {fileID: 159785682}
 --- !u!1 &18085889
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,6 +587,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 105244835}
   m_CullTransparentMesh: 1
+--- !u!1 &159785682 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7015843230738409125, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1168968498}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &159785683 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2206348138624526545, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1168968498}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &190933179
 GameObject:
   m_ObjectHideFlags: 0
@@ -1582,18 +1594,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 430477284}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &442396276 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 479253395773534452, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1168968498}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &442396277 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4839155676036760774, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1168968498}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &455210295
 GameObject:
   m_ObjectHideFlags: 0
@@ -2650,8 +2650,8 @@ Transform:
   - {fileID: 1543934362}
   - {fileID: 9856944}
   - {fileID: 2123275321}
-  - {fileID: 442396277}
-  - {fileID: 1607709623}
+  - {fileID: 159785683}
+  - {fileID: 964161201}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &541895963
@@ -3620,11 +3620,18 @@ MonoBehaviour:
   - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
   - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
   - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
   tileRespawnPoint: 0
   tileLength: 16
-  numberOfTiles: 3
-  firstPlayerTransform: {fileID: 1607709623}
-  secondPlayerTransform: {fileID: 442396277}
+  numberOfTiles: 10
+  firstPlayerTransform: {fileID: 159785683}
+  secondPlayerTransform: {fileID: 964161201}
 --- !u!4 &739289675
 Transform:
   m_ObjectHideFlags: 0
@@ -3757,11 +3764,6 @@ MonoBehaviour:
   firstMissionState: {fileID: 0}
   secondMissionState: {fileID: 0}
   thirdMissionState: {fileID: 0}
-  missionGround: {fileID: 579223393}
-  startForestGround: {fileID: 387105018}
-  skyboxNormal: {fileID: 2100000, guid: e042e3a075d43734cb2151822f3efb89, type: 2}
-  skyboxVolcano: {fileID: 2100000, guid: cba8250b9d9377f4ca5ccc7bda47897e, type: 2}
-  missionRoomVolcano: {fileID: 1853347469}
   curLookAt: {fileID: 455210295}
   curFollow: {fileID: 341169857}
   lookAt:
@@ -3778,6 +3780,11 @@ MonoBehaviour:
   - {fileID: 548276039}
   - {fileID: 1512101601}
   - {fileID: 646663802}
+  missionGround: {fileID: 579223393}
+  startForestGround: {fileID: 387105018}
+  skyboxNormal: {fileID: 2100000, guid: e042e3a075d43734cb2151822f3efb89, type: 2}
+  skyboxVolcano: {fileID: 2100000, guid: cba8250b9d9377f4ca5ccc7bda47897e, type: 2}
+  missionRoomVolcano: {fileID: 1853347469}
 --- !u!114 &807674219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3850,8 +3857,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   players:
-  - {fileID: 1607709622}
-  - {fileID: 442396276}
+  - {fileID: 159785682}
+  - {fileID: 964161200}
   dinosaur: {fileID: 1323343827}
   roundTimeLimit: 300
   totalRunningDistance: 500
@@ -4553,6 +4560,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 940532233}
   m_CullTransparentMesh: 1
+--- !u!1 &964161200 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 479253395773534452, guid: afa35d528dcfb984296ea9823357d499,
+    type: 3}
+  m_PrefabInstance: {fileID: 2016109464}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &964161201 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4839155676036760774, guid: afa35d528dcfb984296ea9823357d499,
+    type: 3}
+  m_PrefabInstance: {fileID: 2016109464}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &965631249
 GameObject:
   m_ObjectHideFlags: 0
@@ -5537,6 +5556,11 @@ PrefabInstance:
       propertyPath: increaseSpeed
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 2147841809479262293, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
+        type: 3}
+      propertyPath: cSpawnController
+      value: 
+      objectReference: {fileID: 18085890}
     - target: {fileID: 2147841809479262293, guid: 687aa2a77cad7b44b9bbd0dba75dbc6e,
         type: 3}
       propertyPath: gameSceneController
@@ -7694,18 +7718,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1580610662}
   m_CullTransparentMesh: 1
---- !u!1 &1607709622 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7015843230738409125, guid: afa35d528dcfb984296ea9823357d499,
-    type: 3}
-  m_PrefabInstance: {fileID: 2016109464}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1607709623 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2206348138624526545, guid: afa35d528dcfb984296ea9823357d499,
-    type: 3}
-  m_PrefabInstance: {fileID: 2016109464}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1684785417
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10870,6 +10882,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8155759913201001040, guid: afa35d528dcfb984296ea9823357d499,
         type: 3}
+      propertyPath: cSpawnController
+      value: 
+      objectReference: {fileID: 18085890}
+    - target: {fileID: 8155759913201001040, guid: afa35d528dcfb984296ea9823357d499,
+        type: 3}
       propertyPath: gameSceneController
       value: 
       objectReference: {fileID: 807674218}
@@ -11115,7 +11132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac2b220c226989418ed3dbfba341838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 442396276}
+  player: {fileID: 964161200}
 --- !u!1 &1618646707987478956 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2079846796619956638, guid: c76ac0ced8acd924c9d917da9e4c0224,

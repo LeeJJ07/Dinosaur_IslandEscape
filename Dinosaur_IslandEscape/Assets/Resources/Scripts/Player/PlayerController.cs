@@ -1,4 +1,5 @@
 using HakSeung;
+using MyeongJin;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +30,7 @@ namespace JongJin
         enum EPlayerState { CUTSCENE, RUNNING, MISSION }
 
         // TODO<이종진> - 테스트용 작성 수정필요 - 20241110
+        [SerializeField] private CSpawnController cSpawnController;
         [SerializeField] private GameSceneController gameSceneController;
 
         [SerializeField] private BoxCollider upCollider;
@@ -217,10 +219,24 @@ namespace JongJin
         private void LeftTouch()
         {
             StartCoroutine(LeftTouchActive());
+
+            if (cSpawnController == null) return;
+
+            if(gameSceneController.CurState == EGameState.SECONDMISSION)
+                cSpawnController.GenerateSwatter((int)playerId, 0);
+            else if (gameSceneController.CurState == EGameState.THIRDMISSION)
+                cSpawnController.GenerateRay();
         }
         private void RightTouch()
         {
             StartCoroutine(RightTouchActive());
+
+            if (cSpawnController == null) return;
+
+            if (gameSceneController.CurState == EGameState.SECONDMISSION)
+                cSpawnController.GenerateSwatter((int)playerId, 1);
+            else if (gameSceneController.CurState == EGameState.THIRDMISSION)
+                cSpawnController.GenerateRay();
         }
         private void IncreaseSpeed()
         {
