@@ -9,10 +9,10 @@ using static UnityEditor.Rendering.InspectorCurveEditor;
 namespace MyeongJin
 {
 	public class CSpawnController : MonoBehaviour
-    {
-        public Vector3 MissionGroundPos { get; private set; }
+	{
+		public Vector3 MissionGroundPos { get; private set; }
 
-        [SerializeField] private GameObject missionGround;
+		[SerializeField] private GameObject missionGround;
 
 		private CObstacleObjectPool obstaclePool;
 		private CCreatureHerdPool creatureHerdPool;
@@ -22,12 +22,12 @@ namespace MyeongJin
 		private GameObject gameSceneController;
 		private GameObject swatter;
 
-        private string swatterPath = "Prefabs/Obstacle/Team/SecondMission/Swatter";      // 프리팹이 존재하는 폴더 위치
+		private string swatterPath = "Prefabs/Obstacle/Team/SecondMission/Swatter";      // 프리팹이 존재하는 폴더 위치
 
-        private float creatureTimer = 0;
-        private float flyTimer = 0;
-        private float backgroundTimer = 0;
-        private int playerCount = 2;
+		private float creatureTimer = 0;
+		private float flyTimer = 0;
+		private float backgroundTimer = 0;
+		private int playerCount = 2;
 		private bool isThirdMissionGenerate = false;
 
 		private int curGeneratePosition;
@@ -36,6 +36,10 @@ namespace MyeongJin
 		private RunningState runningState;
 		private EGameState curState;
 		private GameSceneController gamecSceneController;
+
+		private Transform rayBox;
+		private RaycastHit hit;
+		private float maxDistance = 10f;
 
 		// TODO < 문명진 > - 실제 플레이어의 위치를 받아야 함. - 2024.11.07 16:10
 		public int FirstPlayerPosition { get; private set; }
@@ -46,9 +50,9 @@ namespace MyeongJin
 
 		private void Start()
 		{
-            swatter = Resources.Load<GameObject>(swatterPath);
+			swatter = Resources.Load<GameObject>(swatterPath);
 
-            MissionGroundPos = missionGround.GetComponent<Transform>().position;
+			MissionGroundPos = missionGround.GetComponent<Transform>().position;
 
 			obstaclePool = gameObject.AddComponent<CObstacleObjectPool>();
 			creatureHerdPool = gameObject.AddComponent<CCreatureHerdPool>();
@@ -77,17 +81,16 @@ namespace MyeongJin
 
 					break;
 				case EGameState.FIRSTMISSION:
-                    TimerIncrease();
+					TimerIncrease();
 
-                    if (IsBackgroundSpawnTime(1.5f))
+					if (IsBackgroundSpawnTime(1.5f))
 						SpawnCreatureHerdBackground();
 
-
-                    if (IsCreatureSpawnTime(6))
+					if (IsCreatureSpawnTime(5.5f))
 						CheckCanSpawnCreatureHerd();
 					break;
 				case EGameState.SECONDMISSION:
-                    TimerIncrease();
+					TimerIncrease();
 
 					if (IsFlySpawnTime(3))
 						GenerateFly();
@@ -95,33 +98,46 @@ namespace MyeongJin
 				case EGameState.THIRDMISSION:
 					if (!isThirdMissionGenerate)
 					{
+						rayBox = GameObject.Find("Main Camera").transform;
 						isThirdMissionGenerate = true;
 
 						GenerateVolcanicAsh();
 					}
 					break;
 			}
-		}
+			if (Input.GetKeyDown(KeyCode.Space))
+				GenerateRay();
+        }
+		/// <summary>
+		/// Player(종진)가 해당 함수를 호출해주고 playerIndex, vertical(좌,우)를 인수로 담아 호출해주면 굿
+		/// </summary>
 		public void GenerateSwatter(int playerIndex, int vertical)
 		{
-            var go = Instantiate(swatter);
-            go.name = "Swatter" + playerIndex;
+			var go = Instantiate(swatter);
+			go.name = "Swatter" + playerIndex;
 
-            go.AddComponent<CSwatter>();
+			go.AddComponent<CSwatter>();
 
 			go.GetComponent<CSwatter>().Init(playerIndex, vertical);
-        }
+		}
+		public void GenerateRay()
+		{
+			if(Physics.Raycast(rayBox.position, rayBox.forward,out hit, maxDistance))
+			{
+				hit.transform.GetComponent<CVolcanicAsh>().FadeAway();
+			}
+		}
 		private void TimerIncrease()
 		{
-            creatureTimer += Time.deltaTime;
+			creatureTimer += Time.deltaTime;
 			flyTimer += Time.deltaTime;
 			backgroundTimer += Time.deltaTime;
-        }
+		}
 		private void SpawnCreatureHerdBackground()
 		{
 			creatureBackgroundPool.SpawnCreatureHerd(MissionGroundPos);
 			backgroundTimer = 0;
-        }
+		}
 
 		private void UpdateCurState()
 		{
@@ -146,7 +162,7 @@ namespace MyeongJin
 		{
 			flyPool.SpawnFly(MissionGroundPos);
 			flyTimer = 0;
-        }
+		}
 		private void GenerateVolcanicAsh()
 		{
 			volcanicAshPool.SpawnVolcanicAshes(MissionGroundPos);
@@ -155,8 +171,8 @@ namespace MyeongJin
 		/// 큰 익룡/악어를 생성 시 true를 반환하여 해당 Line에는 더 이상 소환되지 않음. 즉, 라인 수 상관없이 한마리만 생성
 		/// </summary>
 		private void IsSpawnHerd(int i)
-        {
-            creatureHerdPool.SpawnCreatureHerd(i, MissionGroundPos);
+		{
+			creatureHerdPool.SpawnCreatureHerd(i, MissionGroundPos);
 		}
 		private bool IsSpawnSection(out int curGeneratePosition)
 		{
@@ -168,13 +184,13 @@ namespace MyeongJin
 		{
 			return creatureTimer > time;
 		}
-        private bool IsBackgroundSpawnTime(float time)
-        {
-            return backgroundTimer > time;
-        }
-        private bool IsFlySpawnTime(float time)
-        {
-            return flyTimer > time;
-        }
+		private bool IsBackgroundSpawnTime(float time)
+		{
+			return backgroundTimer > time;
+		}
+		private bool IsFlySpawnTime(float time)
+		{
+			return flyTimer > time;
+		}
 	}
 }

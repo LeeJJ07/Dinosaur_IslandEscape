@@ -99,7 +99,7 @@ namespace MyeongJin
 
                     // TODO <문명진> : hitCount만큼 프로그래스바 늘리기
 
-                    ReturnToPool(hitCount * 10);
+                    ReturnToPool(hitCount * 40);
 				}
 			}
 		}

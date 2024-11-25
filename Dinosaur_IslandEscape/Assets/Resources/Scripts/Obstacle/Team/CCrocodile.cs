@@ -15,7 +15,7 @@ namespace MyeongJin
 		private float moveSpeed = 12f;		// 이동 속도
 		private float t = 0f;				// Catmull-Rom 곡선의 시간 변수
 		private int currentSegment = 0;		// 현재 이동 중인 곡선 구간
-		private int targetNum = 0;
+		public int targetNum = 0;
 		// <<
 		private int hitCount = 1;
 		private void Awake()

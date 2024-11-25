@@ -53,7 +53,8 @@ namespace MyeongJin
 		}
         public void ReturnToPool(int fillValue)
         {
-            ((CUIEventPanel)UIManager.Instance.CurSceneUI).progressBar.FillProgressBar(fillValue);
+			if (((CUIEventPanel)UIManager.Instance.CurSceneUI) != null)
+				((CUIEventPanel)UIManager.Instance.CurSceneUI).progressBar.FillProgressBar(fillValue);
             Pool.Release(this);
         }
         public void ResetObstacle()

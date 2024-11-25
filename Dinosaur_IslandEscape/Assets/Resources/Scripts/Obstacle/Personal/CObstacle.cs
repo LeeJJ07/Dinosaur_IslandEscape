@@ -102,8 +102,6 @@ namespace MyeongJin
         }
 		private void RotateObstacle()
 		{
-			Debug.Log("Rotate Obstacle!");
-
 			this.transform.Rotate(-curRotateSpeed, 0, 0);
 		}
 	}
