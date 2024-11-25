@@ -15,17 +15,21 @@ namespace JongJin
 
 		private GameObject player1;
 		private GameObject player2;
+		private Vector3 player1Scale;
+		private Vector3 player2Scale;
 
         private void Awake()
         {
 			player1 = GameObject.FindWithTag("Player1");
 			player2 = GameObject.FindWithTag("Player2");
+            player1Scale = player1.transform.localScale;
+            player2Scale = player2.transform.localScale;
         }
         public void EnterState()
 		{
 			isSuccess = false;
-			player1.transform.localScale = Vector3.one * 1.5f;
-			player2.transform.localScale = Vector3.one * 1.5f;
+			player1.transform.localScale = player1.transform.localScale * 1.5f;
+			player2.transform.localScale = player2.transform.localScale * 1.5f;
             timer = 60f;
 		}
 		public void UpdateState()
@@ -40,9 +44,9 @@ namespace JongJin
         {
             ((CUIEventPanel)UIManager.Instance.CurSceneUI).progressBar.Init();
             UIManager.Instance.SceneUISwap((int)ESceneUIType.RunningCanvas);
-            player1.transform.localScale = Vector3.one;
-            player2.transform.localScale = Vector3.one;
-        }
+			player1.transform.localScale = player1Scale;
+			player2.transform.localScale = player2Scale;
+		}
 		public bool IsFinishMission(out bool success)
 		{
 			success = false;

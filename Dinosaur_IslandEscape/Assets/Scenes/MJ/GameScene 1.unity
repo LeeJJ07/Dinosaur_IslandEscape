@@ -8210,10 +8210,65 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2126217375717450531, guid: 61d0af0409728474881dbd46747a91ff,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2966795388032138574, guid: 61d0af0409728474881dbd46747a91ff,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613396038665679021, guid: 61d0af0409728474881dbd46747a91ff,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613396038665679021, guid: 61d0af0409728474881dbd46747a91ff,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7387189994108227468, guid: 61d0af0409728474881dbd46747a91ff,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7528090099097432067, guid: 61d0af0409728474881dbd46747a91ff,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 10.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 7528090099097432067, guid: 61d0af0409728474881dbd46747a91ff,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 22.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 8001777557620401601, guid: 61d0af0409728474881dbd46747a91ff,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8516639698835766151, guid: 61d0af0409728474881dbd46747a91ff,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690859329397801634, guid: 61d0af0409728474881dbd46747a91ff,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8830073094463796739, guid: 61d0af0409728474881dbd46747a91ff,
         type: 3}
       propertyPath: m_Name
       value: SmallPteranodonControlPoints
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834977203402194815, guid: 61d0af0409728474881dbd46747a91ff,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
