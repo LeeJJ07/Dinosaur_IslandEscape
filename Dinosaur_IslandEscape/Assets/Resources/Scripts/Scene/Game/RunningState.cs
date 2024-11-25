@@ -90,11 +90,6 @@ namespace JongJin
         }
         public void EnterState()
 		{
-
-			
-			//UIManager.Instance.SceneUISwap((int)ESceneUIType.RunningCanvas);
-			
-
             dinosaurSpeed = dinosaur.GetComponent<DinosaurController>().Speed;
             runningViewCam.GetComponent<CinemachineVirtualCamera>().Priority = 20;
 
