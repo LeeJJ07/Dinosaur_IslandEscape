@@ -16,10 +16,12 @@ namespace HakSeung
             RunningCanvas,
             EventScenePanel,
             
+            END
         }
 
         public enum EPopupUIType
         {
+            TutorialPopupPanel,
 
             END
         }
@@ -46,7 +48,8 @@ namespace HakSeung
         private int popupIndex = 0;
 
         private List<CUIScene> SceneUIList = null;
-        public Stack<CUIPopup> PopupUIStack { get; private set; } = null;
+        private Stack<CUIPopup> popupUIStack;
+        public CUIPopup CurrentPopupUI { get { return popupUIStack.Peek(); } }
         public CUIScene CurSceneUI { get; private set; } = null;
         
         //TODO <이학승> RunningCanvas 이용을 위해 Get을 private 에서 해제 추후 Running Canvas 수정 필요
@@ -89,7 +92,7 @@ namespace HakSeung
             MainCanvas = GameObject.Find("MainCanvas");
             uiPrefabs = new Dictionary<string, UnityEngine.Object>();
             uiObjs = new Dictionary<string, CUIBase>();
-            PopupUIStack = new Stack<CUIPopup>();
+            popupUIStack = new Stack<CUIPopup>();
             SceneUIList = new List<CUIScene>();
             for (int i = 0; i < MAXSCENEUICOUNT; i++)
                 SceneUIList.Add(null);
@@ -193,8 +196,8 @@ namespace HakSeung
             {
                 if (popUI = uiObjs[key] as CUIPopup)
                 {
-                    PopupUIStack.Push(popUI);
-                    PopupUIStack.Peek().Show();
+                    popupUIStack.Push(popUI);
+                    popupUIStack.Peek().Show();
                     ++popupIndex;
                 }
                 else
@@ -208,8 +211,8 @@ namespace HakSeung
                 popUI.transform.SetParent(MainCanvas.transform, false);
 
                 uiObjs.Add(key, popUI);
-                PopupUIStack.Push(popUI);
-                PopupUIStack.Peek().Show();
+                popupUIStack.Push(popUI);
+                popupUIStack.Peek().Show();
                 ++popupIndex;
             }
             else
@@ -218,40 +221,40 @@ namespace HakSeung
                 return false;
             }
 
-            PopupUIStack.Peek().gameObject.transform.SetAsLastSibling();
+            popupUIStack.Peek().gameObject.transform.SetAsLastSibling();
             return true;
 
         }
 
         public void ClosePopupUI()
         {
-            if (PopupUIStack.Count == 0)
+            if (popupUIStack.Count == 0)
                 return;
 
-            PopupUIStack.Peek().Hide();
-            PopupUIStack.Pop();
+            popupUIStack.Peek().Hide();
+            popupUIStack.Pop();
             --popupIndex;
         }
 
         public void ClosePopupUI(CUIPopup popupUI)
         {
-            if (PopupUIStack.Count == 0)
+            if (popupUIStack.Count == 0)
                 return;
 
-            if (PopupUIStack.Peek() != popupUI)
+            if (popupUIStack.Peek() != popupUI)
             {
                 Debug.LogError($"popupUi: {popupUI.UIName}은 닫을 수 없습니다.");
                 return;
             }
 
-            PopupUIStack.Peek().Hide();
-            PopupUIStack.Pop();
+            popupUIStack.Peek().Hide();
+            popupUIStack.Pop();
             --popupIndex;
         }
 
         public void CloseAllPopupUI()
         {
-            while(PopupUIStack.Count > 0)
+            while(popupUIStack.Count > 0)
                 ClosePopupUI();
         }
 
@@ -268,7 +271,7 @@ namespace HakSeung
                 Debug.Log(items.name + "파괴");
             }
             uiObjs.Clear();
-            PopupUIStack.Clear();
+            popupUIStack.Clear();
         }
         
 

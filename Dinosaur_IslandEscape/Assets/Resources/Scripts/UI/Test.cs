@@ -30,6 +30,8 @@ public class Test : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             UIManager.Instance.ShowPopupUI(UIManager.ETestType.TutorialPopupPanel.ToString());
+            ((CUITutorialPopup)(UIManager.Instance.CurrentPopupUI)).ImageSwap(CUITutorialPopup.TutorialState.STORY);
+            ((CUITutorialPopup)(UIManager.Instance.CurrentPopupUI)).TimerHide();
         }
 
         //ÆË¾÷ UI ´Ý±â
