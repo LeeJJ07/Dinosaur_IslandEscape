@@ -2,6 +2,8 @@ using HakSeung;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Unity.VisualScripting;
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.Rendering.Universal;
@@ -46,7 +48,8 @@ namespace MyeongJin
 
 			color.a = 1f;
 			sprite.color = color;
-		}
+			RenderSettings.fogDensity += 0.005f;
+        }
 		public void ReturnToPool()
 		{
 			Pool.Release(this);
@@ -67,7 +70,11 @@ namespace MyeongJin
 
 			color.a -= 0.5f;
             sprite.color = color;
-			if (sprite.color.a == 0)
+
+			if (RenderSettings.fogDensity > 0)
+				RenderSettings.fogDensity -= 0.0025f;
+
+            if (sprite.color.a == 0)
 			{
                 ReturnToPool(10);
             }

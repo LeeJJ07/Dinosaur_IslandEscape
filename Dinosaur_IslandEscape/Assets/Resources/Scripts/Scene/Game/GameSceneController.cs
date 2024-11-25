@@ -56,10 +56,10 @@ namespace JongJin
             missionRoomVolcano.SetActive(false);
             
             gameStateContext = new GameStateContext(this);
-            gameStateContext.Transition(cutSceneState);
-            curState = EGameState.CUTSCENE;
-            //gameStateContext.Transition(runningState);
-            //curState = EGameState.RUNNING;
+            //gameStateContext.Transition(cutSceneState);
+            //curState = EGameState.CUTSCENE;
+            gameStateContext.Transition(runningState);
+            curState = EGameState.RUNNING;
 
         }
 
@@ -82,7 +82,7 @@ namespace JongJin
                 case EGameState.RUNNING:
                     if (runningState.IsFirstMissionTriggered())
                     {
-                        UpdateState(EGameState.THIRDMISSION);
+                        UpdateState(EGameState.FIRSTMISSION);
                         missionGround.SetActive(true);                // FirstMission�� �����ϸ� missionGround�� ����
                         startForestGround.SetActive(false);             // FirstMission�� �����ϸ� startForestGround�� ����
                         missionRoomVolcano.SetActive(true);

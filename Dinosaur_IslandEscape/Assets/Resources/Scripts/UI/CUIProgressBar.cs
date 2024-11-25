@@ -32,11 +32,12 @@ namespace HakSeung
 					maxProgress = value;
 			} 
 		}
-		private void Init()
+		public void Init()
 		{
 			PrograssBarFill.fillAmount = 0;
             maxProgress = defaultMaxProgress;
-		}
+			isProgressBarFullFilled = false;
+        }
 
 		public void FillProgressBar(float curProgress)
 		{

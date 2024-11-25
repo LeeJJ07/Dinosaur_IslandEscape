@@ -15,6 +15,7 @@ namespace JongJin
 
         public void EnterState()
         {
+            RenderSettings.fog = true;
             isSuccess = false;
             timer = 60f;
         }
@@ -28,7 +29,9 @@ namespace JongJin
 
         public void ExitState()
         {
+            ((CUIEventPanel)UIManager.Instance.CurSceneUI).progressBar.Init();
             UIManager.Instance.SceneUISwap((int)ESceneUIType.RunningCanvas);
+            RenderSettings.fog = false;
         }
         public bool IsFinishMission(out bool success)
         {
