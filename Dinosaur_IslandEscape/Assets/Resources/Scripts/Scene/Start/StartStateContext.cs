@@ -1,24 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace JongJin
 {
-    
-    public enum EGameState
+    public enum EStartGameState
     {
-        CUTSCENE,
-        RUNNING,
-        TAILMISSION,
-        FIRSTMISSION,
-        SECONDMISSION,
-        THIRDMISSION,
+        STORYDESCRIPTION,
+        STORYCUTSCENE,
+        TUTORIALDESCRIPTION,
+        TUTORIALACTION,
 
         END
     }
-
-    public class GameStateContext
+    public class StartStateContext
     {
         public IGameState CurrentState { get; set; }
-        private readonly GameSceneController controller;
-        public GameStateContext(GameSceneController controller)
+        private readonly StartSceneController controller;
+        public StartStateContext(StartSceneController controller)
         {
             this.controller = controller;
         }
@@ -32,4 +31,5 @@ namespace JongJin
             CurrentState.EnterState();
         }
     }
+
 }

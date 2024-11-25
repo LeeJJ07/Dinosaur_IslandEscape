@@ -16,6 +16,14 @@ namespace JongJin
         [SerializeField] private SecondMissionState secondMissionState;
         [SerializeField] private ThirdMissionState thirdMissionState;
 
+        
+        [Header("MissionCamera Set")]
+        [SerializeField] private GameObject curLookAt;
+        [SerializeField] private GameObject curFollow;
+        [SerializeField] private GameObject []lookAt;
+        [SerializeField] private GameObject []follow;
+
+        [Header("BackGround Set")]
         [SerializeField] private GameObject missionGround;
         [SerializeField] private GameObject startForestGround;
 
@@ -23,12 +31,6 @@ namespace JongJin
         [SerializeField] Material skyboxVolcano;
 
         [SerializeField] private GameObject missionRoomVolcano;
-        
-        [Header("MissionCamera Set")]
-        [SerializeField] private GameObject curLookAt;
-        [SerializeField] private GameObject curFollow;
-        [SerializeField] private GameObject []lookAt;
-        [SerializeField] private GameObject []follow;
 
         private GameStateContext gameStateContext;
         private EGameState curState;
