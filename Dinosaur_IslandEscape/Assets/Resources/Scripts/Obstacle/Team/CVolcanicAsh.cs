@@ -1,3 +1,4 @@
+using HakSeung;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -7,46 +8,69 @@ using UnityEngine.Rendering.Universal;
 
 namespace MyeongJin
 {
-    public class CVolcanicAsh : MonoBehaviour
-    {
-        public IObjectPool<CVolcanicAsh> Pool { get; set; }
+	public class CVolcanicAsh : MonoBehaviour
+	{
+		public IObjectPool<CVolcanicAsh> Pool { get; set; }
 
-        private SpriteRenderer sprite;
-        private Vector3 startPosition;
+		private SpriteRenderer sprite;
+		private Vector3 startPosition;
 
-        private void Awake()
+		private void Awake()
+		{
+			sprite = GetComponent<SpriteRenderer>();
+		}
+		private void OnEnable()
+		{
+			StartCoroutine("CastAshes");
+		}
+		private void OnDisable()
+		{
+			ResetObstacle();
+		}
+		private IEnumerator CastAshes()
+		{
+			float duration = 2f;
+			float elapsedTime = 0f;
+
+			var color = sprite.color;
+
+			while (elapsedTime < duration)
+			{
+				// 경과 시간에 따라 알파 값을 증가
+				elapsedTime += Time.deltaTime;
+				color.a = Mathf.Lerp(0, 1, elapsedTime / duration);
+				sprite.color = color;
+
+				yield return null;
+			}
+
+			color.a = 1f;
+			sprite.color = color;
+		}
+		public void ReturnToPool()
+		{
+			Pool.Release(this);
+		}
+        public void ReturnToPool(int fillValue)
         {
-            sprite = GetComponent<SpriteRenderer>();
-        }
-        private void Update()
-        {
-            //int alphaValue = Random.Range(1, 10);
-            //var color = sprite.color;
-            //if (color.a < 1)
-            //{
-            //    color.a += alphaValue * 0.0001f;
-            //    sprite.color = color;
-            //}
-            //if (Input.GetKeyDown(KeyCode.Space))
-            //{
-            //    //OnTriggerEnter(null);
-            //}
-        }
-        private void OnEnable()
-        {
-            
-        }
-        private void OnDisable()
-        {
-            ResetObstacle();
-        }
-        public void ReturnToPool()
-        {
+            if (((CUIEventPanel)UIManager.Instance.CurSceneUI) != null)
+                ((CUIEventPanel)UIManager.Instance.CurSceneUI).progressBar.FillProgressBar(fillValue);
             Pool.Release(this);
         }
         public void ResetObstacle()
-        {
-            this.GetComponent<BoxCollider>().enabled = true;
+		{
+			this.GetComponent<BoxCollider>().enabled = true;
+		}
+		public void FadeAway()
+		{
+            var color = sprite.color;
+
+			color.a -= 0.5f;
+            sprite.color = color;
+			if (sprite.color.a == 0)
+			{
+                ReturnToPool(10);
+            }
         }
         //private void OnTriggerEnter(Collider other)
         //{

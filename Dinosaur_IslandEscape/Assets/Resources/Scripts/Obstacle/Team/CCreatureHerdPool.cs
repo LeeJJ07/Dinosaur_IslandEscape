@@ -208,14 +208,19 @@ namespace MyeongJin
 			if (obstacle is CSmallPteranodon)
 			{
 				obstacle.transform.position = new Vector3(lineNum * space + position.x - 2, smallPteranodonControlPoints[1].position.y, smallPteranodonControlPoints[1].position.z);
-			}
+
+                ((CUIEventPanel)UIManager.Instance.CurSceneUI).playerNotes[lineNum].Show(obstacle.gameObject, lineNum);
+            }
             if (obstacle is CBigPteranodon)
             {
                 ((CUIEventPanel)UIManager.Instance.CurSceneUI).playerNotes[0].Show(obstacle.gameObject, 0);
                 ((CUIEventPanel)UIManager.Instance.CurSceneUI).playerNotes[1].Show(obstacle.gameObject, 1);
-				return;
             }
-            ((CUIEventPanel)UIManager.Instance.CurSceneUI).playerNotes[lineNum].Show(obstacle.gameObject, lineNum);
+			if(obstacle is CCrocodile)
+			{
+                CCrocodile crocodile = obstacle as CCrocodile;
+				((CUIEventPanel)UIManager.Instance.CurSceneUI).playerNotes[lineNum].Show(obstacle.gameObject, crocodile.targetNum);
+            }
 		}
 	}
 }

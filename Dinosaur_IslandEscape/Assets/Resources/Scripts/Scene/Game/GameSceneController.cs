@@ -110,7 +110,7 @@ namespace JongJin
                         UpdateState(EGameState.RUNNING);
                     break;
                 case EGameState.FIRSTMISSION:           // ù ��° ���� �̼� ���¿���
-                    if (firstMissionState.test)         // ù ��° ���� �̼� ������
+                    if (firstMissionState.IsFinishMission(out runningState.isMissionSuccess))         // ù ��° ���� �̼� ������
                     { 
                         UpdateState(EGameState.RUNNING);            // ���� �������� �ٽ� �޸�
                         missionGround.SetActive(false);             // missinoGround �ٽ� ����
@@ -118,8 +118,20 @@ namespace JongJin
                     }
                     break;
                 case EGameState.SECONDMISSION:          // missionGround.SetActive(false) �־����
+                    if (secondMissionState.IsFinishMission(out runningState.isMissionSuccess))         // ù ��° ���� �̼� ������
+                    {
+                        UpdateState(EGameState.RUNNING);            // ���� �������� �ٽ� �޸�
+                        missionGround.SetActive(false);             // missinoGround �ٽ� ����
+                        missionRoomVolcano.SetActive(false);
+                    }
                     break;
                 case EGameState.THIRDMISSION:           // missionGround.SetActive(false) �־����
+                    if (thirdMissionState.IsFinishMission(out runningState.isMissionSuccess))         // ù ��° ���� �̼� ������
+                    {
+                        UpdateState(EGameState.RUNNING);            // ���� �������� �ٽ� �޸�
+                        missionGround.SetActive(false);             // missinoGround �ٽ� ����
+                        missionRoomVolcano.SetActive(false);
+                    }
                     break;
             }
             gameStateContext.CurrentState.UpdateState();

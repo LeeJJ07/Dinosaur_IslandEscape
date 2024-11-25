@@ -1,3 +1,4 @@
+using HakSeung;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -32,11 +33,17 @@ namespace MyeongJin
 		{
 			ResetObstacle();
 		}
-		public void ReturnToPool()
-		{
-			Pool.Release(this);
-		}
-		public void ResetObstacle()
+        public void ReturnToPool(int fillValue)
+        {
+            if (((CUIEventPanel)UIManager.Instance.CurSceneUI) != null)
+                ((CUIEventPanel)UIManager.Instance.CurSceneUI).progressBar.FillProgressBar(fillValue);
+            Pool.Release(this);
+        }
+        public void ReturnToPool()
+        {
+            Pool.Release(this);
+        }
+        public void ResetObstacle()
 		{
 			this.GetComponent<BoxCollider>().enabled = true;
             blood.SetActive(false);
@@ -67,7 +74,7 @@ namespace MyeongJin
 		{
 			yield return new WaitForSeconds(1.0f);
 
-			ReturnToPool();
+            ReturnToPool(5);
 		}
 	}
 }
