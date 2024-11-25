@@ -38,19 +38,6 @@ namespace JongJin
         [Header("Virtual Camera")] 
 		[SerializeField] private GameObject runningViewCam;
 
-		/*[Header("UI")]
-		[SerializeField] private float imageOffset = -20.0f;
-
-		[SerializeField] private Canvas runningCanvas;
-		[SerializeField] private Image progressBarImage;
-		[SerializeField] private RectTransform dinosaurImagePos;
-		[SerializeField] private RectTransform player1ImagePos;
-		[SerializeField] private RectTransform player2ImagePos;
-		[SerializeField] private TextMeshProUGUI endDistanceText;
-		[SerializeField] private TextMeshProUGUI dinosaurDistanceText;
-		[SerializeField] private TextMeshProUGUI timerText;
-		[SerializeField] private Image[] heartImages;*/
-
 		[HideInInspector] public bool isMissionSuccess = false;
 
 		private int life = 3;
