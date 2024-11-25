@@ -15,13 +15,7 @@ namespace HakSeung
 
         protected override void InitUI()
         {
-            [SerializeField] public CUIProgressBar progressBar;
-            public CUINote[] playerNotes = new CUINote[TOTALPLAYERS];
 
-            protected override void InitUI()
-            {
-
-            }
         }
         public void SetTimer(float roundTimeLimit)
         {
