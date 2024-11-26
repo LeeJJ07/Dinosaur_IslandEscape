@@ -1134,9 +1134,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilePrefabs:
-  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
-  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
-  - {fileID: 6581742789103066699, guid: 88e3a1bfebb3b9d4d923e66ab44a15d9, type: 3}
+  - {fileID: 6581742789103066699, guid: 92413a3bdf44ac24aaca767bd9a8927d, type: 3}
+  - {fileID: 6581742789103066699, guid: bdeb83b13d86976489608458bf233c44, type: 3}
+  - {fileID: 6581742789103066699, guid: 4462c3a12d272414db7ea4b7a73c2dd9, type: 3}
   tileRespawnPoint: 0
   tileLength: 16
   numberOfTiles: 3

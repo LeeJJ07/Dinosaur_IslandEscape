@@ -38,13 +38,13 @@ namespace JongJin
             thirdMissionState = GetComponent<ThirdMissionState>();
 
             gameStateContext = new GameStateContext(this);
-            gameStateContext.Transition(cutSceneState);
-            curState = EGameState.CUTSCENE;
+            gameStateContext.Transition(runningState);
+            curState = EGameState.RUNNING;
 
-            missionGround.SetActive(false);           // missionGround´Â ÃÊ±â¿¡´Â ²¨µÐ »óÅÂ
-            startForestGround.SetActive(true);          // startForestGround´Â ÃÊ±â¿¡ ÄÑµÐ »óÅÂ
+            missionGround.SetActive(false);           // missionGroundï¿½ï¿½ ï¿½Ê±â¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            startForestGround.SetActive(true);          // startForestGroundï¿½ï¿½ ï¿½Ê±â¿¡ ï¿½Ñµï¿½ ï¿½ï¿½ï¿½ï¿½
 
-            RenderSettings.skybox = skyboxNormal;       // ÃÊ±â skybox´Â skyboxNormal
+            RenderSettings.skybox = skyboxNormal;       // ï¿½Ê±ï¿½ skyboxï¿½ï¿½ skyboxNormal
 
             missionRoomVolcano.SetActive(false);
         }
@@ -61,22 +61,22 @@ namespace JongJin
                     if (runningState.IsFirstMissionTriggered())
                     {
                         UpdateState(EGameState.FIRSTMISSION);
-                        missionGround.SetActive(true);                // FirstMission¿¡ µ¹ÀÔÇÏ¸é missionGround°¡ ÄÑÁü
-                        startForestGround.SetActive(false);             // FirstMission¿¡ µ¹ÀÔÇÏ¸é startForestGround°¡ ²¨Áü
+                        missionGround.SetActive(true);                // FirstMissionï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ missionGroundï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                        startForestGround.SetActive(false);             // FirstMissionï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ startForestGroundï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                         missionRoomVolcano.SetActive(true);
                     }
-                    else if (runningState.IsSecondMissionTriggered())
-                    {
-                        UpdateState(EGameState.SECONDMISSION);
-                        missionGround.SetActive(true);
-                        missionRoomVolcano.SetActive(true);
-                        RenderSettings.skybox = skyboxVolcano;          // SecondMission µ¹ÀÔ ½Ã skybox°¡ ºÓ°Ô º¯ÇÔ
-                    }
-                    else if (runningState.IsThirdMissionTriggered())
-                    {
-                        UpdateState(EGameState.THIRDMISSION);
-                        missionGround.SetActive(true);
-                    }
+                    // else if (runningState.IsSecondMissionTriggered())
+                    // {
+                    //     UpdateState(EGameState.SECONDMISSION);
+                    //     missionGround.SetActive(true);
+                    //     missionRoomVolcano.SetActive(true);
+                    //     RenderSettings.skybox = skyboxVolcano;          // SecondMission ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ skyboxï¿½ï¿½ ï¿½Ó°ï¿½ ï¿½ï¿½ï¿½ï¿½
+                    // }
+                    // else if (runningState.IsThirdMissionTriggered())
+                    // {
+                    //     UpdateState(EGameState.THIRDMISSION);
+                    //     missionGround.SetActive(true);
+                    // }
                     //else if (runningState.IsTailMissionTriggered())
                     //{
                     //    UpdateState(EGameState.TAILMISSION);
@@ -85,17 +85,17 @@ namespace JongJin
                     break;
                 case EGameState.TAILMISSION:
                     break;
-                case EGameState.FIRSTMISSION:           // Ã¹ ¹øÂ° µ¹¹ß ¹Ì¼Ç »óÅÂ¿¡¼­
-                    if (firstMissionState.test)         // Ã¹ ¹øÂ° µ¹¹ß ¹Ì¼Ç ³¡³ª¸é
+                case EGameState.FIRSTMISSION:           // Ã¹ ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½
+                    if (firstMissionState.test)         // Ã¹ ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     { 
-                        UpdateState(EGameState.RUNNING);            // ²÷±ä ÁöÁ¡¿¡¼­ ´Ù½Ã ´Þ¸²
-                        missionGround.SetActive(false);             // missinoGround ´Ù½Ã ²¨Áü
+                        UpdateState(EGameState.RUNNING);            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½Þ¸ï¿½
+                        missionGround.SetActive(false);             // missinoGround ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½
                         missionRoomVolcano.SetActive(false);
                     }
                     break;
-                case EGameState.SECONDMISSION:          // missionGround.SetActive(false) ³Ö¾î¾ßÇÔ
+                case EGameState.SECONDMISSION:          // missionGround.SetActive(false) ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½
                     break;
-                case EGameState.THIRDMISSION:           // missionGround.SetActive(false) ³Ö¾î¾ßÇÔ
+                case EGameState.THIRDMISSION:           // missionGround.SetActive(false) ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½
                     break;
             }
             gameStateContext.CurrentState.UpdateState();
